@@ -19,3 +19,9 @@ This directory is the source checkout for the private Sites app identified by `.
 ## Known catalog limits
 
 The gallery snapshot does not have exact art for a few tokens and promo printings in the Card Nexus file. Their inventory quantities are preserved; unmatched entries use a same-number base card image when available, otherwise an image-unavailable tile. Vendetta promo cards are shown as a separate set.
+
+## Deferred to-do list
+
+Record future user-provided to-do items here. Treat them as backlog, not authorization to implement or publish them. Update the list as the user adds, revises, or completes items.
+
+- Add a catalog-view filter that hides alternate printings and cards numbered beyond the regular set total. It should let the user browse realistically obtainable cards while keeping any owned copies in the saved collection and exports. Do not implement until the user asks to work on this item.
