@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { displayCards, type DisplayCard, type ImportDifference } from "../lib/collection";
+import { displayCards, hasFoilTreatment, isAlternatePrinting, isOvernumbered, type DisplayCard, type ImportDifference } from "../lib/collection";
 import type { CollectionSnapshot } from "../lib/server-collection";
 
 type Props = { initial: CollectionSnapshot; accountName: string; signOutPath: string };
@@ -14,6 +14,8 @@ export default function CollectionClient({ initial, accountName, signOutPath }: 
   const [snapshot, setSnapshot] = useState(initial);
   const [selectedSet, setSelectedSet] = useState("Vendetta");
   const [status, setStatus] = useState("all");
+  const [hideAlternates, setHideAlternates] = useState(false);
+  const [hideOvernumbered, setHideOvernumbered] = useState(false);
   const [search, setSearch] = useState("");
   const [preview, setPreview] = useState<Preview | null>(null);
   const [error, setError] = useState("");
@@ -26,9 +28,11 @@ export default function CollectionClient({ initial, accountName, signOutPath }: 
   const visibleCards = useMemo(() => setCards.filter((card) => {
     if (status === "owned" && card.quantity === 0) return false;
     if (status === "missing" && card.quantity > 0) return false;
+    if (hideAlternates && isAlternatePrinting(card)) return false;
+    if (hideOvernumbered && isOvernumbered(card)) return false;
     const query = search.trim().toLowerCase();
     return !query || `${card.name} ${card.number} ${card.set}`.toLowerCase().includes(query);
-  }).sort((a, b) => a.set.localeCompare(b.set) || a.number.localeCompare(b.number, undefined, { numeric: true }) || a.code.localeCompare(b.code)), [setCards, status, search]);
+  }).sort((a, b) => a.set.localeCompare(b.set) || a.number.localeCompare(b.number, undefined, { numeric: true }) || a.code.localeCompare(b.code)), [setCards, status, hideAlternates, hideOvernumbered, search]);
   const owned = setCards.filter((card) => card.quantity > 0).length;
   const copies = setCards.reduce((sum, card) => sum + card.quantity, 0);
   const foils = setCards.reduce((sum, card) => sum + card.foilQuantity, 0);
@@ -89,7 +93,7 @@ export default function CollectionClient({ initial, accountName, signOutPath }: 
     <div className="workspace-grid">
       <section className="main-column">
         <div className="grid-toolbar"><div><h2>Cards</h2><span>{formatNumber(visibleCards.length)} shown · {formatNumber(copies)} copies in {selectedSet === "All sets" ? "all sets" : selectedSet}</span></div><label className="search-box"><span className="visually-hidden">Search cards</span><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search cards or number" /></label></div>
-        <div className="filters" aria-label="Card filters"><label>Set <select value={selectedSet} onChange={(event) => setSelectedSet(event.target.value)}><option>All sets</option>{sets.map((set) => <option key={set}>{set}</option>)}</select></label><div className="segmented" role="group" aria-label="Ownership"><button type="button" className={status === "all" ? "active" : ""} onClick={() => setStatus("all")}>All</button><button type="button" className={status === "owned" ? "active" : ""} onClick={() => setStatus("owned")}>Owned</button><button type="button" className={status === "missing" ? "active" : ""} onClick={() => setStatus("missing")}>Missing</button></div></div>
+        <div className="filters" role="group" aria-label="Card filters"><div className="filter-primary"><label>Set <select value={selectedSet} onChange={(event) => setSelectedSet(event.target.value)}><option>All sets</option>{sets.map((set) => <option key={set}>{set}</option>)}</select></label><div className="segmented" role="group" aria-label="Ownership"><button type="button" aria-pressed={status === "all"} className={status === "all" ? "active" : ""} onClick={() => setStatus("all")}>All</button><button type="button" aria-pressed={status === "owned"} className={status === "owned" ? "active" : ""} onClick={() => setStatus("owned")}>Owned</button><button type="button" aria-pressed={status === "missing"} className={status === "missing" ? "active" : ""} onClick={() => setStatus("missing")}>Not owned</button></div></div><div className="filter-exclusions"><label><input type="checkbox" checked={hideAlternates} onChange={(event) => setHideAlternates(event.target.checked)} />Hide alternate art</label><label><input type="checkbox" checked={hideOvernumbered} onChange={(event) => setHideOvernumbered(event.target.checked)} />Hide over-numbered</label></div></div>
         {visibleCards.length ? <div className="card-grid" aria-label="Cards">{visibleCards.map((card) => <CardTile key={card.code} card={card} />)}</div> : <div className="empty-state">No cards match these filters.</div>}
       </section>
       <aside className="insights-panel" aria-label="Collection breakdown">
@@ -103,10 +107,10 @@ export default function CollectionClient({ initial, accountName, signOutPath }: 
 }
 
 function CardTile({ card }: { card: DisplayCard }) {
+  const shiny = hasFoilTreatment(card);
   return <article className="card-tile" aria-label={`${card.name}, ${card.quantity} owned${card.foilQuantity ? `, ${card.foilQuantity} foil` : ""}`}><div className={`card-image-wrap ${card.quantity ? "" : "missing"}`}>
     {card.image ? <img src={card.image} alt="" loading="lazy" /> : <span className="no-image">Image unavailable</span>}
-    {card.foilQuantity > 0 && <span className="foil-badge">✦ {card.foilQuantity} foil</span>}
-    <span className="quantity-badge">{card.quantity}</span>
+    <span className={`quantity-badge${shiny ? " shiny" : ""}`}>{card.quantity}</span>
   </div><div className="card-meta"><span className="card-number">{card.number.toUpperCase()}</span><strong title={card.name}>{card.name}</strong></div><p className="card-set">{card.set}</p></article>;
 }
 

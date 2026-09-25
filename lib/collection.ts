@@ -1,9 +1,24 @@
 import catalogData from "../data/catalog.json";
 
 export type InventoryRow = Record<string, string>;
-export type CatalogCard = { code: string; name: string; set: string; number: string; domains: string[]; image: string | null };
+export type CatalogCard = { code: string; name: string; set: string; number: string; rarity: string; domains: string[]; image: string | null };
 export type DisplayCard = CatalogCard & { quantity: number; foilQuantity: number; extra?: boolean };
 export const catalog = catalogData as CatalogCard[];
+const regularSetTotals: Record<string, number> = { Vendetta: 166, Unleashed: 219, Spiritforged: 221, Origins: 298, "Proving Grounds": 24 };
+
+export function isAlternatePrinting(card: DisplayCard): boolean {
+  return /^(?:\d+|r\d+)a$/i.test(card.number.trim()) || (card.set === "Vendetta" && /^sp\d+$/i.test(card.number.trim()));
+}
+
+export function isOvernumbered(card: DisplayCard): boolean {
+  const number = card.number.trim();
+  return /^\d+$/.test(number) && Number(number) > (regularSetTotals[card.set] ?? Infinity);
+}
+
+export function hasFoilTreatment(card: DisplayCard): boolean {
+  if (card.quantity === 0) return false;
+  return card.foilQuantity > 0 || (card.set !== "Proving Grounds" && ((!card.extra && ["Rare", "Epic", "Showcase"].includes(card.rarity)) || isOvernumbered(card)));
+}
 export const CARD_NEXUS_COLUMNS = ["totalQtyOwned", "productId", "name", "printNumber", "finish", "variant", "expansion", "game", "condition", "language", "location", "tags", "comment", "notes", "price", "sellValue"];
 
 export function parseCardNexusCsv(input: string): { headers: string[]; rows: InventoryRow[] } {
@@ -84,7 +99,7 @@ export function displayCards(rows: InventoryRow[]): DisplayCard[] {
       if (previous) { previous.quantity += quantity; previous.foilQuantity += foil; }
       else {
         const fallback = findCatalogCard(row);
-        extras.set(key, { code: `extra:${key}`, name: row.name, set, number: row.printNumber, domains: fallback?.domains ?? [], image: fallback?.image ?? null, quantity, foilQuantity: foil, extra: true });
+        extras.set(key, { code: `extra:${key}`, name: row.name, set, number: row.printNumber, rarity: fallback?.rarity ?? "Unknown", domains: fallback?.domains ?? [], image: fallback?.image ?? null, quantity, foilQuantity: foil, extra: true });
       }
     }
   }
