@@ -5,9 +5,10 @@ This directory is the source checkout for the private Sites app identified by `.
 ## Architecture
 
 - Vinext renders the collection at `/` and uses dispatch-owned Sign in with ChatGPT. The authenticated Site user ID scopes every collection read and write.
-- D1 holds versioned Card Nexus inventory snapshots. `collection_meta.active_import_id` selects the current snapshot; imports stage rows before switching that pointer, so a failed upload cannot clear the previous collection.
+- D1 holds versioned Card Nexus inventory snapshots. `collection_meta.active_import_id` selects the current snapshot; imports stage rows before switching that pointer, so a failed upload cannot clear the previous collection. `collection_imports` stores each import's date, filename, headers, and version. Keep historical rows when saving a new import. A read of an existing Site records its previously active import in `collection_imports` without rewriting that inventory. Historical browsing is read-only; exports and new imports use the latest snapshot.
 - `data/initial-inventory.json` contains the user's supplied 2026-09-24 export. Only the first authenticated owner of this private Site is seeded with it. Do not put it in public assets or expose it through an unauthenticated route.
 - `data/catalog.json` is a compact snapshot of [riftbound-cards](https://github.com/LouisCourrian/riftbound-cards) release `v2026-09-23`; names, rarity, and Riot CDN image URLs originate from Riot's card gallery. Keep attribution visible. The catalog is used for missing cards, art, set/color counts, and foil display.
+- `data/deck-card-metadata.json` maps catalog codes to full printed names and card types from the Riot-derived [Riftbound-card-data](https://github.com/slimtreble/Riftbound-card-data) export. The deck matcher uses it to distinguish champion subtitles that the compact catalog omits. It accepts quantity-and-name deck lines, groups required and owned copies by full card name, and lists unmatched lines separately. Rune and token exclusions are on by default; section headings and card codes help classify them. The deck matcher uses the snapshot currently being viewed and does not estimate prices.
 - Catalog-only filters in `app/collection-client.tsx` hide alternate art (`a` collector-number suffix, including alt runes, plus Vendetta `sp` special alt numbers) and over-numbered printings (numeric collector number above the regular set total). They do not change saved inventory, summaries, imports, or exports. The `Not owned` filter shows zero-copy cards and remains visible before the statistics panel on phones.
 - The quantity badge shows total copies and gains a subtle foil finish for owned Rare, Epic, Showcase, or over-numbered printings, or when an imported row explicitly records foil copies. Proving Grounds is excluded from rarity-based foil inference because its box printings are nonfoil. Keep the badge's treatment tied to reliable catalog rarity or the imported finish, never to image appearance.
 - A card tile opens a larger, keyboard-accessible card view with its inventory count and any matched standard or foil price. The header uses the owner-supplied orange logo in `public/riftbound-logo.png`.
@@ -18,6 +19,7 @@ This directory is the source checkout for the private Sites app identified by `.
 
 - Change the Drizzle schema in `db/schema.ts`, generate a new migration, and preserve already-applied migration files. Do not seed user rows in migration SQL.
 - Run TypeScript checking and the Sites build after product changes. Check the supplied CSV round trip and a repeated-import preview when import logic changes.
+- Run the deck parser check with the user's supplied deck text when matching logic changes.
 - Publish the pushed source with the Sites workflow and verify the deployment reaches `succeeded`.
 
 ## Known catalog limits
@@ -28,4 +30,6 @@ The gallery snapshot does not have exact art for a few tokens and promo printing
 
 Record future user-provided to-do items here. Treat them as backlog, not authorization to implement or publish them. Update the list as the user adds, revises, or completes items.
 
-No deferred items remain. The alternate/over-numbered filters, discoverable `Not owned` view, and foil quantity badge were implemented in the September 2026 update.
+No deferred items remain. Inventory history and the deck matcher were implemented in the September 2026 update. A "restore as current" action was not requested.
+
+The alternate/over-numbered filters, discoverable `Not owned` view, and foil quantity badge were implemented in the September 2026 update.

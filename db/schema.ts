@@ -11,6 +11,12 @@ export const collectionMeta = sqliteTable("collection_meta", {
   importedAt: text("imported_at").notNull(), sourceName: text("source_name").notNull(),
 });
 
+export const collectionImports = sqliteTable("collection_imports", {
+  userId: text("user_id").notNull(), importId: text("import_id").notNull(),
+  headersJson: text("headers_json").notNull(), version: integer("version").notNull(),
+  importedAt: text("imported_at").notNull(), sourceName: text("source_name").notNull(),
+}, (table) => [primaryKey({ columns: [table.userId, table.importId] })]);
+
 export const bootstrapOwner = sqliteTable("bootstrap_owner", {
   id: integer("id").primaryKey(), userId: text("user_id").notNull(),
 });

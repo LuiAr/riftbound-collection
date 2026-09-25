@@ -3,10 +3,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { displayCards, hasFoilTreatment, isAlternatePrinting, isOvernumbered, type DisplayCard, type ImportDifference } from "../lib/collection";
 import { priceKey, type PriceQuote, type PriceSnapshot } from "../lib/prices";
-import type { CollectionSnapshot } from "../lib/server-collection";
+import type { CollectionSnapshot, CollectionVersion } from "../lib/server-collection";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../components/ui/dialog";
+import DeckMatcher from "./deck-matcher";
 
-type Props = { initial: CollectionSnapshot; accountName: string; signOutPath: string };
+type Props = { initial: CollectionSnapshot; initialHistory: CollectionVersion[]; accountName: string; signOutPath: string };
 type Preview = { difference: ImportDifference; version: number; filename: string; csv: string };
 const sets = ["Vendetta", "Vendetta Promos", "Unleashed", "Origins", "Spiritforged", "Proving Grounds"];
 const colors = ["Fury", "Calm", "Mind", "Body", "Order", "Chaos", "Colorless"];
@@ -19,8 +20,14 @@ function quoteFor(card: DisplayCard, prices: PriceSnapshot | null): PriceQuote |
   return prices?.quotes[priceKey(card.set, card.name)] ?? null;
 }
 
-export default function CollectionClient({ initial, accountName, signOutPath }: Props) {
-  const [snapshot, setSnapshot] = useState(initial);
+export default function CollectionClient({ initial, initialHistory, accountName, signOutPath }: Props) {
+  const [currentSnapshot, setCurrentSnapshot] = useState(initial);
+  const [viewedSnapshot, setViewedSnapshot] = useState<CollectionSnapshot | null>(null);
+  const [history, setHistory] = useState(initialHistory);
+  const [section, setSection] = useState<"collection" | "decks" | "history">("collection");
+  const [historyBusy, setHistoryBusy] = useState(false);
+  const [historyError, setHistoryError] = useState("");
+  const snapshot = viewedSnapshot ?? currentSnapshot;
   const [selectedSet, setSelectedSet] = useState("Vendetta");
   const [status, setStatus] = useState("all");
   const [hideAlternates, setHideAlternates] = useState(false);
@@ -114,11 +121,31 @@ export default function CollectionClient({ initial, accountName, signOutPath }: 
       const response = await fetch("/api/import", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ mode: "apply", csv: preview.csv, filename: preview.filename, version: preview.version }) });
       const result = await response.json() as { error?: string; snapshot: CollectionSnapshot };
       if (!response.ok) throw new Error(result.error || "The collection could not be updated.");
-      setSnapshot(result.snapshot as CollectionSnapshot);
+      setCurrentSnapshot(result.snapshot);
+      setViewedSnapshot(null);
+      if (result.snapshot.importId && result.snapshot.importedAt) setHistory((old) => [{ importId: result.snapshot.importId!, version: result.snapshot.version, importedAt: result.snapshot.importedAt!, sourceName: result.snapshot.sourceName ?? preview.filename }, ...old]);
       setNotice(`Imported ${result.snapshot.rows.length} rows from ${preview.filename}.`);
       setPreview(null);
     } catch (cause) { setError(cause instanceof Error ? cause.message : "The collection could not be updated."); }
     finally { setBusy(false); }
+  }
+
+  async function viewVersion(importId: string) {
+    setHistoryError("");
+    if (importId === currentSnapshot.importId) {
+      setViewedSnapshot(null);
+      setSection("collection");
+      return;
+    }
+    setHistoryBusy(true);
+    try {
+      const response = await fetch(`/api/history?importId=${encodeURIComponent(importId)}`, { cache: "no-store" });
+      const result = await response.json() as { error?: string; snapshot?: CollectionSnapshot };
+      if (!response.ok || !result.snapshot) throw new Error(result.error || "This version could not be loaded.");
+      setViewedSnapshot(result.snapshot);
+      setSection("collection");
+    } catch (cause) { setHistoryError(cause instanceof Error ? cause.message : "This version could not be loaded."); }
+    finally { setHistoryBusy(false); }
   }
 
   return <main className="collection-shell">
@@ -126,10 +153,24 @@ export default function CollectionClient({ initial, accountName, signOutPath }: 
       <div className="brand"><img className="brand-mark" src="/riftbound-logo.png" alt="" /><span>Riftbound <span className="brand-light">Collection</span></span></div>
       <div className="account-area"><span className="account-dot" aria-hidden="true" /><span className="account-name" title={accountName}>{accountName}</span><a href={signOutPath}>Sign out</a></div>
     </header>
+    <nav className="section-nav" aria-label="Website sections">
+      <button type="button" className={section === "collection" ? "active" : ""} aria-current={section === "collection" ? "page" : undefined} onClick={() => setSection("collection")}>My collection</button>
+      <button type="button" className={section === "decks" ? "active" : ""} aria-current={section === "decks" ? "page" : undefined} onClick={() => setSection("decks")}>Deck matcher</button>
+      <button type="button" className={section === "history" ? "active" : ""} aria-current={section === "history" ? "page" : undefined} onClick={() => setSection("history")}>History</button>
+    </nav>
+    {section === "history" && <section className="feature-page" aria-labelledby="history-title">
+      <p className="eyebrow">YOUR PROFILE</p><h1 id="history-title">Collection history</h1>
+      <p className="feature-intro">Every saved Card Nexus import appears here. Open a version to browse its cards and summaries without changing your latest collection.</p>
+      {historyError && <p className="error-note" role="alert">{historyError}</p>}
+      {history.length ? <div className="history-list">{history.map((item) => <button type="button" className={`history-item ${snapshot.importId === item.importId ? "selected" : ""}`} key={item.importId} disabled={historyBusy} onClick={() => viewVersion(item.importId)}><span><strong>{item.sourceName}</strong><small>{new Date(item.importedAt).toLocaleString("en-US", { day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "2-digit" })}</small></span><span className="history-item-side">{item.importId === currentSnapshot.importId ? "Latest" : `Version ${item.version}`}<span aria-hidden="true">→</span></span></button>)}</div> : <div className="empty-state">Import a Card Nexus CSV to create your first collection version.</div>}
+    </section>}
+    {section === "decks" && <DeckMatcher cards={allCards} snapshotLabel={viewedSnapshot ? `Version ${viewedSnapshot.version}` : "latest collection"} />}
+    {section === "collection" && <>
     <section className="collection-head">
-      <div><p className="eyebrow">MY CARDS</p><h1>My collection</h1><p className="head-note">{snapshot.importedAt ? `Last import ${new Date(snapshot.importedAt).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}` : "Import a Card Nexus export to begin."} · Synced with your ChatGPT account</p></div>
-      <div className="head-actions"><a className="secondary-button" href="/api/export">Export CSV</a><button className="primary-button" type="button" onClick={() => fileInput.current?.click()} disabled={busy}>{busy ? "Working…" : "Import Card Nexus CSV"}</button><input ref={fileInput} className="visually-hidden" type="file" accept=".csv,text/csv" aria-label="Choose a Card Nexus CSV export" onChange={(event) => chooseFile(event.target.files?.[0])} /></div>
+      <div><p className="eyebrow">MY CARDS</p><h1>My collection</h1><p className="head-note">{snapshot.importedAt ? `${viewedSnapshot ? "Imported" : "Last import"} ${new Date(snapshot.importedAt).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}` : "Import a Card Nexus export to begin."} · Synced with your ChatGPT account</p></div>
+      {!viewedSnapshot && <div className="head-actions"><a className="secondary-button" href="/api/export">Export CSV</a><button className="primary-button" type="button" onClick={() => fileInput.current?.click()} disabled={busy}>{busy ? "Working…" : "Import Card Nexus CSV"}</button><input ref={fileInput} className="visually-hidden" type="file" accept=".csv,text/csv" aria-label="Choose a Card Nexus CSV export" onChange={(event) => chooseFile(event.target.files?.[0])} /></div>}
     </section>
+    {viewedSnapshot && <div className="history-banner"><span>Viewing version {viewedSnapshot.version} from {new Date(viewedSnapshot.importedAt!).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}. Your latest collection is unchanged.</span><button type="button" onClick={() => setViewedSnapshot(null)}>Return to latest</button></div>}
     {notice && <p className="notice" role="status">{notice}</p>}
     {error && !preview && <p className="error-note" role="alert">{error}</p>}
     <section className="summary-row" aria-label="Collection summary">
@@ -148,10 +189,11 @@ export default function CollectionClient({ initial, accountName, signOutPath }: 
         <p className="credit">Card images and names © Riot Games. Card catalog via <a href="https://github.com/LouisCourrian/riftbound-cards" target="_blank" rel="noreferrer">riftbound-cards</a>.</p>
       </aside>
     </section>
+    </>}
     <Dialog open={selectedCard !== null} onOpenChange={(open) => { if (!open) setSelectedCard(null); }}>
       {selectedCard && <DialogContent className="card-detail-dialog"><div className="card-detail-art">{selectedCard.image ? <img src={selectedCard.image} alt={`${selectedCard.name} card`} /> : <span>Image unavailable</span>}</div><div className="card-detail-copy"><p className="eyebrow">{selectedCard.set} · {selectedCard.number.toUpperCase()}</p><DialogTitle className="card-detail-title">{selectedCard.name}</DialogTitle><DialogDescription className="card-detail-description">{selectedCard.quantity === 0 ? "Not owned" : `${formatNumber(selectedCard.quantity)} ${selectedCard.quantity === 1 ? "copy" : "copies"} owned`}</DialogDescription><div className="card-detail-prices"><h3>7-day average sale price</h3>{quoteFor(selectedCard, prices) ? <>{quoteFor(selectedCard, prices)?.standard != null && <div><span>Standard</span><strong>{formatPrice(quoteFor(selectedCard, prices)!.standard!)}</strong></div>}{quoteFor(selectedCard, prices)?.foil != null && <div><span>Foil</span><strong>{formatPrice(quoteFor(selectedCard, prices)!.foil!)}</strong></div>}</> : <p>{prices ? "No reliable price match for this printing." : priceError || "Loading recent prices…"}</p>}<p>Cardmarket · EUR · {prices ? new Date(prices.createdAt).toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" }) : ""}</p></div></div></DialogContent>}
     </Dialog>
-    {preview && <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget && !busy) setPreview(null); }}><section className="import-dialog" role="dialog" aria-modal="true" aria-labelledby="import-title"><div className="dialog-top"><div><p className="eyebrow">CARD NEXUS IMPORT</p><h2 id="import-title">Review this export</h2><p>{preview.filename}</p></div><button className="close-button" type="button" aria-label="Close import review" onClick={() => setPreview(null)} disabled={busy}>×</button></div><div className="dialog-summary"><div><strong>{preview.difference.incomingRows}</strong><span>rows in file</span></div><div><strong>{preview.difference.newCards.length}</strong><span>new cards</span></div><div><strong>{preview.difference.newFoils.length}</strong><span>foil additions</span></div></div><div className="dialog-scroll"><DifferenceList title="Cards you did not own" items={preview.difference.newCards} /><DifferenceList title="New foil copies" items={preview.difference.newFoils} /><DifferenceList title="More standard copies" items={preview.difference.moreCopies} />{preview.difference.removedCopies > 0 && <p className="removal-note">This export removes or changes the finish of {preview.difference.removedCopies} previously recorded copies.</p>}{preview.difference.newCards.length + preview.difference.newFoils.length + preview.difference.moreCopies.length === 0 && preview.difference.removedCopies === 0 && <p className="no-changes">No quantity changes found. You can still save this export as your latest snapshot.</p>}</div>{error && <p className="error-note" role="alert">{error}</p>}<div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setPreview(null)} disabled={busy}>Cancel</button><button className="primary-button" type="button" onClick={applyImport} disabled={busy}>{busy ? "Saving…" : "Save this collection"}</button></div><p className="dialog-help">This replaces the previous Card Nexus snapshot. Importing the same file again will not add copies twice.</p></section></div>}
+    {preview && <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget && !busy) setPreview(null); }}><section className="import-dialog" role="dialog" aria-modal="true" aria-labelledby="import-title"><div className="dialog-top"><div><p className="eyebrow">CARD NEXUS IMPORT</p><h2 id="import-title">Review this export</h2><p>{preview.filename}</p></div><button className="close-button" type="button" aria-label="Close import review" onClick={() => setPreview(null)} disabled={busy}>×</button></div><div className="dialog-summary"><div><strong>{preview.difference.incomingRows}</strong><span>rows in file</span></div><div><strong>{preview.difference.newCards.length}</strong><span>new cards</span></div><div><strong>{preview.difference.newFoils.length}</strong><span>foil additions</span></div></div><div className="dialog-scroll"><DifferenceList title="Cards you did not own" items={preview.difference.newCards} /><DifferenceList title="New foil copies" items={preview.difference.newFoils} /><DifferenceList title="More standard copies" items={preview.difference.moreCopies} />{preview.difference.removedCopies > 0 && <p className="removal-note">This export removes or changes the finish of {preview.difference.removedCopies} previously recorded copies.</p>}{preview.difference.newCards.length + preview.difference.newFoils.length + preview.difference.moreCopies.length === 0 && preview.difference.removedCopies === 0 && <p className="no-changes">No quantity changes found. You can still save this export as your latest snapshot.</p>}</div>{error && <p className="error-note" role="alert">{error}</p>}<div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setPreview(null)} disabled={busy}>Cancel</button><button className="primary-button" type="button" onClick={applyImport} disabled={busy}>{busy ? "Saving…" : "Save this collection"}</button></div><p className="dialog-help">Saving makes this the latest collection. Earlier imports remain in History. Importing the same file again will not add copies twice.</p></section></div>}
   </main>;
 }
 
