@@ -2,6 +2,8 @@
 
 This directory is the source checkout for the private Sites app identified by `.openai/hosting.json`. Follow the parent project's `AGENTS.md` and the Sites building and hosting skills before changing or publishing it.
 
+The private GitHub repository at `https://github.com/LuiAr/riftbound-collection` mirrors this source. The local `github` remote points there; Sites deployment still uses its own source repository and workflow. After a website change is published through Sites, push the same commit to `github` so both sources stay aligned. A GitHub push alone does not deploy the Site. Keep the GitHub repository private because `data/initial-inventory.json` contains the owner's supplied collection export.
+
 ## Architecture
 
 - Vinext renders the collection at `/` and uses dispatch-owned Sign in with ChatGPT. The authenticated Site user ID scopes every collection read and write.
