@@ -2,10 +2,12 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { displayCards, hasFoilTreatment, isAlternatePrinting, isOvernumbered, type DisplayCard, type ImportDifference } from "../lib/collection";
+import { matchesCardType, rarityFor, type CardTypeFilter } from "../lib/rarity";
 import { priceKey, type PriceQuote, type PriceSnapshot } from "../lib/prices";
 import type { CollectionSnapshot, CollectionVersion } from "../lib/server-collection";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../components/ui/dialog";
 import DeckMatcher from "./deck-matcher";
+import RarityIcon from "./rarity-icon";
 
 type Props = { initial: CollectionSnapshot; initialHistory: CollectionVersion[]; accountName: string; signOutPath: string };
 type Preview = { difference: ImportDifference; version: number; filename: string; csv: string };
@@ -16,8 +18,17 @@ const formatPrice = (value: number) => new Intl.NumberFormat("en-US", { style: "
 type PricedCard = { card: DisplayCard; amount: number; finish: "Standard" | "Foil" };
 
 function quoteFor(card: DisplayCard, prices: PriceSnapshot | null): PriceQuote | null {
-  if (card.extra) return null;
+  if (card.extra || isAlternatePrinting(card) || isOvernumbered(card) || card.rarity === "Showcase") return null;
   return prices?.quotes[priceKey(card.set, card.name)] ?? null;
+}
+
+function estimateFor(quote: PriceQuote | null): string | null {
+  if (!quote) return null;
+  const amounts = [quote.standard, quote.foil].filter((amount): amount is number => amount !== null);
+  if (!amounts.length) return null;
+  const low = Math.min(...amounts);
+  const high = Math.max(...amounts);
+  return low === high ? formatPrice(low) : `${formatPrice(low)}–${formatPrice(high)}`;
 }
 
 export default function CollectionClient({ initial, initialHistory, accountName, signOutPath }: Props) {
@@ -30,6 +41,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
   const snapshot = viewedSnapshot ?? currentSnapshot;
   const [selectedSet, setSelectedSet] = useState("Vendetta");
   const [status, setStatus] = useState("all");
+  const [cardType, setCardType] = useState<CardTypeFilter>("all");
   const [hideAlternates, setHideAlternates] = useState(false);
   const [hideOvernumbered, setHideOvernumbered] = useState(false);
   const [search, setSearch] = useState("");
@@ -57,11 +69,10 @@ export default function CollectionClient({ initial, initialHistory, accountName,
   const visibleCards = useMemo(() => setCards.filter((card) => {
     if (status === "owned" && card.quantity === 0) return false;
     if (status === "missing" && card.quantity > 0) return false;
-    if (hideAlternates && isAlternatePrinting(card)) return false;
-    if (hideOvernumbered && isOvernumbered(card)) return false;
+    if (!matchesCardType(card, cardType, hideAlternates, hideOvernumbered)) return false;
     const query = search.trim().toLowerCase();
     return !query || `${card.name} ${card.number} ${card.set}`.toLowerCase().includes(query);
-  }).sort((a, b) => a.set.localeCompare(b.set) || a.number.localeCompare(b.number, undefined, { numeric: true }) || a.code.localeCompare(b.code)), [setCards, status, hideAlternates, hideOvernumbered, search]);
+  }).sort((a, b) => a.set.localeCompare(b.set) || a.number.localeCompare(b.number, undefined, { numeric: true }) || a.code.localeCompare(b.code)), [setCards, status, cardType, hideAlternates, hideOvernumbered, search]);
   const owned = setCards.filter((card) => card.quantity > 0).length;
   const copies = setCards.reduce((sum, card) => sum + card.quantity, 0);
   const foils = setCards.reduce((sum, card) => sum + card.foilQuantity, 0);
@@ -86,7 +97,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
         if (card.quantity > card.foilQuantity && quote.standard !== null) options.push({ card, amount: quote.standard, finish: "Standard" });
         if (card.foilQuantity > 0 && quote.foil !== null) options.push({ card, amount: quote.foil, finish: "Foil" });
         if (options.length) { pricedOwned++; ownedCards.push(...options); }
-      } else if ((selectedSet === "All sets" || card.set === selectedSet) && !(hideAlternates && isAlternatePrinting(card)) && !(hideOvernumbered && isOvernumbered(card))) {
+      } else if ((selectedSet === "All sets" || card.set === selectedSet) && matchesCardType(card, cardType, hideAlternates, hideOvernumbered)) {
         const options: PricedCard[] = [];
         if (quote.standard !== null) options.push({ card, amount: quote.standard, finish: "Standard" });
         if (quote.foil !== null) options.push({ card, amount: quote.foil, finish: "Foil" });
@@ -97,8 +108,11 @@ export default function CollectionClient({ initial, initialHistory, accountName,
     ownedCards.sort((a, b) => b.amount - a.amount);
     watchCards.sort((a, b) => b.amount - a.amount);
     return { mostValuable: ownedCards[0] ?? null, watch: watchCards.slice(0, 3), pricedOwned };
-  }, [allCards, prices, selectedSet, hideAlternates, hideOvernumbered]);
+  }, [allCards, prices, selectedSet, cardType, hideAlternates, hideOvernumbered]);
   const ownedTotal = allCards.filter((card) => card.quantity > 0).length;
+  const selectedQuote = selectedCard ? quoteFor(selectedCard, prices) : null;
+  const selectedEstimate = estimateFor(selectedQuote);
+  const selectedRarity = selectedCard ? rarityFor(selectedCard) : null;
 
   async function chooseFile(file?: File) {
     if (!file) return;
@@ -180,7 +194,14 @@ export default function CollectionClient({ initial, initialHistory, accountName,
     </section>
     <section className="workspace-grid" aria-label="Cards and collection breakdown">
         <div className="grid-toolbar"><div><h2>Cards</h2><span>{formatNumber(visibleCards.length)} shown · {formatNumber(copies)} copies in {selectedSet === "All sets" ? "all sets" : selectedSet}</span></div><label className="search-box"><span className="visually-hidden">Search cards</span><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search cards or number" /></label></div>
-        <div className="filters" role="group" aria-label="Card filters"><div className="filter-primary"><label>Set <select value={selectedSet} onChange={(event) => setSelectedSet(event.target.value)}><option>All sets</option>{sets.map((set) => <option key={set}>{set}</option>)}</select></label><div className="segmented" role="group" aria-label="Ownership"><button type="button" aria-pressed={status === "all"} className={status === "all" ? "active" : ""} onClick={() => setStatus("all")}>All</button><button type="button" aria-pressed={status === "owned"} className={status === "owned" ? "active" : ""} onClick={() => setStatus("owned")}>Owned</button><button type="button" aria-pressed={status === "missing"} className={status === "missing" ? "active" : ""} onClick={() => setStatus("missing")}>Not owned</button></div></div><div className="filter-exclusions"><label><input type="checkbox" checked={hideAlternates} onChange={(event) => setHideAlternates(event.target.checked)} />Hide alternate art</label><label><input type="checkbox" checked={hideOvernumbered} onChange={(event) => setHideOvernumbered(event.target.checked)} />Hide over-numbered</label></div></div>
+        <div className="filters" role="group" aria-label="Card filters">
+          <div className="filter-fields">
+            <label>Set<select value={selectedSet} onChange={(event) => setSelectedSet(event.target.value)}><option>All sets</option>{sets.map((set) => <option key={set}>{set}</option>)}</select></label>
+            <label>Ownership<select value={status} onChange={(event) => setStatus(event.target.value)}><option value="all">All cards</option><option value="owned">Owned</option><option value="missing">Missing</option></select></label>
+            <label>Rarity &amp; printing<select value={cardType} onChange={(event) => setCardType(event.target.value as CardTypeFilter)}><option value="all">All rarities</option><option value="normal">Normal cards (no Epic / OVN)</option><option value="common">Common</option><option value="uncommon">Uncommon</option><option value="rare">Rare</option><option value="epic">Epic</option><option value="special">Over-numbered / alternate art</option></select></label>
+          </div>
+          <details className="filter-advanced"><summary>More filters{hideAlternates || hideOvernumbered ? <span> · {Number(hideAlternates) + Number(hideOvernumbered)} active</span> : null}</summary><div className="filter-exclusions"><label><input type="checkbox" checked={hideAlternates} onChange={(event) => setHideAlternates(event.target.checked)} />Hide alternate art</label><label><input type="checkbox" checked={hideOvernumbered} onChange={(event) => setHideOvernumbered(event.target.checked)} />Hide over-numbered</label></div></details>
+        </div>
         {visibleCards.length ? <div className="card-grid" aria-label="Cards">{visibleCards.map((card) => <CardTile key={card.code} card={card} onOpen={setSelectedCard} />)}</div> : <div className="empty-state">No cards match these filters.</div>}
       <aside className="insights-panel" aria-label="Collection breakdown">
         <div className="insight-section"><h3>By set</h3><p>Unique printings owned</p>{setSummary.map(({ set, owned, total }) => <button type="button" className={`stat-row ${selectedSet === set ? "selected" : ""}`} key={set} onClick={() => setSelectedSet(set)}><span className="stat-title">{set}</span><span className="stat-value">{owned}/{total}</span><span className="stat-track"><span style={{ width: `${100 * owned / total}%` }} /></span></button>)}</div>
@@ -191,7 +212,22 @@ export default function CollectionClient({ initial, initialHistory, accountName,
     </section>
     </>}
     <Dialog open={selectedCard !== null} onOpenChange={(open) => { if (!open) setSelectedCard(null); }}>
-      {selectedCard && <DialogContent className="card-detail-dialog"><div className="card-detail-art">{selectedCard.image ? <img src={selectedCard.image} alt={`${selectedCard.name} card`} /> : <span>Image unavailable</span>}</div><div className="card-detail-copy"><p className="eyebrow">{selectedCard.set} · {selectedCard.number.toUpperCase()}</p><DialogTitle className="card-detail-title">{selectedCard.name}</DialogTitle><DialogDescription className="card-detail-description">{selectedCard.quantity === 0 ? "Not owned" : `${formatNumber(selectedCard.quantity)} ${selectedCard.quantity === 1 ? "copy" : "copies"} owned`}</DialogDescription><div className="card-detail-prices"><h3>7-day average sale price</h3>{quoteFor(selectedCard, prices) ? <>{quoteFor(selectedCard, prices)?.standard != null && <div><span>Standard</span><strong>{formatPrice(quoteFor(selectedCard, prices)!.standard!)}</strong></div>}{quoteFor(selectedCard, prices)?.foil != null && <div><span>Foil</span><strong>{formatPrice(quoteFor(selectedCard, prices)!.foil!)}</strong></div>}</> : <p>{prices ? "No reliable price match for this printing." : priceError || "Loading recent prices…"}</p>}<p>Cardmarket · EUR · {prices ? new Date(prices.createdAt).toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" }) : ""}</p></div></div></DialogContent>}
+      {selectedCard && <DialogContent className="card-detail-dialog">
+        <div className="card-detail-art">{selectedCard.image ? <img src={selectedCard.image} alt={`${selectedCard.name} card`} /> : <span>Image unavailable</span>}</div>
+        <div className="card-detail-copy">
+          <p className="eyebrow">{selectedCard.set} · {selectedCard.number.toUpperCase()}</p>
+          <DialogTitle className="card-detail-title">{selectedCard.name}</DialogTitle>
+          <div className="card-detail-facts">{selectedRarity && <span className="card-rarity-label"><RarityIcon kind={selectedRarity.kind} />{selectedRarity.label}</span>}<span>{selectedCard.quantity === 0 ? "Not owned" : `${formatNumber(selectedCard.quantity)} ${selectedCard.quantity === 1 ? "copy" : "copies"} owned`}</span></div>
+          <DialogDescription className="visually-hidden">Card details and estimated price</DialogDescription>
+          <div className="card-detail-prices">
+            <p className="estimate-label">Estimated price per card</p>
+            {selectedEstimate ? <strong className="estimate-value">{selectedEstimate}</strong> : <p className="estimate-unavailable">{prices ? "No reliable price estimate for this printing." : priceError || "Loading recent prices…"}</p>}
+            {selectedQuote?.standard != null && <div className="finish-price"><span>Standard</span><strong>{formatPrice(selectedQuote.standard)}</strong></div>}
+            {selectedQuote?.foil != null && <div className="finish-price"><span>Foil</span><strong>{formatPrice(selectedQuote.foil)}</strong></div>}
+            {prices && <p className="price-method">Cardmarket 7-day sale average · EUR · {new Date(prices.createdAt).toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" })}. Varies by condition and language.</p>}
+          </div>
+        </div>
+      </DialogContent>}
     </Dialog>
     {preview && <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget && !busy) setPreview(null); }}><section className="import-dialog" role="dialog" aria-modal="true" aria-labelledby="import-title"><div className="dialog-top"><div><p className="eyebrow">CARD NEXUS IMPORT</p><h2 id="import-title">Review this export</h2><p>{preview.filename}</p></div><button className="close-button" type="button" aria-label="Close import review" onClick={() => setPreview(null)} disabled={busy}>×</button></div><div className="dialog-summary"><div><strong>{preview.difference.incomingRows}</strong><span>rows in file</span></div><div><strong>{preview.difference.newCards.length}</strong><span>new cards</span></div><div><strong>{preview.difference.newFoils.length}</strong><span>foil additions</span></div></div><div className="dialog-scroll"><DifferenceList title="Cards you did not own" items={preview.difference.newCards} /><DifferenceList title="New foil copies" items={preview.difference.newFoils} /><DifferenceList title="More standard copies" items={preview.difference.moreCopies} />{preview.difference.removedCopies > 0 && <p className="removal-note">This export removes or changes the finish of {preview.difference.removedCopies} previously recorded copies.</p>}{preview.difference.newCards.length + preview.difference.newFoils.length + preview.difference.moreCopies.length === 0 && preview.difference.removedCopies === 0 && <p className="no-changes">No quantity changes found. You can still save this export as your latest snapshot.</p>}</div>{error && <p className="error-note" role="alert">{error}</p>}<div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setPreview(null)} disabled={busy}>Cancel</button><button className="primary-button" type="button" onClick={applyImport} disabled={busy}>{busy ? "Saving…" : "Save this collection"}</button></div><p className="dialog-help">Saving makes this the latest collection. Earlier imports remain in History. Importing the same file again will not add copies twice.</p></section></div>}
   </main>;
@@ -199,10 +235,11 @@ export default function CollectionClient({ initial, initialHistory, accountName,
 
 function CardTile({ card, onOpen }: { card: DisplayCard; onOpen: (card: DisplayCard) => void }) {
   const shiny = hasFoilTreatment(card);
-  return <article className="card-tile"><button type="button" className="card-open" onClick={() => onOpen(card)} aria-label={`View ${card.name} larger, ${card.quantity} owned${card.foilQuantity ? `, ${card.foilQuantity} foil` : ""}`}><div className={`card-image-wrap ${card.quantity ? "" : "missing"}`}>
+  const rarity = rarityFor(card);
+  return <article className="card-tile"><button type="button" className="card-open" onClick={() => onOpen(card)} aria-label={`View ${card.name} larger, ${rarity?.label ?? card.rarity}, ${card.quantity} owned${card.foilQuantity ? `, ${card.foilQuantity} foil` : ""}`}><div className={`card-image-wrap ${card.quantity ? "" : "missing"}`}>
     {card.image ? <img src={card.image} alt="" loading="lazy" /> : <span className="no-image">Image unavailable</span>}
     <span className={`quantity-badge${shiny ? " shiny" : ""}`}>{card.quantity}</span>
-  </div><div className="card-meta"><span className="card-number">{card.number.toUpperCase()}</span><strong title={card.name}>{card.name}</strong></div><p className="card-set">{card.set}</p></button></article>;
+  </div><div className="card-meta"><span className="card-number">{card.number.toUpperCase()}</span><strong title={card.name}>{card.name}</strong>{rarity && <span className="card-rarity-mark"><RarityIcon kind={rarity.kind} /></span>}</div><p className="card-set">{card.set}</p></button></article>;
 }
 
 function DifferenceList({ title, items }: { title: string; items: ImportDifference["newCards"] }) {
