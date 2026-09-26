@@ -1,6 +1,6 @@
 # Riftbound Collection
 
-Private source for the [Riftbound Collection website](https://riftbound.louisar.chatgpt.site). The site imports Card Nexus CSV exports, tracks collection history, compares pasted deck lists with owned cards, and shows rarity and Cardmarket price estimates where a reliable match exists.
+Private source for the [Riftbound Collection website](https://riftbound.louisar.chatgpt.site). The site imports Card Nexus CSV exports, tracks and compares collection history, saves deck lists against the latest collection, tracks a one-of-each goal for regular cards, and shows rarity and Cardmarket price estimates where a reliable match exists.
 
 ## Privacy
 

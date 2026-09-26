@@ -20,3 +20,11 @@ export const collectionImports = sqliteTable("collection_imports", {
 export const bootstrapOwner = sqliteTable("bootstrap_owner", {
   id: integer("id").primaryKey(), userId: text("user_id").notNull(),
 });
+
+export const savedDecks = sqliteTable("saved_decks", {
+  userId: text("user_id").notNull(), deckId: text("deck_id").notNull(),
+  name: text("name").notNull(), deckText: text("deck_text").notNull(),
+  hideRunes: integer("hide_runes", { mode: "boolean" }).notNull(),
+  hideTokens: integer("hide_tokens", { mode: "boolean" }).notNull(),
+  createdAt: text("created_at").notNull(), updatedAt: text("updated_at").notNull(),
+}, (table) => [primaryKey({ columns: [table.userId, table.deckId] })]);

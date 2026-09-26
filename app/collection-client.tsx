@@ -1,17 +1,22 @@
 "use client";
 
-import { useEffect, useId, useMemo, useRef, useState } from "react";
-import { displayCards, hasFoilTreatment, isAlternatePrinting, isOvernumbered, type DisplayCard, type ImportDifference } from "../lib/collection";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { catalog, displayCards, hasFoilTreatment, isAlternatePrinting, isOvernumbered, type DisplayCard, type ImportDifference } from "../lib/collection";
 import { matchesCardType, rarityFor, type RarityKind } from "../lib/rarity";
+import { oneOfEachGoal } from "../lib/goals";
+import { isRadianceCatalogComplete } from "../lib/radiance";
 import { priceKey, type PriceQuote, type PriceSnapshot } from "../lib/prices";
 import type { CollectionSnapshot, CollectionVersion } from "../lib/server-collection";
+import SingleFilter from "../components/single-filter";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../components/ui/dialog";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../components/ui/dropdown-menu";
 import DeckMatcher from "./deck-matcher";
+import HistoryCompare from "./history-compare";
 
 type Props = { initial: CollectionSnapshot; initialHistory: CollectionVersion[]; accountName: string; signOutPath: string };
 type Preview = { difference: ImportDifference; version: number; filename: string; csv: string };
-const sets = ["Vendetta", "Vendetta Promos", "Unleashed", "Origins", "Spiritforged", "Proving Grounds"];
+const radianceReady = isRadianceCatalogComplete(catalog);
+const sets = ["Vendetta", "Vendetta Promos", "Unleashed", "Origins", "Spiritforged", "Proving Grounds", ...(radianceReady ? ["Radiance"] : [])];
 const setOptions = ["All sets", ...sets].map((set) => ({ value: set, label: set }));
 const ownershipOptions = [{ value: "all", label: "All cards" }, { value: "owned", label: "Owned" }, { value: "missing", label: "Missing" }];
 const colors = ["Fury", "Calm", "Mind", "Body", "Order", "Chaos", "Colorless"];
@@ -71,7 +76,8 @@ export default function CollectionClient({ initial, initialHistory, accountName,
     return () => { active = false; };
   }, []);
 
-  const allCards = useMemo(() => displayCards(snapshot.rows), [snapshot.rows]);
+  const allCards = useMemo(() => displayCards(snapshot.rows).filter((card) => radianceReady || card.set !== "Radiance"), [snapshot.rows]);
+  const latestCards = useMemo(() => displayCards(currentSnapshot.rows).filter((card) => radianceReady || card.set !== "Radiance"), [currentSnapshot.rows]);
   const setCards = useMemo(() => allCards.filter((card) => selectedSet === "All sets" || card.set === selectedSet), [allCards, selectedSet]);
   const visibleCards = useMemo(() => setCards.filter((card) => {
     if (status === "owned" && card.quantity === 0) return false;
@@ -83,7 +89,8 @@ export default function CollectionClient({ initial, initialHistory, accountName,
   const owned = setCards.filter((card) => card.quantity > 0).length;
   const copies = setCards.reduce((sum, card) => sum + card.quantity, 0);
   const foils = setCards.reduce((sum, card) => sum + card.foilQuantity, 0);
-  const overallCopies = snapshot.rows.reduce((sum, row) => sum + Number(row.totalQtyOwned), 0);
+  const overallCopies = allCards.reduce((sum, card) => sum + card.quantity, 0);
+  const goal = useMemo(() => oneOfEachGoal(allCards, selectedSet), [allCards, selectedSet]);
   const setSummary = sets.map((set) => {
     const cards = allCards.filter((card) => card.set === set);
     return { set, owned: cards.filter((card) => card.quantity > 0).length, total: cards.length };
@@ -182,10 +189,11 @@ export default function CollectionClient({ initial, initialHistory, accountName,
     {section === "history" && <section className="feature-page" aria-labelledby="history-title">
       <p className="eyebrow">YOUR PROFILE</p><h1 id="history-title">Collection history</h1>
       <p className="feature-intro">Every saved Card Nexus import appears here. Open a version to browse its cards and summaries without changing your latest collection.</p>
+      <HistoryCompare key={currentSnapshot.importId ?? "empty"} history={history} latest={currentSnapshot} />
       {historyError && <p className="error-note" role="alert">{historyError}</p>}
       {history.length ? <div className="history-list">{history.map((item) => <button type="button" className={`history-item ${snapshot.importId === item.importId ? "selected" : ""}`} key={item.importId} disabled={historyBusy} onClick={() => viewVersion(item.importId)}><span><strong>{item.sourceName}</strong><small>{new Date(item.importedAt).toLocaleString("en-US", { day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "2-digit" })}</small></span><span className="history-item-side">{item.importId === currentSnapshot.importId ? "Latest" : `Version ${item.version}`}<span aria-hidden="true">→</span></span></button>)}</div> : <div className="empty-state">Import a Card Nexus CSV to create your first collection version.</div>}
     </section>}
-    {section === "decks" && <DeckMatcher cards={allCards} snapshotLabel={viewedSnapshot ? `Version ${viewedSnapshot.version}` : "latest collection"} />}
+    {section === "decks" && <DeckMatcher cards={latestCards} />}
     {section === "collection" && <>
     <section className="collection-head">
       <div><p className="eyebrow">MY CARDS</p><h1>My collection</h1><p className="head-note">{snapshot.importedAt ? `${viewedSnapshot ? "Imported" : "Last import"} ${new Date(snapshot.importedAt).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}` : "Import a Card Nexus export to begin."} · Synced with your ChatGPT account</p></div>
@@ -210,6 +218,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
         </div>
         {visibleCards.length ? <div className="card-grid" aria-label="Cards">{visibleCards.map((card) => <CardTile key={card.code} card={card} onOpen={setSelectedCard} />)}</div> : <div className="empty-state">No cards match these filters.</div>}
       <aside className="insights-panel" aria-label="Collection breakdown">
+        {goal.total > 0 && <div className="insight-section goal-insight"><h3>One of each</h3><p>Regular Common, Uncommon, and Rare cards · no Epic, alternate art, or over-numbered printings</p><div className="goal-total"><strong>{goal.owned} / {goal.total}</strong><span>{goal.total - goal.owned} missing</span></div><div className="goal-track"><span style={{ width: `${100 * goal.owned / goal.total}%` }} /></div>{goal.missing.length > 0 && <details className="goal-missing"><summary>See missing cards</summary><ul>{goal.missing.map((card) => <li key={card.code}>{card.name}<small>{card.set} · {card.number}</small></li>)}</ul></details>}</div>}
         <div className="insight-section"><h3>By set</h3><p>Unique printings owned</p>{setSummary.map(({ set, owned, total }) => <button type="button" className={`stat-row ${selectedSet === set ? "selected" : ""}`} key={set} onClick={() => setSelectedSet(set)}><span className="stat-title">{set}</span><span className="stat-value">{owned}/{total}</span><span className="stat-track"><span style={{ width: `${100 * owned / total}%` }} /></span></button>)}</div>
         <div className="insight-section"><h3>By color</h3><p>Unique printings in {selectedSet === "All sets" ? "all sets" : selectedSet}</p>{colorSummary.map(({ color, owned, total }) => <div className="stat-row passive" key={color}><span className="stat-title">{color}</span><span className="stat-value">{owned}/{total}</span><span className="stat-track"><span style={{ width: `${100 * owned / total}%` }} /></span></div>)}</div>
         <div className="insight-section price-insight"><h3>Card values</h3>{prices ? <><p>Cardmarket 7-day sale averages · EUR · {new Date(prices.createdAt).toLocaleDateString("en-US", { day: "numeric", month: "short" })}</p><h4>Most valuable priced card</h4>{priceHighlights.mostValuable ? <button type="button" className="price-card-row" onClick={() => setSelectedCard(priceHighlights.mostValuable!.card)}><span>{priceHighlights.mostValuable.card.name}<small>{priceHighlights.mostValuable.card.set} · {priceHighlights.mostValuable.finish}</small></span><strong>{formatPrice(priceHighlights.mostValuable.amount)}</strong></button> : <p>No owned cards have a 7-day average yet.</p>}<p className="price-coverage">{priceHighlights.pricedOwned} of {ownedTotal} owned printings priced</p><h4>Unowned cards to watch</h4>{priceHighlights.watch.length ? priceHighlights.watch.map((item) => <button type="button" className="price-card-row" key={`${item.card.code}-${item.finish}`} onClick={() => setSelectedCard(item.card)}><span>{item.card.name}<small>{item.card.number.toUpperCase()} · {item.finish}</small></span><strong>{formatPrice(item.amount)}</strong></button>) : <p>No matched 7-day prices in this set.</p>}</> : <p>{priceError || "Loading recent prices…"}</p>}<p className="price-source"><a href="https://www.cardmarket.com/en/Riftbound/Data/Price-Guide" target="_blank" rel="noreferrer">Cardmarket price guide</a> · Estimates vary by condition and language.</p></div>
@@ -237,12 +246,6 @@ export default function CollectionClient({ initial, initialHistory, accountName,
     </Dialog>
     {preview && <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget && !busy) setPreview(null); }}><section className="import-dialog" role="dialog" aria-modal="true" aria-labelledby="import-title"><div className="dialog-top"><div><p className="eyebrow">CARD NEXUS IMPORT</p><h2 id="import-title">Review this export</h2><p>{preview.filename}</p></div><button className="close-button" type="button" aria-label="Close import review" onClick={() => setPreview(null)} disabled={busy}>×</button></div><div className="dialog-summary"><div><strong>{preview.difference.incomingRows}</strong><span>rows in file</span></div><div><strong>{preview.difference.newCards.length}</strong><span>new cards</span></div><div><strong>{preview.difference.newFoils.length}</strong><span>foil additions</span></div></div><div className="dialog-scroll"><DifferenceList title="Cards you did not own" items={preview.difference.newCards} /><DifferenceList title="New foil copies" items={preview.difference.newFoils} /><DifferenceList title="More standard copies" items={preview.difference.moreCopies} />{preview.difference.removedCopies > 0 && <p className="removal-note">This export removes or changes the finish of {preview.difference.removedCopies} previously recorded copies.</p>}{preview.difference.newCards.length + preview.difference.newFoils.length + preview.difference.moreCopies.length === 0 && preview.difference.removedCopies === 0 && <p className="no-changes">No quantity changes found. You can still save this export as your latest snapshot.</p>}</div>{error && <p className="error-note" role="alert">{error}</p>}<div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setPreview(null)} disabled={busy}>Cancel</button><button className="primary-button" type="button" onClick={applyImport} disabled={busy}>{busy ? "Saving…" : "Save this collection"}</button></div><p className="dialog-help">Saving makes this the latest collection. Earlier imports remain in History. Importing the same file again will not add copies twice.</p></section></div>}
   </main>;
-}
-
-function SingleFilter({ label, value, options, onChange }: { label: string; value: string; options: { value: string; label: string }[]; onChange: (value: string) => void }) {
-  const labelId = useId();
-  const valueId = useId();
-  return <div className="filter-field"><span id={labelId}>{label}</span><DropdownMenu><DropdownMenuTrigger className="filter-trigger" aria-labelledby={`${labelId} ${valueId}`}><span id={valueId}>{options.find((option) => option.value === value)?.label ?? value}</span></DropdownMenuTrigger><DropdownMenuContent align="start" className="filter-menu"><DropdownMenuRadioGroup value={value} onValueChange={onChange}>{options.map((option) => <DropdownMenuRadioItem key={option.value} value={option.value}>{option.label}</DropdownMenuRadioItem>)}</DropdownMenuRadioGroup></DropdownMenuContent></DropdownMenu></div>;
 }
 
 function CardTile({ card, onOpen }: { card: DisplayCard; onOpen: (card: DisplayCard) => void }) {

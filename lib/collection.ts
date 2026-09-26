@@ -1,10 +1,11 @@
 import catalogData from "../data/catalog.json";
+import { RADIANCE_BASE_COUNT } from "./radiance";
 
 export type InventoryRow = Record<string, string>;
 export type CatalogCard = { code: string; name: string; set: string; number: string; rarity: string; domains: string[]; image: string | null };
 export type DisplayCard = CatalogCard & { quantity: number; foilQuantity: number; extra?: boolean };
 export const catalog = catalogData as CatalogCard[];
-const regularSetTotals: Record<string, number> = { Vendetta: 166, Unleashed: 219, Spiritforged: 221, Origins: 298, "Proving Grounds": 24 };
+const regularSetTotals: Record<string, number> = { Vendetta: 166, Unleashed: 219, Spiritforged: 221, Origins: 298, "Proving Grounds": 24, Radiance: RADIANCE_BASE_COUNT };
 
 export function isAlternatePrinting(card: DisplayCard): boolean {
   return /^(?:\d+|r\d+)a$/i.test(card.number.trim()) || (card.set === "Vendetta" && /^sp\d+$/i.test(card.number.trim()));
@@ -67,6 +68,7 @@ export function setForExpansion(expansion: string): string {
   if (expansion === "Origins - Main Set") return "Origins";
   if (expansion === "Origins - Proving Grounds") return "Proving Grounds";
   if (expansion === "Vendetta - Promo Cards") return "Vendetta Promos";
+  if (expansion === "Radiance - Main Set") return "Radiance";
   return expansion;
 }
 
