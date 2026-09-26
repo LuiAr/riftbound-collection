@@ -1,16 +1,19 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { displayCards, hasFoilTreatment, isAlternatePrinting, isOvernumbered, type DisplayCard, type ImportDifference } from "../lib/collection";
 import { matchesCardType, rarityFor, type RarityKind } from "../lib/rarity";
 import { priceKey, type PriceQuote, type PriceSnapshot } from "../lib/prices";
 import type { CollectionSnapshot, CollectionVersion } from "../lib/server-collection";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../components/ui/dialog";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../components/ui/dropdown-menu";
 import DeckMatcher from "./deck-matcher";
 
 type Props = { initial: CollectionSnapshot; initialHistory: CollectionVersion[]; accountName: string; signOutPath: string };
 type Preview = { difference: ImportDifference; version: number; filename: string; csv: string };
 const sets = ["Vendetta", "Vendetta Promos", "Unleashed", "Origins", "Spiritforged", "Proving Grounds"];
+const setOptions = ["All sets", ...sets].map((set) => ({ value: set, label: set }));
+const ownershipOptions = [{ value: "all", label: "All cards" }, { value: "owned", label: "Owned" }, { value: "missing", label: "Missing" }];
 const colors = ["Fury", "Calm", "Mind", "Body", "Order", "Chaos", "Colorless"];
 const rarityOptions: { kind: RarityKind; label: string }[] = [
   { kind: "common", label: "Common" },
@@ -202,12 +205,9 @@ export default function CollectionClient({ initial, initialHistory, accountName,
         <div className="grid-toolbar"><div><h2>Cards</h2><span>{formatNumber(visibleCards.length)} shown · {formatNumber(copies)} copies in {selectedSet === "All sets" ? "all sets" : selectedSet}</span></div><label className="search-box"><span className="visually-hidden">Search cards</span><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search cards or number" /></label></div>
         <div className="filters" role="group" aria-label="Card filters">
           <div className="filter-fields">
-            <label>Set<select value={selectedSet} onChange={(event) => setSelectedSet(event.target.value)}><option>All sets</option>{sets.map((set) => <option key={set}>{set}</option>)}</select></label>
-            <label>Ownership<select value={status} onChange={(event) => setStatus(event.target.value)}><option value="all">All cards</option><option value="owned">Owned</option><option value="missing">Missing</option></select></label>
-            <label className="rarity-filter-field">Rarity &amp; printing<select className="rarity-native-select" multiple size={6} value={selectedRarities.length ? selectedRarities : ["all"]} aria-describedby="rarity-filter-hint" onChange={(event) => {
-              const chosen = Array.from(event.currentTarget.selectedOptions, (option) => option.value);
-              setSelectedRarities((current) => chosen.includes("all") && current.length > 0 ? [] : chosen.filter((value): value is RarityKind => value !== "all"));
-            }}><option value="all">All rarities</option>{rarityOptions.map(({ kind, label }) => <option key={kind} value={kind}>{label}</option>)}</select><span className="rarity-filter-hint" id="rarity-filter-hint">⌘/Ctrl-click to select more than one on desktop.</span></label>
+            <SingleFilter label="Set" value={selectedSet} options={setOptions} onChange={setSelectedSet} />
+            <SingleFilter label="Ownership" value={status} options={ownershipOptions} onChange={setStatus} />
+            <div className="filter-field rarity-filter-field"><span id="rarity-filter-label">Rarity &amp; printing</span><DropdownMenu><DropdownMenuTrigger aria-labelledby="rarity-filter-label rarity-filter-value" className="filter-trigger"><span id="rarity-filter-value">{selectedRarities.length === 0 ? "All rarities" : selectedRarities.length === 1 ? rarityOptions.find((option) => option.kind === selectedRarities[0])?.label : `${selectedRarities.length} rarities selected`}</span></DropdownMenuTrigger><DropdownMenuContent align="start" className="filter-menu"><DropdownMenuItem onSelect={() => setSelectedRarities([])}>All rarities</DropdownMenuItem><DropdownMenuSeparator />{rarityOptions.map(({ kind, label }) => <DropdownMenuCheckboxItem key={kind} checked={selectedRarities.includes(kind)} onCheckedChange={(checked) => setSelectedRarities((current) => checked ? [...current, kind] : current.filter((item) => item !== kind))} onSelect={(event) => event.preventDefault()}>{label}</DropdownMenuCheckboxItem>)}</DropdownMenuContent></DropdownMenu></div>
           </div>
           <details className="filter-advanced"><summary>More filters{hideAlternates || hideOvernumbered ? <span> · {Number(hideAlternates) + Number(hideOvernumbered)} active</span> : null}</summary><div className="filter-exclusions"><label><input type="checkbox" checked={hideAlternates} onChange={(event) => setHideAlternates(event.target.checked)} />Hide alternate art</label><label><input type="checkbox" checked={hideOvernumbered} onChange={(event) => setHideOvernumbered(event.target.checked)} />Hide over-numbered</label></div></details>
         </div>
@@ -240,6 +240,12 @@ export default function CollectionClient({ initial, initialHistory, accountName,
     </Dialog>
     {preview && <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget && !busy) setPreview(null); }}><section className="import-dialog" role="dialog" aria-modal="true" aria-labelledby="import-title"><div className="dialog-top"><div><p className="eyebrow">CARD NEXUS IMPORT</p><h2 id="import-title">Review this export</h2><p>{preview.filename}</p></div><button className="close-button" type="button" aria-label="Close import review" onClick={() => setPreview(null)} disabled={busy}>×</button></div><div className="dialog-summary"><div><strong>{preview.difference.incomingRows}</strong><span>rows in file</span></div><div><strong>{preview.difference.newCards.length}</strong><span>new cards</span></div><div><strong>{preview.difference.newFoils.length}</strong><span>foil additions</span></div></div><div className="dialog-scroll"><DifferenceList title="Cards you did not own" items={preview.difference.newCards} /><DifferenceList title="New foil copies" items={preview.difference.newFoils} /><DifferenceList title="More standard copies" items={preview.difference.moreCopies} />{preview.difference.removedCopies > 0 && <p className="removal-note">This export removes or changes the finish of {preview.difference.removedCopies} previously recorded copies.</p>}{preview.difference.newCards.length + preview.difference.newFoils.length + preview.difference.moreCopies.length === 0 && preview.difference.removedCopies === 0 && <p className="no-changes">No quantity changes found. You can still save this export as your latest snapshot.</p>}</div>{error && <p className="error-note" role="alert">{error}</p>}<div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setPreview(null)} disabled={busy}>Cancel</button><button className="primary-button" type="button" onClick={applyImport} disabled={busy}>{busy ? "Saving…" : "Save this collection"}</button></div><p className="dialog-help">Saving makes this the latest collection. Earlier imports remain in History. Importing the same file again will not add copies twice.</p></section></div>}
   </main>;
+}
+
+function SingleFilter({ label, value, options, onChange }: { label: string; value: string; options: { value: string; label: string }[]; onChange: (value: string) => void }) {
+  const labelId = useId();
+  const valueId = useId();
+  return <div className="filter-field"><span id={labelId}>{label}</span><DropdownMenu><DropdownMenuTrigger className="filter-trigger" aria-labelledby={`${labelId} ${valueId}`}><span id={valueId}>{options.find((option) => option.value === value)?.label ?? value}</span></DropdownMenuTrigger><DropdownMenuContent align="start" className="filter-menu"><DropdownMenuRadioGroup value={value} onValueChange={onChange}>{options.map((option) => <DropdownMenuRadioItem key={option.value} value={option.value}>{option.label}</DropdownMenuRadioItem>)}</DropdownMenuRadioGroup></DropdownMenuContent></DropdownMenu></div>;
 }
 
 function CardTile({ card, onOpen }: { card: DisplayCard; onOpen: (card: DisplayCard) => void }) {
