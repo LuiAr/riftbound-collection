@@ -68,13 +68,6 @@ button:disabled { opacity: .55; cursor: wait; }
 .filter-menu { z-index: 30; min-width: max(225px, var(--radix-dropdown-menu-trigger-width, 225px)); max-width: calc(100vw - 24px); border: 1px solid #dfe5e9; border-radius: 9px; background: white; color: #25313b; box-shadow: 0 12px 32px #18212b25; }
 .filter-menu [data-slot="dropdown-menu-item"], .filter-menu [data-slot="dropdown-menu-radio-item"], .filter-menu [data-slot="dropdown-menu-checkbox-item"] { min-height: 35px; font-size: 12px; font-weight: 600; cursor: pointer; }
 .filter-menu [data-slot="dropdown-menu-item"]:focus, .filter-menu [data-slot="dropdown-menu-radio-item"]:focus, .filter-menu [data-slot="dropdown-menu-checkbox-item"]:focus { background: #f0f3f5; color: #18212b; }
-.filter-advanced { color: #64707b; font-size: 11px; }
-.filter-advanced summary { width: fit-content; padding: 4px 0; cursor: pointer; font-weight: 700; }
-.filter-advanced summary:hover { color: #25313b; }
-.filter-advanced summary:focus-visible, .filter-exclusions input:focus-visible { outline: 2px solid #50677a; outline-offset: 2px; }
-.filter-exclusions { display: flex; flex-wrap: wrap; gap: 10px 22px; padding: 10px 0 3px; }
-.filter-exclusions label { display: inline-flex; align-items: center; gap: 8px; color: #56626e; font-size: 12px; font-weight: 600; cursor: pointer; }
-.filter-exclusions input { width: 16px; height: 16px; margin: 0; accent-color: #263744; cursor: pointer; }
 .card-grid { grid-template-columns: repeat(5,minmax(0,1fr)); gap: 24px 16px; }
 .card-tile { overflow: hidden; }
 .card-open { display: block; width: 100%; padding: 0; border: 0; background: transparent; color: inherit; text-align: left; }

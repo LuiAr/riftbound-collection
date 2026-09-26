@@ -13,9 +13,7 @@ export function rarityFor(card: DisplayCard): { kind: RarityKind; label: string 
   return null;
 }
 
-export function matchesCardType(card: DisplayCard, selectedRarities: readonly RarityKind[], hideAlternates: boolean, hideOvernumbered: boolean): boolean {
-  if (hideAlternates && isAlternatePrinting(card)) return false;
-  if (hideOvernumbered && isOvernumbered(card)) return false;
+export function matchesCardType(card: DisplayCard, selectedRarities: readonly RarityKind[]): boolean {
   if (selectedRarities.length === 0) return true;
   const rarity = rarityFor(card)?.kind;
   return rarity !== undefined && selectedRarities.includes(rarity);
