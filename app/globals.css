@@ -62,13 +62,9 @@ button:disabled { opacity: .55; cursor: wait; }
 .filter-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .filter-fields label, .rarity-filter-field { display: grid; gap: 6px; min-width: 0; color: #65717b; font-size: 11px; font-weight: 700; }
 .filters select { width: 100%; min-width: 0; border: 1px solid #dfe5e9; background: white; color: #25313b; border-radius: 8px; outline: 0; padding: 10px 27px 10px 11px; font-size: 12px; font-weight: 650; }
-.rarity-filter-trigger { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-width: 0; height: 37px; border: 1px solid #dfe5e9; border-radius: 8px; background: white; color: #25313b; padding: 0 11px; text-align: left; font-size: 12px; font-weight: 650; cursor: pointer; }
-.rarity-filter-trigger span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.rarity-filter-trigger::after { content: ""; flex: none; width: 6px; height: 6px; border-right: 1.5px solid #65717b; border-bottom: 1.5px solid #65717b; transform: translateY(-2px) rotate(45deg); }
-.rarity-filter-trigger:focus-visible { border-color: #6e7e8b; box-shadow: 0 0 0 3px #dce3e8; outline: 0; }
-.rarity-filter-menu { z-index: 30; min-width: max(225px, var(--radix-dropdown-menu-trigger-width, 225px)); max-width: calc(100vw - 24px); border: 1px solid #dfe5e9; border-radius: 9px; background: white; color: #25313b; box-shadow: 0 12px 32px #18212b25; }
-.rarity-filter-menu [data-slot="dropdown-menu-item"], .rarity-filter-menu [data-slot="dropdown-menu-checkbox-item"] { min-height: 35px; font-size: 12px; font-weight: 600; cursor: pointer; }
-.rarity-filter-menu [data-slot="dropdown-menu-item"]:focus, .rarity-filter-menu [data-slot="dropdown-menu-checkbox-item"]:focus { background: #f0f3f5; color: #18212b; }
+.filters .rarity-native-select { height: auto; padding: 3px; font-size: 13px; }
+.rarity-native-select option { padding: 5px 7px; }
+.rarity-filter-hint { color: #87919a; font-size: 11px; font-weight: 500; line-height: 1.3; }
 .filter-advanced { color: #64707b; font-size: 11px; }
 .filter-advanced summary { width: fit-content; padding: 4px 0; cursor: pointer; font-weight: 700; }
 .filter-advanced summary:hover { color: #25313b; }

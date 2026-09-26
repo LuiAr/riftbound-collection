@@ -6,7 +6,6 @@ import { matchesCardType, rarityFor, type RarityKind } from "../lib/rarity";
 import { priceKey, type PriceQuote, type PriceSnapshot } from "../lib/prices";
 import type { CollectionSnapshot, CollectionVersion } from "../lib/server-collection";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../components/ui/dialog";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../components/ui/dropdown-menu";
 import DeckMatcher from "./deck-matcher";
 
 type Props = { initial: CollectionSnapshot; initialHistory: CollectionVersion[]; accountName: string; signOutPath: string };
@@ -205,7 +204,10 @@ export default function CollectionClient({ initial, initialHistory, accountName,
           <div className="filter-fields">
             <label>Set<select value={selectedSet} onChange={(event) => setSelectedSet(event.target.value)}><option>All sets</option>{sets.map((set) => <option key={set}>{set}</option>)}</select></label>
             <label>Ownership<select value={status} onChange={(event) => setStatus(event.target.value)}><option value="all">All cards</option><option value="owned">Owned</option><option value="missing">Missing</option></select></label>
-            <div className="rarity-filter-field"><span id="rarity-filter-label">Rarity &amp; printing</span><DropdownMenu><DropdownMenuTrigger aria-labelledby="rarity-filter-label" className="rarity-filter-trigger"><span>{selectedRarities.length === 0 ? "All rarities" : selectedRarities.length === 1 ? rarityOptions.find((option) => option.kind === selectedRarities[0])?.label : `${selectedRarities.length} rarities selected`}</span></DropdownMenuTrigger><DropdownMenuContent align="start" className="rarity-filter-menu"><DropdownMenuItem onSelect={() => setSelectedRarities([])}>All rarities</DropdownMenuItem><DropdownMenuSeparator />{rarityOptions.map(({ kind, label }) => <DropdownMenuCheckboxItem key={kind} checked={selectedRarities.includes(kind)} onCheckedChange={(checked) => setSelectedRarities((current) => checked ? [...current, kind] : current.filter((item) => item !== kind))} onSelect={(event) => event.preventDefault()}>{label}</DropdownMenuCheckboxItem>)}</DropdownMenuContent></DropdownMenu></div>
+            <label className="rarity-filter-field">Rarity &amp; printing<select className="rarity-native-select" multiple size={6} value={selectedRarities.length ? selectedRarities : ["all"]} aria-describedby="rarity-filter-hint" onChange={(event) => {
+              const chosen = Array.from(event.currentTarget.selectedOptions, (option) => option.value);
+              setSelectedRarities((current) => chosen.includes("all") && current.length > 0 ? [] : chosen.filter((value): value is RarityKind => value !== "all"));
+            }}><option value="all">All rarities</option>{rarityOptions.map(({ kind, label }) => <option key={kind} value={kind}>{label}</option>)}</select><span className="rarity-filter-hint" id="rarity-filter-hint">⌘/Ctrl-click to select more than one on desktop.</span></label>
           </div>
           <details className="filter-advanced"><summary>More filters{hideAlternates || hideOvernumbered ? <span> · {Number(hideAlternates) + Number(hideOvernumbered)} active</span> : null}</summary><div className="filter-exclusions"><label><input type="checkbox" checked={hideAlternates} onChange={(event) => setHideAlternates(event.target.checked)} />Hide alternate art</label><label><input type="checkbox" checked={hideOvernumbered} onChange={(event) => setHideOvernumbered(event.target.checked)} />Hide over-numbered</label></div></details>
         </div>
