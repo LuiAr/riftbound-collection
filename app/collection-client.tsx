@@ -6,6 +6,7 @@ import { matchesCardType, rarityFor, type CardTypeFilter } from "../lib/rarity";
 import { priceKey, type PriceQuote, type PriceSnapshot } from "../lib/prices";
 import type { CollectionSnapshot, CollectionVersion } from "../lib/server-collection";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import DeckMatcher from "./deck-matcher";
 import RarityIcon from "./rarity-icon";
 
@@ -198,7 +199,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
           <div className="filter-fields">
             <label>Set<select value={selectedSet} onChange={(event) => setSelectedSet(event.target.value)}><option>All sets</option>{sets.map((set) => <option key={set}>{set}</option>)}</select></label>
             <label>Ownership<select value={status} onChange={(event) => setStatus(event.target.value)}><option value="all">All cards</option><option value="owned">Owned</option><option value="missing">Missing</option></select></label>
-            <label>Rarity &amp; printing<select value={cardType} onChange={(event) => setCardType(event.target.value as CardTypeFilter)}><option value="all">All rarities</option><option value="normal">Normal cards (no Epic / OVN)</option><option value="common">Common</option><option value="uncommon">Uncommon</option><option value="rare">Rare</option><option value="epic">Epic</option><option value="special">Over-numbered / alternate art</option></select></label>
+            <div className="rarity-filter-field"><span id="rarity-filter-label">Rarity &amp; printing</span><Select value={cardType} onValueChange={(value) => setCardType(value as CardTypeFilter)}><SelectTrigger aria-labelledby="rarity-filter-label" className="rarity-select-trigger"><SelectValue /></SelectTrigger><SelectContent position="popper" className="rarity-select-content"><SelectItem value="all">All rarities</SelectItem><SelectItem value="normal">Normal cards (no Epic / OVN)</SelectItem><SelectItem value="common"><RarityIcon kind="common" />Common</SelectItem><SelectItem value="uncommon"><RarityIcon kind="uncommon" />Uncommon</SelectItem><SelectItem value="rare"><RarityIcon kind="rare" />Rare</SelectItem><SelectItem value="epic"><RarityIcon kind="epic" />Epic</SelectItem><SelectItem value="special"><RarityIcon kind="special" />Over-numbered / alternate art</SelectItem></SelectContent></Select></div>
           </div>
           <details className="filter-advanced"><summary>More filters{hideAlternates || hideOvernumbered ? <span> · {Number(hideAlternates) + Number(hideOvernumbered)} active</span> : null}</summary><div className="filter-exclusions"><label><input type="checkbox" checked={hideAlternates} onChange={(event) => setHideAlternates(event.target.checked)} />Hide alternate art</label><label><input type="checkbox" checked={hideOvernumbered} onChange={(event) => setHideOvernumbered(event.target.checked)} />Hide over-numbered</label></div></details>
         </div>
@@ -217,7 +218,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
         <div className="card-detail-copy">
           <p className="eyebrow">{selectedCard.set} · {selectedCard.number.toUpperCase()}</p>
           <DialogTitle className="card-detail-title">{selectedCard.name}</DialogTitle>
-          <div className="card-detail-facts">{selectedRarity && <span className="card-rarity-label"><RarityIcon kind={selectedRarity.kind} />{selectedRarity.label}</span>}<span>{selectedCard.quantity === 0 ? "Not owned" : `${formatNumber(selectedCard.quantity)} ${selectedCard.quantity === 1 ? "copy" : "copies"} owned`}</span></div>
+          <div className="card-detail-facts">{selectedRarity && <span className="card-rarity-label">{selectedRarity.label}</span>}<span>{selectedCard.quantity === 0 ? "Not owned" : `${formatNumber(selectedCard.quantity)} ${selectedCard.quantity === 1 ? "copy" : "copies"} owned`}</span></div>
           <DialogDescription className="visually-hidden">Card details and estimated price</DialogDescription>
           <div className="card-detail-prices">
             <p className="estimate-label">Estimated price per card</p>
@@ -239,7 +240,7 @@ function CardTile({ card, onOpen }: { card: DisplayCard; onOpen: (card: DisplayC
   return <article className="card-tile"><button type="button" className="card-open" onClick={() => onOpen(card)} aria-label={`View ${card.name} larger, ${rarity?.label ?? card.rarity}, ${card.quantity} owned${card.foilQuantity ? `, ${card.foilQuantity} foil` : ""}`}><div className={`card-image-wrap ${card.quantity ? "" : "missing"}`}>
     {card.image ? <img src={card.image} alt="" loading="lazy" /> : <span className="no-image">Image unavailable</span>}
     <span className={`quantity-badge${shiny ? " shiny" : ""}`}>{card.quantity}</span>
-  </div><div className="card-meta"><span className="card-number">{card.number.toUpperCase()}</span><strong title={card.name}>{card.name}</strong>{rarity && <span className="card-rarity-mark"><RarityIcon kind={rarity.kind} /></span>}</div><p className="card-set">{card.set}</p></button></article>;
+  </div><div className="card-meta"><span className="card-number">{card.number.toUpperCase()}</span><strong title={card.name}>{card.name}</strong></div><p className="card-set">{card.set}</p></button></article>;
 }
 
 function DifferenceList({ title, items }: { title: string; items: ImportDifference["newCards"] }) {

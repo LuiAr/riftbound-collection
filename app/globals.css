@@ -60,8 +60,13 @@ button:disabled { opacity: .55; cursor: wait; }
 .search-box input:focus, .filters select:focus { border-color: #6e7e8b; box-shadow: 0 0 0 3px #dce3e8; }
 .filters { display: grid; gap: 10px; margin-bottom: 21px; }
 .filter-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-.filter-fields label { display: grid; gap: 6px; min-width: 0; color: #65717b; font-size: 11px; font-weight: 700; }
+.filter-fields label, .rarity-filter-field { display: grid; gap: 6px; min-width: 0; color: #65717b; font-size: 11px; font-weight: 700; }
 .filters select { width: 100%; min-width: 0; border: 1px solid #dfe5e9; background: white; color: #25313b; border-radius: 8px; outline: 0; padding: 10px 27px 10px 11px; font-size: 12px; font-weight: 650; }
+.rarity-select-trigger { width: 100%; min-width: 0; height: 37px; border: 1px solid #dfe5e9; border-radius: 8px; background: white; color: #25313b; padding: 0 11px; font-size: 12px; font-weight: 650; box-shadow: none; }
+.rarity-select-trigger:focus-visible { border-color: #6e7e8b; box-shadow: 0 0 0 3px #dce3e8; outline: 0; }
+.rarity-select-content { z-index: 30; min-width: var(--radix-select-trigger-width); border: 1px solid #dfe5e9; border-radius: 9px; background: white; color: #25313b; box-shadow: 0 12px 32px #18212b25; }
+.rarity-select-content [data-slot="select-item"] { min-height: 38px; gap: 8px; font-size: 12px; font-weight: 600; }
+.rarity-select-content [data-slot="select-item"]:focus { background: #f0f3f5; color: #18212b; }
 .filter-advanced { color: #64707b; font-size: 11px; }
 .filter-advanced summary { width: fit-content; padding: 4px 0; cursor: pointer; font-weight: 700; }
 .filter-advanced summary:hover { color: #25313b; }
@@ -79,13 +84,12 @@ button:disabled { opacity: .55; cursor: wait; }
 .card-image-wrap.missing img { filter: grayscale(1); opacity: .23; }
 .card-image-wrap.missing .quantity-badge { color: #88939d; }
 .card-meta strong { flex: 1; }
-.card-rarity-mark { flex: none; display: inline-flex; align-self: center; width: 26px; height: 26px; margin-left: auto; border-radius: 50%; background: #fff; }
-.rarity-icon { display: inline-block; flex: none; width: 28px; height: 28px; background-image: url('/rarity-icons.png'); background-size: 193px 64.4px; background-repeat: no-repeat; }
-.rarity-icon-common { background-position: -8px -13px; }
-.rarity-icon-uncommon { background-position: -42px -13px; }
-.rarity-icon-rare { background-position: -78px -13px; }
-.rarity-icon-epic { background-position: -115px -13px; }
-.rarity-icon-special { background-position: -152px -13px; }
+.rarity-icon { display: inline-block; flex: none; width: 28px; height: 28px; background-image: url('/rarity-icons-transparent.png'); background-size: 174px 58px; background-repeat: no-repeat; }
+.rarity-icon-common { background-position: -6px -15px; }
+.rarity-icon-uncommon { background-position: -38px -15px; }
+.rarity-icon-rare { background-position: -75px -15px; }
+.rarity-icon-epic { background-position: -110px -15px; }
+.rarity-icon-special { background-position: -142px -15px; }
 .card-set { margin: 4px 0 0; color: #8a949d; font-size: 10px; }
 .insights-panel { position: sticky; top: 18px; border: 1px solid #e0e5e9; border-radius: 11px; background: white; overflow: hidden; }
 .insight-section { padding: 18px 17px 19px; border-bottom: 1px solid #e9edf0; }
@@ -116,7 +120,7 @@ button.stat-row:hover .stat-title, .stat-row.selected .stat-title { color: #1821
 .card-detail-copy .eyebrow { margin-bottom: 12px; }
 .card-detail-title { display: block; margin: 0; font-size: clamp(21px, 2.5vw, 31px); line-height: 1.15; letter-spacing: -.045em; }
 .card-detail-facts { display: flex; flex-wrap: wrap; align-items: center; gap: 7px 14px; margin: 10px 0 0; color: #717d87; font-size: 12px; }
-.card-rarity-label { display: inline-flex; align-items: center; gap: 3px; color: #3d4b56; font-weight: 700; }
+.card-rarity-label { display: inline-flex; align-items: center; color: #3d4b56; font-weight: 700; }
 .card-detail-prices { margin-top: 24px; border-top: 1px solid #e5e9ec; padding-top: 18px; }
 .card-detail-prices .estimate-label { margin: 0 0 6px; color: #66727c; font-size: 11px; font-weight: 700; }
 .card-detail-prices .estimate-value { display: block; margin: 0 0 13px; font-size: clamp(22px, 3vw, 31px); letter-spacing: -.045em; line-height: 1.15; font-variant-numeric: tabular-nums; }
@@ -154,7 +158,7 @@ button.stat-row:hover .stat-title, .stat-row.selected .stat-title { color: #1821
 .dialog-help { margin: 10px 0 0; color: #9aa3aa; text-align: right; font-size: 10px; }
 @media (max-width: 1150px) { .workspace-grid { grid-template-columns: minmax(0,1fr) 205px; gap: 22px; } .card-grid { grid-template-columns: repeat(4,minmax(0,1fr)); } }
 @media (max-width: 820px) { .workspace-grid { grid-template-columns: minmax(0,1fr); } .workspace-grid > .insights-panel { grid-column: 1; grid-row: 3; margin-bottom: 20px; } .workspace-grid > .card-grid, .workspace-grid > .empty-state { grid-row: 4; } .insights-panel { position: static; width: 100%; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); } .insight-section { border-right: 1px solid #e9edf0; } .price-insight { grid-column: 1/-1; } .credit { grid-column: 1/-1; } }
-@media (max-width: 720px) { .account-name { max-width: 108px; } .head-actions { width: 100%; } .head-actions > * { flex: 1; } .summary-block em { font-size: 11px; } .card-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .grid-toolbar { align-items: start; } .search-box input { width: 145px; } .filter-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); } .filter-fields label:last-child { grid-column: 1 / -1; } .insights-panel { display: block; } .insight-section { border-right: 0; } .stat-row { padding: 6px 0; } .import-dialog { padding: 18px; } .card-detail-dialog[data-slot="dialog-content"] { grid-template-columns: 1fr; gap: 16px; width: min(94vw, 420px); max-height: 92vh; padding: 14px; } .card-detail-art { width: min(100%, 260px); margin: auto; } .card-detail-copy { padding: 0 4px 4px; } .card-detail-title { font-size: 23px; } .card-detail-prices { margin-top: 14px; } }
+@media (max-width: 720px) { .account-name { max-width: 108px; } .head-actions { width: 100%; } .head-actions > * { flex: 1; } .summary-block em { font-size: 11px; } .card-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .grid-toolbar { align-items: start; } .search-box input { width: 145px; } .filter-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); } .rarity-filter-field { grid-column: 1 / -1; } .insights-panel { display: block; } .insight-section { border-right: 0; } .stat-row { padding: 6px 0; } .import-dialog { padding: 18px; } .card-detail-dialog[data-slot="dialog-content"] { grid-template-columns: 1fr; gap: 16px; width: min(94vw, 420px); max-height: 92vh; padding: 14px; } .card-detail-art { width: min(100%, 260px); margin: auto; } .card-detail-copy { padding: 0 4px 4px; } .card-detail-title { font-size: 23px; } .card-detail-prices { margin-top: 14px; } }
 
 .section-nav { display: flex; gap: 25px; border-bottom: 1px solid #e3e7eb; }
 .section-nav button { border: 0; border-bottom: 2px solid transparent; background: transparent; padding: 15px 3px 13px; color: #6d7881; font-size: 13px; font-weight: 700; }
