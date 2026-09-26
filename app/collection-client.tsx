@@ -2,18 +2,24 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { displayCards, hasFoilTreatment, isAlternatePrinting, isOvernumbered, type DisplayCard, type ImportDifference } from "../lib/collection";
-import { matchesCardType, rarityFor, type CardTypeFilter } from "../lib/rarity";
+import { matchesCardType, rarityFor, type RarityKind } from "../lib/rarity";
 import { priceKey, type PriceQuote, type PriceSnapshot } from "../lib/prices";
 import type { CollectionSnapshot, CollectionVersion } from "../lib/server-collection";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../components/ui/dropdown-menu";
 import DeckMatcher from "./deck-matcher";
-import RarityIcon from "./rarity-icon";
 
 type Props = { initial: CollectionSnapshot; initialHistory: CollectionVersion[]; accountName: string; signOutPath: string };
 type Preview = { difference: ImportDifference; version: number; filename: string; csv: string };
 const sets = ["Vendetta", "Vendetta Promos", "Unleashed", "Origins", "Spiritforged", "Proving Grounds"];
 const colors = ["Fury", "Calm", "Mind", "Body", "Order", "Chaos", "Colorless"];
+const rarityOptions: { kind: RarityKind; label: string }[] = [
+  { kind: "common", label: "Common" },
+  { kind: "uncommon", label: "Uncommon" },
+  { kind: "rare", label: "Rare" },
+  { kind: "epic", label: "Epic" },
+  { kind: "special", label: "Over-numbered / alternate art" },
+];
 const formatNumber = (value: number) => new Intl.NumberFormat("en-US").format(value);
 const formatPrice = (value: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "EUR" }).format(value);
 type PricedCard = { card: DisplayCard; amount: number; finish: "Standard" | "Foil" };
@@ -42,7 +48,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
   const snapshot = viewedSnapshot ?? currentSnapshot;
   const [selectedSet, setSelectedSet] = useState("Vendetta");
   const [status, setStatus] = useState("all");
-  const [cardType, setCardType] = useState<CardTypeFilter>("all");
+  const [selectedRarities, setSelectedRarities] = useState<RarityKind[]>([]);
   const [hideAlternates, setHideAlternates] = useState(false);
   const [hideOvernumbered, setHideOvernumbered] = useState(false);
   const [search, setSearch] = useState("");
@@ -70,10 +76,10 @@ export default function CollectionClient({ initial, initialHistory, accountName,
   const visibleCards = useMemo(() => setCards.filter((card) => {
     if (status === "owned" && card.quantity === 0) return false;
     if (status === "missing" && card.quantity > 0) return false;
-    if (!matchesCardType(card, cardType, hideAlternates, hideOvernumbered)) return false;
+    if (!matchesCardType(card, selectedRarities, hideAlternates, hideOvernumbered)) return false;
     const query = search.trim().toLowerCase();
     return !query || `${card.name} ${card.number} ${card.set}`.toLowerCase().includes(query);
-  }).sort((a, b) => a.set.localeCompare(b.set) || a.number.localeCompare(b.number, undefined, { numeric: true }) || a.code.localeCompare(b.code)), [setCards, status, cardType, hideAlternates, hideOvernumbered, search]);
+  }).sort((a, b) => a.set.localeCompare(b.set) || a.number.localeCompare(b.number, undefined, { numeric: true }) || a.code.localeCompare(b.code)), [setCards, status, selectedRarities, hideAlternates, hideOvernumbered, search]);
   const owned = setCards.filter((card) => card.quantity > 0).length;
   const copies = setCards.reduce((sum, card) => sum + card.quantity, 0);
   const foils = setCards.reduce((sum, card) => sum + card.foilQuantity, 0);
@@ -98,7 +104,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
         if (card.quantity > card.foilQuantity && quote.standard !== null) options.push({ card, amount: quote.standard, finish: "Standard" });
         if (card.foilQuantity > 0 && quote.foil !== null) options.push({ card, amount: quote.foil, finish: "Foil" });
         if (options.length) { pricedOwned++; ownedCards.push(...options); }
-      } else if ((selectedSet === "All sets" || card.set === selectedSet) && matchesCardType(card, cardType, hideAlternates, hideOvernumbered)) {
+      } else if ((selectedSet === "All sets" || card.set === selectedSet) && matchesCardType(card, selectedRarities, hideAlternates, hideOvernumbered)) {
         const options: PricedCard[] = [];
         if (quote.standard !== null) options.push({ card, amount: quote.standard, finish: "Standard" });
         if (quote.foil !== null) options.push({ card, amount: quote.foil, finish: "Foil" });
@@ -109,7 +115,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
     ownedCards.sort((a, b) => b.amount - a.amount);
     watchCards.sort((a, b) => b.amount - a.amount);
     return { mostValuable: ownedCards[0] ?? null, watch: watchCards.slice(0, 3), pricedOwned };
-  }, [allCards, prices, selectedSet, cardType, hideAlternates, hideOvernumbered]);
+  }, [allCards, prices, selectedSet, selectedRarities, hideAlternates, hideOvernumbered]);
   const ownedTotal = allCards.filter((card) => card.quantity > 0).length;
   const selectedQuote = selectedCard ? quoteFor(selectedCard, prices) : null;
   const selectedEstimate = estimateFor(selectedQuote);
@@ -199,7 +205,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
           <div className="filter-fields">
             <label>Set<select value={selectedSet} onChange={(event) => setSelectedSet(event.target.value)}><option>All sets</option>{sets.map((set) => <option key={set}>{set}</option>)}</select></label>
             <label>Ownership<select value={status} onChange={(event) => setStatus(event.target.value)}><option value="all">All cards</option><option value="owned">Owned</option><option value="missing">Missing</option></select></label>
-            <div className="rarity-filter-field"><span id="rarity-filter-label">Rarity &amp; printing</span><Select value={cardType} onValueChange={(value) => setCardType(value as CardTypeFilter)}><SelectTrigger aria-labelledby="rarity-filter-label" className="rarity-select-trigger"><SelectValue /></SelectTrigger><SelectContent position="popper" className="rarity-select-content"><SelectItem value="all">All rarities</SelectItem><SelectItem value="normal">Normal cards (no Epic / OVN)</SelectItem><SelectItem value="common"><RarityIcon kind="common" />Common</SelectItem><SelectItem value="uncommon"><RarityIcon kind="uncommon" />Uncommon</SelectItem><SelectItem value="rare"><RarityIcon kind="rare" />Rare</SelectItem><SelectItem value="epic"><RarityIcon kind="epic" />Epic</SelectItem><SelectItem value="special"><RarityIcon kind="special" />Over-numbered / alternate art</SelectItem></SelectContent></Select></div>
+            <div className="rarity-filter-field"><span id="rarity-filter-label">Rarity &amp; printing</span><DropdownMenu><DropdownMenuTrigger aria-labelledby="rarity-filter-label" className="rarity-filter-trigger"><span>{selectedRarities.length === 0 ? "All rarities" : selectedRarities.length === 1 ? rarityOptions.find((option) => option.kind === selectedRarities[0])?.label : `${selectedRarities.length} rarities selected`}</span></DropdownMenuTrigger><DropdownMenuContent align="start" className="rarity-filter-menu"><DropdownMenuItem onSelect={() => setSelectedRarities([])}>All rarities</DropdownMenuItem><DropdownMenuSeparator />{rarityOptions.map(({ kind, label }) => <DropdownMenuCheckboxItem key={kind} checked={selectedRarities.includes(kind)} onCheckedChange={(checked) => setSelectedRarities((current) => checked ? [...current, kind] : current.filter((item) => item !== kind))} onSelect={(event) => event.preventDefault()}>{label}</DropdownMenuCheckboxItem>)}</DropdownMenuContent></DropdownMenu></div>
           </div>
           <details className="filter-advanced"><summary>More filters{hideAlternates || hideOvernumbered ? <span> · {Number(hideAlternates) + Number(hideOvernumbered)} active</span> : null}</summary><div className="filter-exclusions"><label><input type="checkbox" checked={hideAlternates} onChange={(event) => setHideAlternates(event.target.checked)} />Hide alternate art</label><label><input type="checkbox" checked={hideOvernumbered} onChange={(event) => setHideOvernumbered(event.target.checked)} />Hide over-numbered</label></div></details>
         </div>

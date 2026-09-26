@@ -62,11 +62,13 @@ button:disabled { opacity: .55; cursor: wait; }
 .filter-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .filter-fields label, .rarity-filter-field { display: grid; gap: 6px; min-width: 0; color: #65717b; font-size: 11px; font-weight: 700; }
 .filters select { width: 100%; min-width: 0; border: 1px solid #dfe5e9; background: white; color: #25313b; border-radius: 8px; outline: 0; padding: 10px 27px 10px 11px; font-size: 12px; font-weight: 650; }
-.rarity-select-trigger { width: 100%; min-width: 0; height: 37px; border: 1px solid #dfe5e9; border-radius: 8px; background: white; color: #25313b; padding: 0 11px; font-size: 12px; font-weight: 650; box-shadow: none; }
-.rarity-select-trigger:focus-visible { border-color: #6e7e8b; box-shadow: 0 0 0 3px #dce3e8; outline: 0; }
-.rarity-select-content { z-index: 30; min-width: var(--radix-select-trigger-width); border: 1px solid #dfe5e9; border-radius: 9px; background: white; color: #25313b; box-shadow: 0 12px 32px #18212b25; }
-.rarity-select-content [data-slot="select-item"] { min-height: 38px; gap: 8px; font-size: 12px; font-weight: 600; }
-.rarity-select-content [data-slot="select-item"]:focus { background: #f0f3f5; color: #18212b; }
+.rarity-filter-trigger { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-width: 0; height: 37px; border: 1px solid #dfe5e9; border-radius: 8px; background: white; color: #25313b; padding: 0 11px; text-align: left; font-size: 12px; font-weight: 650; cursor: pointer; }
+.rarity-filter-trigger span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.rarity-filter-trigger::after { content: ""; flex: none; width: 6px; height: 6px; border-right: 1.5px solid #65717b; border-bottom: 1.5px solid #65717b; transform: translateY(-2px) rotate(45deg); }
+.rarity-filter-trigger:focus-visible { border-color: #6e7e8b; box-shadow: 0 0 0 3px #dce3e8; outline: 0; }
+.rarity-filter-menu { z-index: 30; min-width: max(225px, var(--radix-dropdown-menu-trigger-width, 225px)); max-width: calc(100vw - 24px); border: 1px solid #dfe5e9; border-radius: 9px; background: white; color: #25313b; box-shadow: 0 12px 32px #18212b25; }
+.rarity-filter-menu [data-slot="dropdown-menu-item"], .rarity-filter-menu [data-slot="dropdown-menu-checkbox-item"] { min-height: 35px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.rarity-filter-menu [data-slot="dropdown-menu-item"]:focus, .rarity-filter-menu [data-slot="dropdown-menu-checkbox-item"]:focus { background: #f0f3f5; color: #18212b; }
 .filter-advanced { color: #64707b; font-size: 11px; }
 .filter-advanced summary { width: fit-content; padding: 4px 0; cursor: pointer; font-weight: 700; }
 .filter-advanced summary:hover { color: #25313b; }
@@ -84,12 +86,6 @@ button:disabled { opacity: .55; cursor: wait; }
 .card-image-wrap.missing img { filter: grayscale(1); opacity: .23; }
 .card-image-wrap.missing .quantity-badge { color: #88939d; }
 .card-meta strong { flex: 1; }
-.rarity-icon { display: inline-block; flex: none; width: 28px; height: 28px; background-image: url('/rarity-icons-transparent.png'); background-size: 174px 58px; background-repeat: no-repeat; }
-.rarity-icon-common { background-position: -6px -15px; }
-.rarity-icon-uncommon { background-position: -38px -15px; }
-.rarity-icon-rare { background-position: -75px -15px; }
-.rarity-icon-epic { background-position: -110px -15px; }
-.rarity-icon-special { background-position: -142px -15px; }
 .card-set { margin: 4px 0 0; color: #8a949d; font-size: 10px; }
 .insights-panel { position: sticky; top: 18px; border: 1px solid #e0e5e9; border-radius: 11px; background: white; overflow: hidden; }
 .insight-section { padding: 18px 17px 19px; border-bottom: 1px solid #e9edf0; }
