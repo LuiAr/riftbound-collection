@@ -24,7 +24,8 @@
   --font-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
   --font-tech: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
   --font-body: Figtree, "Segoe UI", system-ui, sans-serif;
-  --cut-corner: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  --card-radius: 5% / 3.58%;
+  --card-frame-radius: calc(5% + 1.9px) / calc(3.58% + 1.9px);
   --cut-bottom: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
   --slant: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
   font-family: var(--font-body);
@@ -123,16 +124,16 @@ h1 { margin: 0; font-family: var(--font-display); font-size: clamp(52px, 7.4vw, 
 .card-tile { min-width: 0; }
 .card-open { display: block; width: 100%; padding: 0; border: 0; background: transparent; color: inherit; text-align: left; }
 .card-open:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
-.card-frame { padding: 2px; background: var(--line-strong); clip-path: var(--cut-corner); transition: transform .18s, background .18s; }
+.card-frame { padding: 2px; border-radius: var(--card-frame-radius); background: var(--line-strong); transition: transform .18s, background .18s; }
 .card-frame.missing { background: var(--line); }
 .card-frame.shiny { background: conic-gradient(from 210deg, #ff8a1f, #ffd36b, #4fd8c8, #9c7bff, #ff8a1f); }
 .card-open:hover .card-frame { transform: translateY(-3px); }
 .card-open:hover .card-frame:not(.shiny) { background: var(--ink); }
-.card-image-wrap { position: relative; overflow: hidden; aspect-ratio: 744 / 1039; background: var(--surface-2); clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 0 100%); }
+.card-image-wrap { position: relative; overflow: hidden; aspect-ratio: 744 / 1039; border-radius: var(--card-radius); background: var(--surface-2); }
 .card-image-wrap img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .card-image-wrap.missing { background: #ecebe7; }
 .card-image-wrap.missing img { filter: grayscale(1); opacity: .35; }
-.quantity-badge { position: absolute; left: 0; bottom: 12px; display: flex; align-items: center; padding: 4px 13px 4px 9px; background: var(--ink); color: #fff; font-family: var(--font-display); font-size: 21px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%); }
+.quantity-badge { position: absolute; right: 5px; bottom: 5px; display: flex; align-items: center; padding: 3px 9px 3px 14px; border-radius: 0 0 5px 0; background: var(--ink); color: #fff; font-family: var(--font-display); font-size: 21px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%); }
 .quantity-badge.shiny { background: var(--accent); color: var(--ink); }
 .card-image-wrap.missing .quantity-badge { background: #ffffffe6; color: var(--muted); }
 .card-domains { display: flex; gap: 2px; height: 3px; margin-top: 8px; }
@@ -191,7 +192,7 @@ button.stat-row:focus-visible { outline: 2px solid var(--ink); outline-offset: -
 .card-detail-dialog[data-slot="dialog-content"] { display: grid; grid-template-columns: minmax(0, 340px) minmax(260px, 1fr); align-items: center; gap: 32px; width: min(92vw, 820px); max-width: 820px; max-height: min(92vh, 900px); padding: 28px; overflow-y: auto; border: 0; border-top: 4px solid var(--accent); border-radius: 0; background: var(--surface); color: var(--ink); box-shadow: 0 30px 70px #12131759; }
 .card-detail-dialog [data-slot="dialog-close"] { top: 16px; right: 16px; display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--line-strong); border-radius: 0; background: var(--surface-2); opacity: 1; }
 .card-detail-dialog [data-slot="dialog-close"]:hover { border-color: var(--ink); }
-.card-detail-art { display: grid; place-items: center; min-width: 0; aspect-ratio: 744 / 1039; overflow: hidden; background: var(--surface-2); color: var(--muted); font-size: 13px; clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%); }
+.card-detail-art { display: grid; place-items: center; min-width: 0; aspect-ratio: 744 / 1039; overflow: hidden; border-radius: var(--card-radius); background: var(--surface-2); color: var(--muted); font-size: 13px; }
 .card-detail-art img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .card-detail-copy { min-width: 0; padding-right: 8px; }
 .card-detail-copy .eyebrow { margin-bottom: 10px; }
