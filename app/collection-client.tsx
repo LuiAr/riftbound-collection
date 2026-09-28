@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { ArrowRight, ChevronDown, Download, Search, Upload } from "lucide-react";
 import { catalog, displayCards, hasFoilTreatment, isAlternatePrinting, isOvernumbered, type DisplayCard, type ImportDifference } from "../lib/collection";
 import { matchesCardType, rarityFor, type RarityKind } from "../lib/rarity";
 import { oneOfEachGoal } from "../lib/goals";
@@ -18,7 +19,7 @@ type Preview = { difference: ImportDifference; version: number; filename: string
 const radianceReady = isRadianceCatalogComplete(catalog);
 const sets = ["Vendetta", "Vendetta Promos", "Unleashed", "Origins", "Spiritforged", "Proving Grounds", ...(radianceReady ? ["Radiance"] : [])];
 const setOptions = ["All sets", ...sets].map((set) => ({ value: set, label: set }));
-const ownershipOptions = [{ value: "all", label: "All cards" }, { value: "owned", label: "Owned" }, { value: "missing", label: "Missing" }];
+const ownershipOptions: { value: Ownership; label: string }[] = [{ value: "all", label: "All cards" }, { value: "owned", label: "Owned" }, { value: "missing", label: "Missing" }];
 const colors = ["Fury", "Calm", "Mind", "Body", "Order", "Chaos", "Colorless"];
 const rarityOptions: { kind: RarityKind; label: string }[] = [
   { kind: "common", label: "Common" },
@@ -30,6 +31,18 @@ const rarityOptions: { kind: RarityKind; label: string }[] = [
 const formatNumber = (value: number) => new Intl.NumberFormat("en-US").format(value);
 const formatPrice = (value: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "EUR" }).format(value);
 type PricedCard = { card: DisplayCard; amount: number; finish: "Standard" | "Foil" };
+type Ownership = "all" | "owned" | "missing";
+const ratio = (part: number, whole: number) => whole > 0 ? part / whole : 0;
+const plural = (count: number, one: string, many: string) => `${formatNumber(count)} ${count === 1 ? one : many}`;
+
+function importSummary(difference: ImportDifference): string {
+  const parts = [
+    difference.newCards.length ? plural(difference.newCards.length, "new card", "new cards") : "",
+    difference.newFoils.length ? plural(difference.newFoils.length, "new foil", "new foils") : "",
+    difference.moreCopies.length ? `${plural(difference.moreCopies.length, "card", "cards")} with more copies` : "",
+  ].filter(Boolean);
+  return parts.length ? parts.join(", ") : "no quantity changes";
+}
 
 function quoteFor(card: DisplayCard, prices: PriceSnapshot | null): PriceQuote | null {
   if (card.extra || isAlternatePrinting(card) || isOvernumbered(card) || card.rarity === "Showcase") return null;
@@ -42,7 +55,7 @@ function estimateFor(quote: PriceQuote | null): string | null {
   if (!amounts.length) return null;
   const low = Math.min(...amounts);
   const high = Math.max(...amounts);
-  return low === high ? formatPrice(low) : `${formatPrice(low)}–${formatPrice(high)}`;
+  return low === high ? formatPrice(low) : `${formatPrice(low)} to ${formatPrice(high)}`;
 }
 
 export default function CollectionClient({ initial, initialHistory, accountName, signOutPath }: Props) {
@@ -54,7 +67,8 @@ export default function CollectionClient({ initial, initialHistory, accountName,
   const [historyError, setHistoryError] = useState("");
   const snapshot = viewedSnapshot ?? currentSnapshot;
   const [selectedSet, setSelectedSet] = useState("Vendetta");
-  const [status, setStatus] = useState("all");
+  const [status, setStatus] = useState<Ownership>("all");
+  const [overviewOpen, setOverviewOpen] = useState(false);
   const [selectedRarities, setSelectedRarities] = useState<RarityKind[]>([]);
   const [search, setSearch] = useState("");
   const [preview, setPreview] = useState<Preview | null>(null);
@@ -65,6 +79,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
   const [prices, setPrices] = useState<PriceSnapshot | null>(null);
   const [priceError, setPriceError] = useState("");
   const fileInput = useRef<HTMLInputElement>(null);
+  const importTrigger = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     let active = true;
@@ -79,17 +94,20 @@ export default function CollectionClient({ initial, initialHistory, accountName,
   const allCards = useMemo(() => displayCards(snapshot.rows).filter((card) => radianceReady || card.set !== "Radiance"), [snapshot.rows]);
   const latestCards = useMemo(() => displayCards(currentSnapshot.rows).filter((card) => radianceReady || card.set !== "Radiance"), [currentSnapshot.rows]);
   const setCards = useMemo(() => allCards.filter((card) => selectedSet === "All sets" || card.set === selectedSet), [allCards, selectedSet]);
-  const visibleCards = useMemo(() => setCards.filter((card) => {
-    if (status === "owned" && card.quantity === 0) return false;
-    if (status === "missing" && card.quantity > 0) return false;
-    if (!matchesCardType(card, selectedRarities)) return false;
+  const filteredCards = useMemo(() => {
     const query = search.trim().toLowerCase();
-    return !query || `${card.name} ${card.number} ${card.set}`.toLowerCase().includes(query);
-  }).sort((a, b) => a.set.localeCompare(b.set) || a.number.localeCompare(b.number, undefined, { numeric: true }) || a.code.localeCompare(b.code)), [setCards, status, selectedRarities, search]);
+    return setCards.filter((card) => matchesCardType(card, selectedRarities) && (!query || `${card.name} ${card.number} ${card.set}`.toLowerCase().includes(query)));
+  }, [setCards, selectedRarities, search]);
+  const ownershipCounts: Record<Ownership, number> = {
+    all: filteredCards.length,
+    owned: filteredCards.filter((card) => card.quantity > 0).length,
+    missing: filteredCards.filter((card) => card.quantity === 0).length,
+  };
+  const visibleCards = useMemo(() => filteredCards.filter((card) => status === "all" || (status === "owned" ? card.quantity > 0 : card.quantity === 0))
+    .sort((a, b) => a.set.localeCompare(b.set) || a.number.localeCompare(b.number, undefined, { numeric: true }) || a.code.localeCompare(b.code)), [filteredCards, status]);
   const owned = setCards.filter((card) => card.quantity > 0).length;
   const copies = setCards.reduce((sum, card) => sum + card.quantity, 0);
   const foils = setCards.reduce((sum, card) => sum + card.foilQuantity, 0);
-  const overallCopies = allCards.reduce((sum, card) => sum + card.quantity, 0);
   const goal = useMemo(() => oneOfEachGoal(allCards, selectedSet), [allCards, selectedSet]);
   const setSummary = sets.map((set) => {
     const cards = allCards.filter((card) => card.set === set);
@@ -152,7 +170,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
       setCurrentSnapshot(result.snapshot);
       setViewedSnapshot(null);
       if (result.snapshot.importId && result.snapshot.importedAt) setHistory((old) => [{ importId: result.snapshot.importId!, version: result.snapshot.version, importedAt: result.snapshot.importedAt!, sourceName: result.snapshot.sourceName ?? preview.filename }, ...old]);
-      setNotice(`Imported ${result.snapshot.rows.length} rows from ${preview.filename}.`);
+      setNotice(`Saved ${preview.filename}: ${importSummary(preview.difference)}.`);
       setPreview(null);
     } catch (cause) { setError(cause instanceof Error ? cause.message : "The collection could not be updated."); }
     finally { setBusy(false); }
@@ -176,11 +194,17 @@ export default function CollectionClient({ initial, initialHistory, accountName,
     finally { setHistoryBusy(false); }
   }
 
+  const firstRun = !snapshot.importedAt && !viewedSnapshot;
+  const setLabel = selectedSet === "All sets" ? "all sets" : selectedSet;
+  const ownershipIndex = ownershipOptions.findIndex((option) => option.value === status);
+  const openFilePicker = () => fileInput.current?.click();
+  const importButton = <button ref={importTrigger} className="primary-button" type="button" onClick={openFilePicker} disabled={busy} aria-busy={busy}><Upload aria-hidden="true" />{busy ? "Working…" : "Import Card Nexus CSV"}</button>;
+
   return <>
     <a className="skip-link" href="#main-content">Skip to content</a>
     <header className="site-header">
       <div className="site-header-inner">
-        <div className="brand"><img className="brand-mark" src="/riftbound-logo-96.png" alt="" width="36" height="36" /><span>Riftbound<span className="brand-slash" aria-hidden="true">/</span><span className="brand-light"><span className="visually-hidden"> </span>Collection</span></span></div>
+        <div className="brand"><img className="brand-mark" src="/riftbound-logo-96.png" alt="" width="32" height="32" /><span>Riftbound<span className="brand-slash" aria-hidden="true">/</span><span className="brand-light"><span className="visually-hidden"> </span>Collection</span></span></div>
         <nav className="section-nav" aria-label="Website sections">
           <button type="button" className={section === "collection" ? "active" : ""} aria-current={section === "collection" ? "page" : undefined} onClick={() => setSection("collection")}>My collection</button>
           <button type="button" className={section === "decks" ? "active" : ""} aria-current={section === "decks" ? "page" : undefined} onClick={() => setSection("decks")}>Deck matcher</button>
@@ -190,51 +214,64 @@ export default function CollectionClient({ initial, initialHistory, accountName,
       </div>
     </header>
     <main className="collection-shell" id="main-content" tabIndex={-1}>
-    {section === "history" && <section className="feature-page" aria-labelledby="history-title">
-      <p className="eyebrow">YOUR PROFILE</p><h1 id="history-title">Collection history</h1>
+    {section === "history" && <section className="feature-page view" aria-labelledby="history-title">
+      <h1 id="history-title">Collection history</h1>
       <p className="feature-intro">Every saved Card Nexus import appears here. Open a version to browse its cards and summaries without changing your latest collection.</p>
       <HistoryCompare key={currentSnapshot.importId ?? "empty"} history={history} latest={currentSnapshot} />
       {historyError && <p className="error-note" role="alert">{historyError}</p>}
-      {history.length ? <div className="history-list">{history.map((item) => <button type="button" className={`history-item ${snapshot.importId === item.importId ? "selected" : ""}`} key={item.importId} disabled={historyBusy} onClick={() => viewVersion(item.importId)}><span><strong>{item.sourceName}</strong><small>{new Date(item.importedAt).toLocaleString("en-US", { day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "2-digit" })}</small></span><span className="history-item-side">{item.importId === currentSnapshot.importId ? "Latest" : `Version ${item.version}`}<span aria-hidden="true">→</span></span></button>)}</div> : <div className="empty-state">Import a Card Nexus CSV to create your first collection version.</div>}
+      {history.length ? <div className="history-list">{history.map((item) => <button type="button" className={`history-item ${snapshot.importId === item.importId ? "selected" : ""}`} key={item.importId} disabled={historyBusy} onClick={() => viewVersion(item.importId)}><span><strong>{item.sourceName}</strong><small>{new Date(item.importedAt).toLocaleString("en-US", { day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "2-digit" })}</small></span><span className="history-item-side">{item.importId === currentSnapshot.importId ? "Latest" : `Version ${item.version}`}<ArrowRight aria-hidden="true" /></span></button>)}</div> : <div className="empty-state">Import a Card Nexus CSV to create your first collection version.</div>}
     </section>}
     {section === "decks" && <DeckMatcher cards={latestCards} />}
-    {section === "collection" && <>
-    <section className="collection-head">
-      <div><p className="eyebrow">MY CARDS</p><h1>My collection</h1><p className="head-note">{snapshot.importedAt ? `${viewedSnapshot ? "Imported" : "Last import"} ${new Date(snapshot.importedAt).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}` : "Import a Card Nexus export to begin."} · Synced with your ChatGPT account</p></div>
-      {!viewedSnapshot && <div className="head-actions"><a className="secondary-button" href="/api/export">Export CSV</a><button className="primary-button" type="button" onClick={() => fileInput.current?.click()} disabled={busy}>{busy ? "Working…" : "Import Card Nexus CSV"}</button><input ref={fileInput} className="visually-hidden" type="file" accept=".csv,text/csv" aria-label="Choose a Card Nexus CSV export" onChange={(event) => chooseFile(event.target.files?.[0])} /></div>}
+    {section === "collection" && <div className="view">
+    <section className="page-head">
+      <div><h1>My collection</h1><p className="head-note">{snapshot.importedAt ? `${viewedSnapshot ? "Imported" : "Last import"} ${new Date(snapshot.importedAt).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })} · ` : ""}Synced with your ChatGPT account</p></div>
+      {!viewedSnapshot && !firstRun && <div className="head-actions"><a className="secondary-button" href="/api/export"><Download aria-hidden="true" />Export CSV</a>{importButton}</div>}
+      {!viewedSnapshot && <input ref={fileInput} className="visually-hidden" type="file" accept=".csv,text/csv" aria-label="Choose a Card Nexus CSV export" onChange={(event) => chooseFile(event.target.files?.[0])} />}
     </section>
     {viewedSnapshot && <div className="history-banner"><span>Viewing version {viewedSnapshot.version} from {new Date(viewedSnapshot.importedAt!).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}. Your latest collection is unchanged.</span><button type="button" onClick={() => setViewedSnapshot(null)}>Return to latest</button></div>}
     {notice && <p className="notice" role="status">{notice}</p>}
     {error && !preview && <p className="error-note" role="alert">{error}</p>}
-    <section className="summary-row" aria-label="Collection summary">
-      <div className="summary-block"><strong>{formatNumber(overallCopies)}</strong><span>Total copies</span></div>
-      <div className="summary-block"><strong>{formatNumber(owned)} <em>/ {formatNumber(setCards.length)}</em></strong><span>{selectedSet === "All sets" ? "Unique printings owned" : `${selectedSet} printings owned`}</span></div>
-      <div className="summary-block accent"><strong>{formatNumber(foils)}</strong><span>Foil copies in {selectedSet === "All sets" ? "collection" : selectedSet}</span></div>
-    </section>
-    <section className="workspace-grid" aria-label="Cards and collection breakdown">
-        <div className="grid-toolbar"><div><h2>Cards</h2><span>{formatNumber(visibleCards.length)} shown · {formatNumber(copies)} copies in {selectedSet === "All sets" ? "all sets" : selectedSet}</span></div><label className="search-box"><span className="visually-hidden">Search cards</span><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search cards or number" /></label></div>
-        <div className="filters" role="group" aria-label="Card filters">
-          <div className="filter-fields">
-            <SingleFilter label="Set" value={selectedSet} options={setOptions} onChange={setSelectedSet} />
-            <SingleFilter label="Ownership" value={status} options={ownershipOptions} onChange={setStatus} />
-            <div className="filter-field rarity-filter-field"><span id="rarity-filter-label">Rarity &amp; printing</span><DropdownMenu><DropdownMenuTrigger aria-labelledby="rarity-filter-label rarity-filter-value" className="filter-trigger"><span id="rarity-filter-value">{selectedRarities.length === 0 ? "All rarities" : selectedRarities.length === 1 ? rarityOptions.find((option) => option.kind === selectedRarities[0])?.label : `${selectedRarities.length} rarities selected`}</span></DropdownMenuTrigger><DropdownMenuContent align="start" className="filter-menu"><DropdownMenuItem onSelect={() => setSelectedRarities([])}>All rarities</DropdownMenuItem><DropdownMenuSeparator />{rarityOptions.map(({ kind, label }) => <DropdownMenuCheckboxItem key={kind} checked={selectedRarities.includes(kind)} onCheckedChange={(checked) => setSelectedRarities((current) => checked ? [...current, kind] : current.filter((item) => item !== kind))} onSelect={(event) => event.preventDefault()}>{label}</DropdownMenuCheckboxItem>)}</DropdownMenuContent></DropdownMenu></div>
-          </div>
+    <div className="workspace-grid">
+      {firstRun ? <section className="welcome-panel panel" aria-labelledby="welcome-title">
+        <img src="/riftbound-logo-96.png" alt="" width="52" height="52" />
+        <div><h2 id="welcome-title">Start with your Card Nexus export</h2><p>Export your collection from the Card Nexus app as a CSV file, then import it here to see every card you own and every card you are still missing.</p></div>
+        {importButton}
+      </section> : <section className="set-progress panel" aria-labelledby="progress-title">
+        <h2 id="progress-title">{selectedSet}</h2>
+        <div className="set-progress-top"><p className="set-progress-count"><strong>{formatNumber(owned)}</strong><span>of {formatNumber(setCards.length)} printings owned</span></p><span className="set-progress-percent">{Math.floor(100 * ratio(owned, setCards.length))}%</span></div>
+        <div className="progress-bar" role="progressbar" aria-label={`${selectedSet} printings owned`} aria-valuemin={0} aria-valuemax={setCards.length} aria-valuenow={owned}><span style={{ "--progress": ratio(owned, setCards.length) } as CSSProperties} /></div>
+        <ul className="set-progress-meta"><li><strong>{formatNumber(copies)}</strong> {copies === 1 ? "copy" : "copies"} in {setLabel}</li><li><strong>{formatNumber(foils)}</strong> foil {foils === 1 ? "copy" : "copies"}</li></ul>
+      </section>}
+      <div className="card-toolbar">
+        <h2 className="visually-hidden">Cards</h2>
+        <div className="toolbar-top">
+          <div className="ownership-toggle" role="group" aria-label="Ownership" style={{ "--index": ownershipIndex } as CSSProperties}>{ownershipOptions.map((option) => <button type="button" key={option.value} aria-pressed={status === option.value} onClick={() => setStatus(option.value)}>{option.label}<span>{formatNumber(ownershipCounts[option.value])}</span></button>)}</div>
+          <span className="result-count">{plural(visibleCards.length, "card", "cards")} shown</span>
         </div>
-        {visibleCards.length ? <div className="card-grid" aria-label="Cards">{visibleCards.map((card) => <CardTile key={card.code} card={card} onOpen={setSelectedCard} />)}</div> : <div className="empty-state"><p>No cards match these filters.</p><button type="button" className="secondary-button" onClick={() => { setSearch(""); setStatus("all"); setSelectedRarities([]); }}>Clear filters</button></div>}
-      <aside className="insights-panel" aria-label="Collection breakdown">
-        {goal.total > 0 && <div className="insight-section goal-insight"><h3>One of each</h3><p>Regular Common, Uncommon, and Rare cards · no Epic, alternate art, or over-numbered printings</p><div className="goal-body"><div className="goal-ring" style={{ "--progress": `${100 * goal.owned / goal.total}%` } as CSSProperties} aria-hidden="true"><span>{Math.floor(100 * goal.owned / goal.total)}%</span></div><div className="goal-total"><strong>{goal.owned} / {goal.total}</strong><span>{goal.total - goal.owned} missing</span></div></div>{goal.missing.length > 0 && <details className="goal-missing"><summary>See missing cards</summary><ul>{goal.missing.map((card) => <li key={card.code}>{card.name}<small>{card.set} · {card.number}</small></li>)}</ul></details>}</div>}
-        <div className="insight-section"><h3>By set</h3><p>Unique printings owned</p>{setSummary.map(({ set, owned, total }) => <button type="button" className={`stat-row ${selectedSet === set ? "selected" : ""}`} key={set} onClick={() => setSelectedSet(set)}><span className="stat-title">{set}</span><span className="stat-value">{owned}/{total}</span><span className="stat-track"><span style={{ width: `${100 * owned / total}%` }} /></span></button>)}</div>
-        <div className="insight-section"><h3>By domain</h3><p>Unique printings in {selectedSet === "All sets" ? "all sets" : selectedSet}</p>{colorSummary.map(({ color, owned, total }) => <div className={`stat-row passive domain-${color.toLowerCase()}`} key={color}><span className="stat-title">{color}</span><span className="stat-value">{owned}/{total}</span><span className="stat-track"><span style={{ width: `${100 * owned / total}%` }} /></span></div>)}</div>
-        <div className="insight-section price-insight"><h3>Card values</h3>{prices ? <><p>Cardmarket 7-day sale averages · EUR · {new Date(prices.createdAt).toLocaleDateString("en-US", { day: "numeric", month: "short" })}</p><h4>Most valuable priced card</h4>{priceHighlights.mostValuable ? <button type="button" className="price-card-row" onClick={() => setSelectedCard(priceHighlights.mostValuable!.card)}><span>{priceHighlights.mostValuable.card.name}<small>{priceHighlights.mostValuable.card.set} · {priceHighlights.mostValuable.finish}</small></span><strong>{formatPrice(priceHighlights.mostValuable.amount)}</strong></button> : <p>No owned cards have a 7-day average yet.</p>}<p className="price-coverage">{priceHighlights.pricedOwned} of {ownedTotal} owned printings priced</p><h4>Unowned cards to watch</h4>{priceHighlights.watch.length ? priceHighlights.watch.map((item) => <button type="button" className="price-card-row" key={`${item.card.code}-${item.finish}`} onClick={() => setSelectedCard(item.card)}><span>{item.card.name}<small>{item.card.number.toUpperCase()} · {item.finish}</small></span><strong>{formatPrice(item.amount)}</strong></button>) : <p>No matched 7-day prices in this set.</p>}</> : <p>{priceError || "Loading recent prices…"}</p>}<p className="price-source"><a href="https://www.cardmarket.com/en/Riftbound/Data/Price-Guide" target="_blank" rel="noreferrer">Cardmarket price guide</a> · Estimates vary by condition and language.</p></div>
-        <p className="credit">Card images and names © Riot Games. Card catalog via <a href="https://github.com/LouisCourrian/riftbound-cards" target="_blank" rel="noreferrer">riftbound-cards</a>.</p>
+        <div className="filter-fields" role="group" aria-label="Card filters">
+          <label className="filter-field search-field"><span>Search</span><span className="search-box"><Search aria-hidden="true" /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search cards or number" /></span></label>
+          <SingleFilter label="Set" value={selectedSet} options={setOptions} onChange={setSelectedSet} />
+          <div className="filter-field rarity-filter-field"><span id="rarity-filter-label">Rarity &amp; printing</span><DropdownMenu><DropdownMenuTrigger aria-labelledby="rarity-filter-label rarity-filter-value" className="filter-trigger"><span id="rarity-filter-value">{selectedRarities.length === 0 ? "All rarities" : selectedRarities.length === 1 ? rarityOptions.find((option) => option.kind === selectedRarities[0])?.label : `${selectedRarities.length} rarities selected`}</span><ChevronDown aria-hidden="true" /></DropdownMenuTrigger><DropdownMenuContent align="start" className="filter-menu"><DropdownMenuItem onSelect={() => setSelectedRarities([])}>All rarities</DropdownMenuItem><DropdownMenuSeparator />{rarityOptions.map(({ kind, label }) => <DropdownMenuCheckboxItem key={kind} checked={selectedRarities.includes(kind)} onCheckedChange={(checked) => setSelectedRarities((current) => checked ? [...current, kind] : current.filter((item) => item !== kind))} onSelect={(event) => event.preventDefault()}>{label}</DropdownMenuCheckboxItem>)}</DropdownMenuContent></DropdownMenu></div>
+        </div>
+      </div>
+      <aside className={`insights-panel panel${overviewOpen ? " open" : ""}`} aria-labelledby="overview-title">
+        <button type="button" className="overview-toggle" aria-expanded={overviewOpen} aria-controls="overview-content" onClick={() => setOverviewOpen((open) => !open)}>Overview<ChevronDown aria-hidden="true" /></button>
+        <h2 className="overview-title" id="overview-title">Overview</h2>
+        <div className="overview-content" id="overview-content">
+        {goal.total > 0 && <div className="insight-section goal-insight"><h3>One of each</h3><p>Regular Common, Uncommon, and Rare cards · no Epic, alternate art, or over-numbered printings</p><div className="goal-body"><div className="goal-ring" style={{ "--progress": `${100 * goal.owned / goal.total}%` } as CSSProperties} aria-hidden="true"><span>{Math.floor(100 * goal.owned / goal.total)}%</span></div><div className="goal-total"><strong>{goal.owned} / {goal.total}</strong><span>{goal.total - goal.owned} missing</span></div></div>{goal.missing.length > 0 && <details className="goal-missing"><summary>See missing cards<ChevronDown aria-hidden="true" /></summary><ul>{goal.missing.map((card) => <li key={card.code}>{card.name}<small>{card.set} · {card.number}</small></li>)}</ul></details>}</div>}
+        <div className="insight-section"><h3>By set</h3><p>Unique printings owned</p>{setSummary.map(({ set, owned, total }) => <button type="button" className={`stat-row ${selectedSet === set ? "selected" : ""}`} aria-pressed={selectedSet === set} key={set} onClick={() => setSelectedSet(set)}><span className="stat-title">{set}</span><span className="stat-value">{owned}/{total}</span><span className="stat-track"><span style={{ "--progress": ratio(owned, total) } as CSSProperties} /></span></button>)}</div>
+        <div className="insight-section"><h3>By domain</h3><p>Unique printings in {setLabel}</p>{colorSummary.map(({ color, owned, total }) => <div className={`stat-row passive domain-${color.toLowerCase()}`} key={color}><span className="stat-title">{color}</span><span className="stat-value">{owned}/{total}</span><span className="stat-track"><span style={{ "--progress": ratio(owned, total) } as CSSProperties} /></span></div>)}</div>
+        <div className="insight-section price-insight"><h3>Card values</h3>{prices ? <><p>Cardmarket 7-day sale averages in EUR, updated {new Date(prices.createdAt).toLocaleDateString("en-US", { day: "numeric", month: "short" })}</p><h4>Most valuable priced card</h4>{priceHighlights.mostValuable ? <button type="button" className="price-card-row" onClick={() => setSelectedCard(priceHighlights.mostValuable!.card)}><span>{priceHighlights.mostValuable.card.name}<small>{priceHighlights.mostValuable.card.set} · {priceHighlights.mostValuable.finish}</small></span><strong>{formatPrice(priceHighlights.mostValuable.amount)}</strong></button> : <p>No owned cards have a 7-day average yet.</p>}<p className="price-coverage">{priceHighlights.pricedOwned} of {ownedTotal} owned printings priced</p><h4>Unowned cards to watch</h4>{priceHighlights.watch.length ? priceHighlights.watch.map((item) => <button type="button" className="price-card-row" key={`${item.card.code}-${item.finish}`} onClick={() => setSelectedCard(item.card)}><span>{item.card.name}<small>{item.card.number.toUpperCase()} · {item.finish}</small></span><strong>{formatPrice(item.amount)}</strong></button>) : <p>No matched 7-day prices in this set.</p>}</> : priceError ? <p>{priceError}</p> : <div role="status" aria-label="Loading recent prices"><span className="skeleton skeleton-line" /><span className="skeleton skeleton-row" /><span className="skeleton skeleton-line short" /><span className="skeleton skeleton-row" /></div>}<p className="price-source"><a href="https://www.cardmarket.com/en/Riftbound/Data/Price-Guide" target="_blank" rel="noreferrer">Cardmarket price guide</a> · Estimates vary by condition and language.</p></div>
+        </div>
       </aside>
-    </section>
-    </>}
+      {visibleCards.length ? <div className="card-grid" aria-label="Cards">{visibleCards.map((card) => <CardTile key={card.code} card={card} onOpen={setSelectedCard} />)}</div> : <div className="empty-state"><p>No cards match these filters.</p><button type="button" className="secondary-button" onClick={() => { setSearch(""); setStatus("all"); setSelectedRarities([]); }}>Clear filters</button></div>}
+    </div>
+    </div>}
     <Dialog open={selectedCard !== null} onOpenChange={(open) => { if (!open) setSelectedCard(null); }}>
       {selectedCard && <DialogContent className="card-detail-dialog">
         <div className="card-detail-art">{selectedCard.image ? <img src={selectedCard.image} alt={`${selectedCard.name} card`} /> : <span>Image unavailable</span>}</div>
         <div className="card-detail-copy">
-          <p className="eyebrow">{selectedCard.set} · {selectedCard.number.toUpperCase()}</p>
+          <p className="card-detail-meta">{selectedCard.set} · {selectedCard.number.toUpperCase()}</p>
           <DialogTitle className="card-detail-title">{selectedCard.name}</DialogTitle>
           <div className="card-detail-facts">{selectedCard.domains.map((domain) => <span className={`domain-chip domain-${domain.toLowerCase()}`} key={domain}>{domain}</span>)}{selectedRarity && <span className={`card-rarity-label rarity-${selectedRarity.kind}`}>{selectedRarity.label}</span>}<span className="owned-chip">{selectedCard.quantity === 0 ? "Not owned" : `${formatNumber(selectedCard.quantity)} ${selectedCard.quantity === 1 ? "copy" : "copies"} owned${selectedCard.foilQuantity ? ` · ${formatNumber(selectedCard.foilQuantity)} foil` : ""}`}</span></div>
           <DialogDescription className="visually-hidden">Card details and estimated price</DialogDescription>
@@ -243,21 +280,36 @@ export default function CollectionClient({ initial, initialHistory, accountName,
             {selectedEstimate ? <strong className="estimate-value">{selectedEstimate}</strong> : <p className="estimate-unavailable">{prices ? "No reliable price estimate for this printing." : priceError || "Loading recent prices…"}</p>}
             {selectedQuote?.standard != null && <div className="finish-price"><span>Standard</span><strong>{formatPrice(selectedQuote.standard)}</strong></div>}
             {selectedQuote?.foil != null && <div className="finish-price"><span>Foil</span><strong>{formatPrice(selectedQuote.foil)}</strong></div>}
-            {prices && <p className="price-method">Cardmarket 7-day sale average · EUR · {new Date(prices.createdAt).toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" })}. Varies by condition and language.</p>}
+            {prices && <p className="price-method">Cardmarket 7-day sale average in EUR, updated {new Date(prices.createdAt).toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" })}. Varies by condition and language.</p>}
           </div>
         </div>
       </DialogContent>}
     </Dialog>
-    {preview && <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget && !busy) setPreview(null); }}><section className="import-dialog" role="dialog" aria-modal="true" aria-labelledby="import-title"><div className="dialog-top"><div><p className="eyebrow">CARD NEXUS IMPORT</p><h2 id="import-title">Review this export</h2><p>{preview.filename}</p></div><button className="close-button" type="button" aria-label="Close import review" onClick={() => setPreview(null)} disabled={busy}>×</button></div><div className="dialog-summary"><div><strong>{preview.difference.incomingRows}</strong><span>rows in file</span></div><div><strong>{preview.difference.newCards.length}</strong><span>new cards</span></div><div><strong>{preview.difference.newFoils.length}</strong><span>foil additions</span></div></div><div className="dialog-scroll"><DifferenceList title="Cards you did not own" items={preview.difference.newCards} /><DifferenceList title="New foil copies" items={preview.difference.newFoils} /><DifferenceList title="More standard copies" items={preview.difference.moreCopies} />{preview.difference.removedCopies > 0 && <p className="removal-note">This export removes or changes the finish of {preview.difference.removedCopies} previously recorded copies.</p>}{preview.difference.newCards.length + preview.difference.newFoils.length + preview.difference.moreCopies.length === 0 && preview.difference.removedCopies === 0 && <p className="no-changes">No quantity changes found. You can still save this export as your latest snapshot.</p>}</div>{error && <p className="error-note" role="alert">{error}</p>}<div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setPreview(null)} disabled={busy}>Cancel</button><button className="primary-button" type="button" onClick={applyImport} disabled={busy}>{busy ? "Saving…" : "Save this collection"}</button></div><p className="dialog-help">Saving makes this the latest collection. Earlier imports remain in History. Importing the same file again will not add copies twice.</p></section></div>}
+    <Dialog open={preview !== null} onOpenChange={(open) => { if (!open && !busy) setPreview(null); }}>
+      {preview && <DialogContent className="import-dialog" onInteractOutside={(event) => { if (busy) event.preventDefault(); }} onEscapeKeyDown={(event) => { if (busy) event.preventDefault(); }} onCloseAutoFocus={(event) => { event.preventDefault(); importTrigger.current?.focus(); }}>
+        <div className="dialog-top"><DialogTitle><span id="import-title">Review this export</span></DialogTitle><DialogDescription>{preview.filename}</DialogDescription></div>
+        <div className="stat-tiles"><div><strong>{preview.difference.incomingRows}</strong><span>rows in file</span></div><div className="accent"><strong>{preview.difference.newCards.length}</strong><span>new cards</span></div><div><strong>{preview.difference.newFoils.length}</strong><span>foil additions</span></div></div>
+        <div className="dialog-scroll"><DifferenceList title="Cards you did not own" items={preview.difference.newCards} /><DifferenceList title="New foil copies" items={preview.difference.newFoils} /><DifferenceList title="More standard copies" items={preview.difference.moreCopies} />{preview.difference.removedCopies > 0 && <p className="removal-note">This export removes or changes the finish of {preview.difference.removedCopies} previously recorded copies.</p>}{preview.difference.newCards.length + preview.difference.newFoils.length + preview.difference.moreCopies.length === 0 && preview.difference.removedCopies === 0 && <p className="no-changes">No quantity changes found. You can still save this export as your latest snapshot.</p>}</div>
+        {error && <p className="error-note" role="alert">{error}</p>}
+        <div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setPreview(null)} disabled={busy}>Cancel</button><button className="primary-button" type="button" onClick={applyImport} disabled={busy} aria-busy={busy}>{busy ? "Saving…" : "Save this collection"}</button></div>
+        <p className="dialog-help">Saving makes this the latest collection. Earlier imports remain in History. Importing the same file again will not add copies twice.</p>
+      </DialogContent>}
+    </Dialog>
     </main>
+    <footer className="site-footer"><p>Card images and names © Riot Games. Card catalog via <a href="https://github.com/LouisCourrian/riftbound-cards" target="_blank" rel="noreferrer">riftbound-cards</a>.</p></footer>
   </>;
 }
 
 function CardTile({ card, onOpen }: { card: DisplayCard; onOpen: (card: DisplayCard) => void }) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const image = useRef<HTMLImageElement>(null);
+  useEffect(() => {
+    if (image.current?.complete && image.current.naturalWidth === 0) setImageFailed(true);
+  }, []);
   const shiny = hasFoilTreatment(card);
   const rarity = rarityFor(card);
   return <article className="card-tile"><button type="button" className="card-open" onClick={() => onOpen(card)} aria-label={`View ${card.name} larger, ${rarity?.label ?? card.rarity}, ${card.quantity} owned${card.foilQuantity ? `, ${card.foilQuantity} foil` : ""}`}><div className={`card-frame${shiny ? " shiny" : ""}${card.quantity ? "" : " missing"}`}><div className={`card-image-wrap ${card.quantity ? "" : "missing"}`}>
-    {card.image ? <img src={card.image} alt="" loading="lazy" /> : <span className="no-image">Image unavailable</span>}
+    {card.image && !imageFailed ? <img ref={image} src={card.image} alt="" loading="lazy" onError={() => setImageFailed(true)} /> : <span className="no-image">Image unavailable</span>}
     <span className={`quantity-badge${shiny ? " shiny" : ""}`}>×{card.quantity}</span>
   </div></div><span className="card-domains" aria-hidden="true">{card.domains.map((domain) => <span className={`domain-${domain.toLowerCase()}`} key={domain} />)}</span><div className="card-meta"><span className="card-number">{card.number.toUpperCase()}</span><span className={`card-rarity rarity-${rarity?.kind ?? "other"}`}>{card.rarity}</span></div><strong className="card-name" title={card.name}>{card.name}</strong><p className="card-set">{card.set}</p></button></article>;
 }
