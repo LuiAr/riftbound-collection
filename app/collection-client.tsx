@@ -7,7 +7,7 @@ import { matchesCardType, rarityFor, type RarityKind } from "../lib/rarity";
 import { oneOfEachGoal } from "../lib/goals";
 import { isRadianceCatalogComplete } from "../lib/radiance";
 import { priceKey, type PriceQuote, type PriceSnapshot } from "../lib/prices";
-import { deckCopyLimit } from "../lib/deck-copy-limit";
+import { deckCardKey, deckCardName, deckCopyGoals, deckCopyLimit, type DeckCopyGoal } from "../lib/deck-copy-limit";
 import type { CollectionSnapshot, CollectionVersion } from "../lib/server-collection";
 import SingleFilter from "../components/single-filter";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../components/ui/dialog";
@@ -18,9 +18,9 @@ import HistoryCompare from "./history-compare";
 type Props = { initial: CollectionSnapshot; initialHistory: CollectionVersion[]; accountName: string; signOutPath: string };
 type Preview = { difference: ImportDifference; version: number; filename: string; csv: string };
 const radianceReady = isRadianceCatalogComplete(catalog);
-const sets = ["Vendetta", "Vendetta Promos", "Unleashed", "Origins", "Spiritforged", "Proving Grounds", ...(radianceReady ? ["Radiance"] : [])];
+const sets = ["Vendetta", "Unleashed", "Origins", "Spiritforged", "Proving Grounds", ...(radianceReady ? ["Radiance"] : [])];
 const setOptions = ["All sets", ...sets].map((set) => ({ value: set, label: set }));
-const ownershipOptions: { value: Ownership; label: string }[] = [{ value: "all", label: "All cards" }, { value: "owned", label: "Owned" }, { value: "missing", label: "Missing" }];
+const ownershipOptions: { value: Ownership; label: string }[] = [{ value: "all", label: "All cards" }, { value: "owned", label: "Owned" }, { value: "missing", label: "Missing" }, { value: "needs", label: "Need copies" }];
 const colors = ["Fury", "Calm", "Mind", "Body", "Order", "Chaos", "Colorless"];
 const rarityOptions: { kind: RarityKind; label: string }[] = [
   { kind: "common", label: "Common" },
@@ -32,7 +32,13 @@ const rarityOptions: { kind: RarityKind; label: string }[] = [
 const formatNumber = (value: number) => new Intl.NumberFormat("en-US").format(value);
 const formatPrice = (value: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "EUR" }).format(value);
 type PricedCard = { card: DisplayCard; amount: number; finish: "Standard" | "Foil" };
-type Ownership = "all" | "owned" | "missing";
+type Ownership = "all" | "owned" | "missing" | "needs";
+
+function preferredPrinting(card: DisplayCard): number {
+  if (card.extra) return 2;
+  if (isAlternatePrinting(card) || isOvernumbered(card) || card.rarity === "Showcase") return 1;
+  return 0;
+}
 const ratio = (part: number, whole: number) => whole > 0 ? part / whole : 0;
 const plural = (count: number, one: string, many: string) => `${formatNumber(count)} ${count === 1 ? one : many}`;
 
@@ -94,18 +100,30 @@ export default function CollectionClient({ initial, initialHistory, accountName,
 
   const allCards = useMemo(() => displayCards(snapshot.rows).filter((card) => radianceReady || card.set !== "Radiance"), [snapshot.rows]);
   const latestCards = useMemo(() => displayCards(currentSnapshot.rows).filter((card) => radianceReady || card.set !== "Radiance"), [currentSnapshot.rows]);
+  const deckGoals = useMemo(() => deckCopyGoals(allCards), [allCards]);
   const setCards = useMemo(() => allCards.filter((card) => selectedSet === "All sets" || card.set === selectedSet), [allCards, selectedSet]);
   const filteredCards = useMemo(() => {
     const query = search.trim().toLowerCase();
-    return setCards.filter((card) => matchesCardType(card, selectedRarities) && (!query || `${card.name} ${card.number} ${card.set}`.toLowerCase().includes(query)));
+    return setCards.filter((card) => matchesCardType(card, selectedRarities) && (!query || `${deckCardName(card)} ${card.number} ${card.set}`.toLowerCase().includes(query)));
   }, [setCards, selectedRarities, search]);
+  const cardsNeedingCopies = useMemo(() => {
+    const byName = new Map<string, DisplayCard>();
+    for (const card of filteredCards) {
+      const key = deckCardKey(card);
+      if (!deckGoals.get(key)?.missing) continue;
+      const previous = byName.get(key);
+      if (!previous || preferredPrinting(card) < preferredPrinting(previous)) byName.set(key, card);
+    }
+    return [...byName.values()];
+  }, [filteredCards, deckGoals]);
   const ownershipCounts: Record<Ownership, number> = {
     all: filteredCards.length,
     owned: filteredCards.filter((card) => card.quantity > 0).length,
     missing: filteredCards.filter((card) => card.quantity === 0).length,
+    needs: cardsNeedingCopies.length,
   };
-  const visibleCards = useMemo(() => filteredCards.filter((card) => status === "all" || (status === "owned" ? card.quantity > 0 : card.quantity === 0))
-    .sort((a, b) => a.set.localeCompare(b.set) || a.number.localeCompare(b.number, undefined, { numeric: true }) || a.code.localeCompare(b.code)), [filteredCards, status]);
+  const visibleCards = useMemo(() => (status === "needs" ? cardsNeedingCopies : filteredCards.filter((card) => status === "all" || (status === "owned" ? card.quantity > 0 : card.quantity === 0)))
+    .sort((a, b) => a.set.localeCompare(b.set) || a.number.localeCompare(b.number, undefined, { numeric: true }) || a.code.localeCompare(b.code)), [filteredCards, cardsNeedingCopies, status]);
   const owned = setCards.filter((card) => card.quantity > 0).length;
   const copies = setCards.reduce((sum, card) => sum + card.quantity, 0);
   const foils = setCards.reduce((sum, card) => sum + card.foilQuantity, 0);
@@ -146,6 +164,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
   const selectedQuote = selectedCard ? quoteFor(selectedCard, prices) : null;
   const selectedEstimate = estimateFor(selectedQuote);
   const selectedRarity = selectedCard ? rarityFor(selectedCard) : null;
+  const selectedDeckGoal = selectedCard ? deckGoals.get(deckCardKey(selectedCard)) : null;
 
   async function chooseFile(file?: File) {
     if (!file) return;
@@ -254,6 +273,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
           <SingleFilter label="Set" value={selectedSet} options={setOptions} onChange={setSelectedSet} />
           <div className="filter-field rarity-filter-field"><span id="rarity-filter-label">Rarity &amp; printing</span><DropdownMenu><DropdownMenuTrigger aria-labelledby="rarity-filter-label rarity-filter-value" className="filter-trigger"><span id="rarity-filter-value">{selectedRarities.length === 0 ? "All rarities" : selectedRarities.length === 1 ? rarityOptions.find((option) => option.kind === selectedRarities[0])?.label : `${selectedRarities.length} rarities selected`}</span><ChevronDown aria-hidden="true" /></DropdownMenuTrigger><DropdownMenuContent align="start" className="filter-menu"><DropdownMenuItem onSelect={() => setSelectedRarities([])}>All rarities</DropdownMenuItem><DropdownMenuSeparator />{rarityOptions.map(({ kind, label }) => <DropdownMenuCheckboxItem key={kind} checked={selectedRarities.includes(kind)} onCheckedChange={(checked) => setSelectedRarities((current) => checked ? [...current, kind] : current.filter((item) => item !== kind))} onSelect={(event) => event.preventDefault()}>{label}</DropdownMenuCheckboxItem>)}</DropdownMenuContent></DropdownMenu></div>
         </div>
+        {status === "needs" && <p className="filter-note">Need copies to reach the deck limit: 3 per main-deck card, 1 per Legend or Battlefield. All printings count together; runes and tokens are excluded.</p>}
       </div>
       <aside className={`insights-panel panel${overviewOpen ? " open" : ""}`} aria-labelledby="overview-title">
         <button type="button" className="overview-toggle" aria-expanded={overviewOpen} aria-controls="overview-content" onClick={() => setOverviewOpen((open) => !open)}>Overview<ChevronDown aria-hidden="true" /></button>
@@ -265,7 +285,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
         <div className="insight-section price-insight"><h3>Card values</h3>{prices ? <><p>Cardmarket 7-day sale averages in EUR, updated {new Date(prices.createdAt).toLocaleDateString("en-US", { day: "numeric", month: "short" })}</p><h4>Most valuable priced card</h4>{priceHighlights.mostValuable ? <button type="button" className="price-card-row" onClick={() => setSelectedCard(priceHighlights.mostValuable!.card)}><span>{priceHighlights.mostValuable.card.name}<small>{priceHighlights.mostValuable.card.set} · {priceHighlights.mostValuable.finish}</small></span><strong>{formatPrice(priceHighlights.mostValuable.amount)}</strong></button> : <p>No owned cards have a 7-day average yet.</p>}<p className="price-coverage">{priceHighlights.pricedOwned} of {ownedTotal} owned printings priced</p><h4>Unowned cards to watch</h4>{priceHighlights.watch.length ? priceHighlights.watch.map((item) => <button type="button" className="price-card-row" key={`${item.card.code}-${item.finish}`} onClick={() => setSelectedCard(item.card)}><span>{item.card.name}<small>{item.card.number.toUpperCase()} · {item.finish}</small></span><strong>{formatPrice(item.amount)}</strong></button>) : <p>No matched 7-day prices in this set.</p>}</> : priceError ? <p>{priceError}</p> : <div role="status" aria-label="Loading recent prices"><span className="skeleton skeleton-line" /><span className="skeleton skeleton-row" /><span className="skeleton skeleton-line short" /><span className="skeleton skeleton-row" /></div>}<p className="price-source"><a href="https://www.cardmarket.com/en/Riftbound/Data/Price-Guide" target="_blank" rel="noreferrer">Cardmarket price guide</a> · Estimates vary by condition and language.</p></div>
         </div>
       </aside>
-      {visibleCards.length ? <div className="card-grid" aria-label="Cards">{visibleCards.map((card) => <CardTile key={card.code} card={card} onOpen={setSelectedCard} />)}</div> : <div className="empty-state"><p>No cards match these filters.</p><button type="button" className="secondary-button" onClick={() => { setSearch(""); setStatus("all"); setSelectedRarities([]); }}>Clear filters</button></div>}
+      {visibleCards.length ? <div className="card-grid" aria-label="Cards">{visibleCards.map((card) => <CardTile key={card.code} card={card} deckGoal={deckGoals.get(deckCardKey(card))} showNeed={status === "needs"} onOpen={setSelectedCard} />)}</div> : <div className="empty-state"><p>{status === "needs" ? "No cards need more copies for these filters." : "No cards match these filters."}</p><button type="button" className="secondary-button" onClick={() => { setSearch(""); setStatus("all"); setSelectedRarities([]); }}>Clear filters</button></div>}
     </div>
     </div>}
     <Dialog open={selectedCard !== null} onOpenChange={(open) => { if (!open) setSelectedCard(null); }}>
@@ -275,6 +295,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
           <p className="card-detail-meta">{selectedCard.set} · {selectedCard.number.toUpperCase()}</p>
           <DialogTitle className="card-detail-title">{selectedCard.name}</DialogTitle>
           <div className="card-detail-facts">{selectedCard.domains.map((domain) => <span className={`domain-chip domain-${domain.toLowerCase()}`} key={domain}>{domain}</span>)}{selectedRarity && <span className={`card-rarity-label rarity-${selectedRarity.kind}`}>{selectedRarity.label}</span>}<span className="owned-chip">{selectedCard.quantity === 0 ? "Not owned" : `${formatNumber(selectedCard.quantity)} ${selectedCard.quantity === 1 ? "copy" : "copies"} owned${selectedCard.foilQuantity ? ` · ${formatNumber(selectedCard.foilQuantity)} foil` : ""}`}</span></div>
+          {status === "needs" && selectedDeckGoal && <p className="playset-detail">{selectedDeckGoal.owned} of {selectedDeckGoal.limit} deck copies owned across all printings · need {selectedDeckGoal.missing} more</p>}
           <DialogDescription className="visually-hidden">Card details and estimated price</DialogDescription>
           <div className="card-detail-prices">
             <p className="estimate-label">Estimated price per card</p>
@@ -301,7 +322,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
   </>;
 }
 
-function CardTile({ card, onOpen }: { card: DisplayCard; onOpen: (card: DisplayCard) => void }) {
+function CardTile({ card, deckGoal, showNeed, onOpen }: { card: DisplayCard; deckGoal?: DeckCopyGoal; showNeed: boolean; onOpen: (card: DisplayCard) => void }) {
   const [imageFailed, setImageFailed] = useState(false);
   const image = useRef<HTMLImageElement>(null);
   useEffect(() => {
@@ -310,11 +331,12 @@ function CardTile({ card, onOpen }: { card: DisplayCard; onOpen: (card: DisplayC
   const shiny = hasFoilTreatment(card);
   const rarity = rarityFor(card);
   const copyLimit = deckCopyLimit(card);
-  const deckProgress = copyLimit === null ? 0 : Math.min(card.quantity / copyLimit, 1);
-  return <article className="card-tile"><button type="button" className="card-open" onClick={() => onOpen(card)} aria-label={`View ${card.name} larger, ${rarity?.label ?? card.rarity}, ${card.quantity} owned${card.foilQuantity ? `, ${card.foilQuantity} foil` : ""}${copyLimit === null ? ", token" : `, ${Math.min(card.quantity, copyLimit)} of ${copyLimit} deck copies`}`}><div className={`card-frame${shiny ? " shiny" : ""}${card.quantity ? "" : " missing"}`}><div className={`card-image-wrap ${card.quantity ? "" : "missing"}`}>
+  const deckOwned = deckGoal?.owned ?? card.quantity;
+  const deckProgress = copyLimit === null ? 0 : Math.min(deckOwned / copyLimit, 1);
+  return <article className="card-tile"><button type="button" className="card-open" onClick={() => onOpen(card)} aria-label={`View ${deckCardName(card)} larger, ${rarity?.label ?? card.rarity}, ${card.quantity} of this printing owned${card.foilQuantity ? `, ${card.foilQuantity} foil` : ""}${copyLimit === null ? ", token" : `, ${Math.min(deckOwned, copyLimit)} of ${copyLimit} deck copies across printings`}${showNeed && deckGoal ? `, need ${deckGoal.missing} more` : ""}`}><div className={`card-frame${shiny ? " shiny" : ""}${card.quantity ? "" : " missing"}`}><div className={`card-image-wrap ${card.quantity ? "" : "missing"}`}>
     {card.image && !imageFailed ? <img ref={image} src={card.image} alt="" loading="lazy" onError={() => setImageFailed(true)} /> : <span className="no-image">Image unavailable</span>}
     <span className={`quantity-badge${shiny ? " shiny" : ""}`}>×{card.quantity}</span>
-  </div></div><span className={`card-domains${copyLimit === null ? " token" : ""}`} aria-hidden="true" style={{ "--deck-progress": deckProgress } as CSSProperties}>{card.domains.map((domain) => <span className={`domain-${domain.toLowerCase()}`} key={domain} />)}</span><div className="card-meta"><span className="card-number">{card.number.toUpperCase()}</span><span className={`card-rarity rarity-${rarity?.kind ?? "other"}`}>{card.rarity}</span></div><strong className="card-name" title={card.name}>{card.name}</strong><p className="card-set">{card.set}</p></button></article>;
+  </div></div><span className={`card-domains${copyLimit === null ? " token" : ""}`} aria-hidden="true" style={{ "--deck-progress": deckProgress } as CSSProperties}>{card.domains.map((domain) => <span className={`domain-${domain.toLowerCase()}`} key={domain} />)}</span><div className="card-meta"><span className="card-number">{card.number.toUpperCase()}</span><span className={`card-rarity rarity-${rarity?.kind ?? "other"}`}>{card.rarity}</span></div><strong className="card-name" title={deckCardName(card)}>{card.name}</strong><p className="card-set">{card.set}</p>{showNeed && deckGoal && <p className="card-need"><strong>Need {deckGoal.missing}</strong><span>{deckGoal.owned}/{deckGoal.limit} owned</span></p>}</button></article>;
 }
 
 function DifferenceList({ title, items }: { title: string; items: ImportDifference["newCards"] }) {

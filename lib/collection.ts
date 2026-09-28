@@ -90,8 +90,10 @@ export function displayCards(rows: InventoryRow[]): DisplayCard[] {
   for (const row of rows) {
     const quantity = Number(row.totalQtyOwned) || 0;
     const foil = row.finish.trim().toLowerCase().includes("foil") ? quantity : 0;
-    const set = setForExpansion(row.expansion);
-    const exact = catalogBySetNumber.get(`${set}|${numberKey(row.printNumber)}`);
+    const sourceSet = setForExpansion(row.expansion);
+    const set = sourceSet === "Vendetta Promos" ? "Vendetta" : sourceSet;
+    const candidate = catalogBySetNumber.get(`${set}|${numberKey(row.printNumber)}`);
+    const exact = sourceSet !== "Vendetta Promos" || (candidate && candidate.name.trim().toLowerCase() === row.name.trim().toLowerCase()) ? candidate : undefined;
     if (exact) {
       const previous = owned.get(exact.code) ?? { quantity: 0, foilQuantity: 0 };
       owned.set(exact.code, { quantity: previous.quantity + quantity, foilQuantity: previous.foilQuantity + foil });

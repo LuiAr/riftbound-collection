@@ -139,14 +139,15 @@ h1 { margin: 0; font-size: clamp(32px, 3.4vw, 44px); font-weight: 800; line-heig
 .card-toolbar { display: grid; gap: 14px; margin: 28px 0 22px; }
 .toolbar-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
 .result-count { color: var(--muted); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.ownership-toggle { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: min(100%, 420px); padding: 4px; border-radius: var(--radius-control); background: var(--surface); box-shadow: inset 0 0 0 1px var(--control-line); }
-.ownership-toggle::before { content: ""; position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc((100% - 8px) / 3); border-radius: var(--radius-inner); background: var(--ink); transform: translateX(calc(var(--index, 0) * 100%)); transition: transform .3s var(--ease); }
+.ownership-toggle { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); width: min(100%, 560px); padding: 4px; border-radius: var(--radius-control); background: var(--surface); box-shadow: inset 0 0 0 1px var(--control-line); }
+.ownership-toggle::before { content: ""; position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc((100% - 8px) / 4); border-radius: var(--radius-inner); background: var(--ink); transform: translateX(calc(var(--index, 0) * 100%)); transition: transform .3s var(--ease); }
 .ownership-toggle button { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 0; height: 38px; padding: 0 10px; border: 0; border-radius: var(--radius-inner); background: transparent; color: var(--ink-2); font-size: 14px; font-weight: 700; white-space: nowrap; transition: color .2s var(--ease); }
 .ownership-toggle button span { color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; transition: color .2s var(--ease); }
 .ownership-toggle button[aria-pressed="true"] { color: var(--on-ink); }
 .ownership-toggle button[aria-pressed="true"] span { color: #c3cad6; }
 .ownership-toggle button:hover:not([aria-pressed="true"]) { color: var(--ink); }
 .ownership-toggle button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.filter-note { max-width: 75ch; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
 
 .filter-fields { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
 .filter-field { display: grid; gap: 6px; min-width: 0; font-size: 13px; font-weight: 600; color: var(--ink-2); }
@@ -195,6 +196,9 @@ h1 { margin: 0; font-size: clamp(32px, 3.4vw, 44px); font-weight: 800; line-heig
 .card-name { display: block; margin-top: 1px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 15px; font-weight: 700; }
 .card-open:hover .card-name { text-decoration: underline; text-underline-offset: 3px; }
 .card-set { margin: 1px 0 0; color: var(--muted); font-size: 13px; }
+.card-need { display: flex; justify-content: space-between; gap: 6px; margin: 7px 0 0; color: var(--ink); font-size: 12px; font-variant-numeric: tabular-nums; }
+.card-need strong { color: var(--accent-ink); font-weight: 800; }
+.card-need span { color: var(--muted); }
 .no-image { position: relative; z-index: 1; display: grid; height: 100%; place-items: end center; padding-bottom: 22%; color: var(--muted); font-size: 12px; font-weight: 600; }
 
 .insights-panel { position: sticky; top: 16px; max-height: calc(100dvh - 32px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
@@ -266,6 +270,7 @@ button.stat-row:focus-visible { outline: 2px solid var(--ink); outline-offset: -
 .card-detail-meta { margin: 0 0 6px; color: var(--accent-ink); font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .card-detail-title { display: block; margin: 0; font-size: clamp(28px, 3.6vw, 40px); font-weight: 800; line-height: 1.1; letter-spacing: -.02em; }
 .card-detail-facts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 16px 0 0; }
+.playset-detail { margin: 10px 0 0; color: var(--ink-2); font-size: 14px; font-weight: 600; }
 .card-detail-facts > span { display: inline-flex; align-items: center; gap: 7px; min-height: 30px; padding: 4px 12px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 700; }
 .domain-chip { box-shadow: inset 0 0 0 1px var(--domain, var(--colorless)); color: var(--ink); }
 .domain-chip::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--domain, var(--colorless)); }
@@ -443,7 +448,7 @@ button.stat-row:focus-visible { outline: 2px solid var(--ink); outline-offset: -
   .welcome-panel .primary-button { width: 100%; }
   .toolbar-top { flex-direction: column; align-items: stretch; gap: 8px; }
   .ownership-toggle { width: 100%; }
-  .ownership-toggle button { flex-direction: column; align-items: center; gap: 0; height: 46px; justify-content: center; line-height: 1.2; font-size: 13px; }
+  .ownership-toggle button { flex-direction: column; align-items: center; gap: 0; height: 46px; justify-content: center; padding: 0 3px; line-height: 1.2; font-size: 12px; }
   .filter-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .search-field { grid-column: 1 / -1; }
   .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 12px; }
