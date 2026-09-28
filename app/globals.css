@@ -186,7 +186,9 @@ h1 { margin: 0; font-size: clamp(32px, 3.4vw, 44px); font-weight: 800; line-heig
 .quantity-badge.shiny { background: var(--accent); color: var(--ink); }
 .card-image-wrap.missing .quantity-badge { background: var(--surface); color: var(--muted); box-shadow: 0 0 0 1px var(--line-strong); }
 .card-domains { display: flex; gap: 3px; height: 4px; margin-top: 9px; }
-.card-domains > span { flex: 1; border-radius: var(--radius-pill); background: var(--domain, var(--colorless)); }
+.card-domains > span { position: relative; flex: 1; overflow: hidden; border-radius: var(--radius-pill); background: var(--track); }
+.card-domains > span::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--domain, var(--colorless)); transform-origin: left; transform: scaleX(var(--deck-progress, 0)); transition: transform .5s var(--ease); }
+.card-domains.token > span { background: var(--domain, var(--colorless)); }
 .card-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-top: 7px; font-size: 13px; font-weight: 600; }
 .card-number { color: var(--accent-ink); font-variant-numeric: tabular-nums; }
 .card-rarity { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }

@@ -7,6 +7,7 @@ import { matchesCardType, rarityFor, type RarityKind } from "../lib/rarity";
 import { oneOfEachGoal } from "../lib/goals";
 import { isRadianceCatalogComplete } from "../lib/radiance";
 import { priceKey, type PriceQuote, type PriceSnapshot } from "../lib/prices";
+import { deckCopyLimit } from "../lib/deck-copy-limit";
 import type { CollectionSnapshot, CollectionVersion } from "../lib/server-collection";
 import SingleFilter from "../components/single-filter";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../components/ui/dialog";
@@ -308,10 +309,12 @@ function CardTile({ card, onOpen }: { card: DisplayCard; onOpen: (card: DisplayC
   }, []);
   const shiny = hasFoilTreatment(card);
   const rarity = rarityFor(card);
-  return <article className="card-tile"><button type="button" className="card-open" onClick={() => onOpen(card)} aria-label={`View ${card.name} larger, ${rarity?.label ?? card.rarity}, ${card.quantity} owned${card.foilQuantity ? `, ${card.foilQuantity} foil` : ""}`}><div className={`card-frame${shiny ? " shiny" : ""}${card.quantity ? "" : " missing"}`}><div className={`card-image-wrap ${card.quantity ? "" : "missing"}`}>
+  const copyLimit = deckCopyLimit(card);
+  const deckProgress = copyLimit === null ? 0 : Math.min(card.quantity / copyLimit, 1);
+  return <article className="card-tile"><button type="button" className="card-open" onClick={() => onOpen(card)} aria-label={`View ${card.name} larger, ${rarity?.label ?? card.rarity}, ${card.quantity} owned${card.foilQuantity ? `, ${card.foilQuantity} foil` : ""}${copyLimit === null ? ", token" : `, ${Math.min(card.quantity, copyLimit)} of ${copyLimit} deck copies`}`}><div className={`card-frame${shiny ? " shiny" : ""}${card.quantity ? "" : " missing"}`}><div className={`card-image-wrap ${card.quantity ? "" : "missing"}`}>
     {card.image && !imageFailed ? <img ref={image} src={card.image} alt="" loading="lazy" onError={() => setImageFailed(true)} /> : <span className="no-image">Image unavailable</span>}
     <span className={`quantity-badge${shiny ? " shiny" : ""}`}>×{card.quantity}</span>
-  </div></div><span className="card-domains" aria-hidden="true">{card.domains.map((domain) => <span className={`domain-${domain.toLowerCase()}`} key={domain} />)}</span><div className="card-meta"><span className="card-number">{card.number.toUpperCase()}</span><span className={`card-rarity rarity-${rarity?.kind ?? "other"}`}>{card.rarity}</span></div><strong className="card-name" title={card.name}>{card.name}</strong><p className="card-set">{card.set}</p></button></article>;
+  </div></div><span className={`card-domains${copyLimit === null ? " token" : ""}`} aria-hidden="true" style={{ "--deck-progress": deckProgress } as CSSProperties}>{card.domains.map((domain) => <span className={`domain-${domain.toLowerCase()}`} key={domain} />)}</span><div className="card-meta"><span className="card-number">{card.number.toUpperCase()}</span><span className={`card-rarity rarity-${rarity?.kind ?? "other"}`}>{card.rarity}</span></div><strong className="card-name" title={card.name}>{card.name}</strong><p className="card-set">{card.set}</p></button></article>;
 }
 
 function DifferenceList({ title, items }: { title: string; items: ImportDifference["newCards"] }) {
