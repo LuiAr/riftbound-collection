@@ -24,6 +24,9 @@ assert.ok(validateDeck([...anchor, { cardId: offDomain.id, quantity: 1, section:
 const wrongSignature = builderCards.find((c) => c.super === "Signature" && !c.tags.includes("Akali"))!;
 assert.ok(validateDeck([...anchor, { cardId: wrongSignature.id, quantity: 1, section: "sideboard" }]).some((e) => e.includes("champion tag")));
 assert.ok(validateDeck([...anchor, { cardId: "shuriken flip", quantity: 2, section: "sideboard" }]).some((e) => e.includes("Signature")));
+const dianaReference = references.find((ref) => ref.legendId === "scorn of the moon")!;
+assert.deepEqual(validateDeck([...dianaReference.entries.filter((entry) => entry.cardId !== "flash"), { cardId: "ezreal prodigy", quantity: 1, section: "main" }]), [], "Domain-compatible Champions can have different tags from the Legend.");
+assert.ok(validateDeck(dianaReference.entries.map((entry) => entry.section === "chosen" ? { ...entry, cardId: "ezreal prodigy" } : entry)).some((error) => error.includes("chosen champion")));
 assert.ok(isBannedCard("The Dreaming Tree"));
 assert.ok(isBannedCard("Stacked Deck"));
 const cards = displayCards(inventory.rows);

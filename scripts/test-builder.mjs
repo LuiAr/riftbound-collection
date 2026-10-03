@@ -17,4 +17,8 @@ try {
   await build({ entryPoints: ["scripts/test-builder-server.ts"], bundle: true, platform: "node", format: "esm", outfile: serverOutput, alias: { "cloudflare:workers": "./tests/fixtures/builder-env.ts" } });
   result = spawnSync(process.execPath, [serverOutput], { stdio: "inherit" });
   if (result.status !== 0) process.exitCode = result.status ?? 1;
+  const jobsOutput = join(temporary, "job-tests.mjs");
+  await build({ entryPoints: ["scripts/test-builder-jobs.ts"], bundle: true, platform: "node", format: "esm", outfile: jobsOutput, alias: { "cloudflare:workers": "./tests/fixtures/builder-env.ts" } });
+  result = spawnSync(process.execPath, [jobsOutput], { stdio: "inherit" });
+  if (result.status !== 0) process.exitCode = result.status ?? 1;
 } finally { await rm(temporary, { recursive: true, force: true }); }

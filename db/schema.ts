@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer, primaryKey } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer, primaryKey, index } from "drizzle-orm/sqlite-core";
 
 export const inventoryRows = sqliteTable("inventory_rows", {
   userId: text("user_id").notNull(), importId: text("import_id").notNull(),
@@ -40,4 +40,17 @@ export const builderCalls = sqliteTable("builder_calls", {
   month: text("month").notNull(), reservedOre: integer("reserved_ore").notNull(),
   actualOre: integer("actual_ore"), status: text("status").notNull(),
   resultJson: text("result_json"), createdAt: text("created_at").notNull(),
-}, (table) => [primaryKey({ columns: [table.userId, table.callId] })]);
+  inputJson: text("input_json"), contextJson: text("context_json"),
+  providerId: text("provider_id"), conversationId: text("conversation_id"),
+  rawOutput: text("raw_output"), errorMessage: text("error_message"),
+  stage: text("stage").notNull().default("inventory"), updatedAt: text("updated_at"),
+  deletedAt: text("deleted_at"), keptDeckId: text("kept_deck_id"),
+  leaseUntil: integer("lease_until").notNull().default(0),
+}, (table) => [primaryKey({ columns: [table.userId, table.callId] }), index("idx_builder_calls_user_inbox").on(table.userId, table.deletedAt, table.createdAt)]);
+
+export const builderEvents = sqliteTable("builder_events", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  userId: text("user_id").notNull(), callId: text("call_id").notNull(),
+  stage: text("stage").notNull(), message: text("message").notNull(),
+  createdAt: text("created_at").notNull(),
+}, (table) => [index("idx_builder_events_user_call").on(table.userId, table.callId, table.id)]);
