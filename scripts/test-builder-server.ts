@@ -3,7 +3,7 @@ import { DatabaseSync } from "node:sqlite";
 import { readFileSync } from "node:fs";
 import { env } from "../tests/fixtures/builder-env";
 import { RULES, references, type BuilderInput, type DeckProposal } from "../lib/deck-builder";
-import { builderStatus, generateDecks } from "../lib/server-builder";
+import { builderStatus, evaluateBuild, generateDecks } from "../lib/server-builder";
 
 const sqlite = new DatabaseSync(":memory:");
 sqlite.exec(readFileSync("drizzle/0003_ancient_lilith.sql", "utf8"));
@@ -41,6 +41,16 @@ try {
   assert.deepEqual(stages, ["references", "build", "validate"]);
   assert.ok(valid.ownedOnly);
   assert.ok(valid.budget);
+  const longProse = { ...deck, strategy: "s".repeat(150), summary: "x".repeat(6000) };
+  const raw = { output: [{ type: "message", content: [{ type: "output_text", text: JSON.stringify({ ownedOnly: longProse, budget: null, explanation: "x".repeat(6000) }) }] }] };
+  const context = { input, owned: fullOwned, prices: null, fx, rulesCheckedAt: new Date().toISOString(), referenceIds: [ref.id] };
+  const recovered = evaluateBuild(raw, context, 20);
+  assert.deepEqual(recovered.ownedOnly?.entries, deck.entries);
+  assert.equal(recovered.ownedOnly?.summary.length, 2500);
+  assert.equal(recovered.ownedOnly?.strategy.length, 120);
+  assert.equal(recovered.explanation.length, 2500);
+  const illegal = { output: [{ type: "message", content: [{ type: "output_text", text: JSON.stringify({ ownedOnly: { ...longProse, entries: deck.entries.filter((e) => e.section !== "runes") }, budget: null, explanation: "test" }) }] }] };
+  assert.equal(evaluateBuild(illegal, context, 20).ownedOnly, null);
   let status = await builderStatus("owner");
   assert.equal(status.reservedSek, 0);
   assert.ok(status.spentSek > 0);

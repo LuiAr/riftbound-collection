@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { builderCards, cardsById, eligibleReferences, references, validateDeck, ownedInventory, representativeCard, assessDeck, cheapestPrice, cardIdFor, isBannedCard, exportDeck } from "../lib/deck-builder";
+import { builderCards, cardsById, eligibleReferences, references, validateDeck, ownedInventory, representativeCard, assessDeck, cheapestPrice, cardIdFor, isBannedCard, exportDeck, strategyProfile } from "../lib/deck-builder";
 import { displayCards } from "../lib/collection";
 import { priceKey } from "../lib/prices";
 import { readBuilderDeck } from "../lib/saved-builder-deck";
@@ -7,6 +7,10 @@ import inventory from "../data/initial-inventory.json";
 
 const refs = eligibleReferences("rogue assassin");
 assert.equal(refs.length, 10);
+assert.ok(strategyProfile(refs).find((card) => card.cardId === "astral heron")?.essential);
+const ireliaProfile = strategyProfile(eligibleReferences("blade dancer"));
+assert.ok(ireliaProfile.find((card) => card.cardId === "astral heron"));
+assert.equal(ireliaProfile.find((card) => card.cardId === "astral heron")?.essential, false, "An Akali engine annotation must not force Heron into another champion's strategy.");
 for (const ref of references) assert.deepEqual(validateDeck(ref.entries), [], ref.name);
 const anchor = refs[0].entries;
 assert.equal(anchor.filter((e) => ["main", "chosen"].includes(e.section)).reduce((s, e) => s + e.quantity, 0), 40);

@@ -119,7 +119,8 @@ export function strategyProfile(refs: ReferenceDeck[]) {
     for (const entry of ref.entries.filter((e) => ["main", "chosen"].includes(e.section))) counts.set(entry.cardId, (counts.get(entry.cardId) ?? 0) + entry.quantity);
     for (const [id, quantity] of counts) { frequencies.set(id, (frequencies.get(id) ?? 0) + 1); mainCopies.set(id, [...(mainCopies.get(id) ?? []), quantity]); }
   }
-  return [...frequencies].map(([cardId, decks]) => ({ cardId, decks, total: refs.length, medianCopies: [...mainCopies.get(cardId)!].sort((a, b) => a - b)[Math.floor(decks / 2)], essential: ["shuriken flip", "akali deadly weapon", "astral heron"].includes(cardId) }));
+  const akaliStrategy = refs.length > 0 && refs.every((ref) => ref.legendId === "rogue assassin");
+  return [...frequencies].map(([cardId, decks]) => ({ cardId, decks, total: refs.length, medianCopies: [...mainCopies.get(cardId)!].sort((a, b) => a - b)[Math.floor(decks / 2)], essential: akaliStrategy && ["shuriken flip", "akali deadly weapon", "astral heron"].includes(cardId) }));
 }
 export function representativeCard(id: string, inventory: readonly DisplayCard[], preferredCodes: string[] = []): DisplayCard | undefined {
   const owned = inventory.filter((c) => cardIdFor(c) === id);
