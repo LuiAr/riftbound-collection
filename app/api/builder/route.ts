@@ -5,6 +5,8 @@ import { displayCards } from "../../../lib/collection";
 import { cardsById, ownedInventory, type BuilderInput } from "../../../lib/deck-builder";
 import { builderStatus, generateDecks, loadFx, verifyCurrentRules } from "../../../lib/server-builder";
 import { loadPrices } from "../../../lib/server-prices";
+import { builderStream } from "../../../lib/server-builder-stream";
+import type { BuildProgress } from "../../../lib/builder-progress";
 
 export async function GET() {
   const user = await getChatGPTUser();
@@ -29,10 +31,15 @@ export async function POST(request: Request) {
     if (cardsById.get(input.legendId)?.type !== "Legend") throw new Error("Choose a supported Legend.");
     if (input.favouriteIds.some((id) => !cardsById.has(id)) || Object.keys(input.extras).some((id) => !cardsById.has(id))) throw new Error("Unknown favourite or temporary inventory card.");
     if (input.mode === "fun" && !input.favouriteIds.length) throw new Error("Choose a favourite card for the fun deck.");
-    const [snapshot, prices, fx] = await Promise.all([getCollection(user.userId), loadPrices().catch(() => null), loadFx()]);
-    const owned = ownedInventory(displayCards(snapshot.rows), input.extras);
-    if (input.favouriteIds.some((id) => !owned[id])) throw new Error("Confirm that you own your favourite cards using a temporary addition first.");
-    return Response.json(await generateDecks(user.userId, input, owned, prices, fx), { headers: { "cache-control": "private, no-store" } });
+    async function run(progress?: BuildProgress) {
+      progress?.("inventory");
+      const [snapshot, prices, fx] = await Promise.all([getCollection(user!.userId), loadPrices().catch(() => null), loadFx()]);
+      const owned = ownedInventory(displayCards(snapshot.rows), input.extras);
+      if (input.favouriteIds.some((id) => !owned[id])) throw new Error("Confirm that you own your favourite cards using a temporary addition first.");
+      return generateDecks(user!.userId, input, owned, prices, fx, progress);
+    }
+    if (request.headers.get("accept")?.includes("application/x-ndjson")) return builderStream(run);
+    return Response.json(await run(), { headers: { "cache-control": "private, no-store" } });
   } catch (error) {
     const message = error instanceof z.ZodError ? "Check the deck builder options and quantities." : error instanceof Error ? error.message : "This build could not be completed.";
     return Response.json({ error: message }, { status: 400 });

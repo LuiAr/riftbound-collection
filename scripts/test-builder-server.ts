@@ -36,7 +36,9 @@ try {
   await assert.rejects(generateDecks("no-key", input, fullOwned, null, fx), /not connected/);
   assert.equal(providerCalls, 0);
   env.OPENAI_API_KEY = "local-test-placeholder";
-  const valid = await generateDecks("owner", input, fullOwned, null, fx);
+  const stages: string[] = [];
+  const valid = await generateDecks("owner", input, fullOwned, null, fx, (stage) => stages.push(stage));
+  assert.deepEqual(stages, ["references", "build", "validate"]);
   assert.ok(valid.ownedOnly);
   assert.ok(valid.budget);
   let status = await builderStatus("owner");
@@ -54,7 +56,9 @@ try {
   await assert.rejects(generateDecks("capped", input, fullOwned, null, fx), /monthly AI limit/);
   assert.equal(providerCalls, before);
   uncertain = true;
-  await assert.rejects(generateDecks("uncertain", input, fullOwned, null, fx), /transport/);
+  const failedStages: string[] = [];
+  await assert.rejects(generateDecks("uncertain", input, fullOwned, null, fx, (stage) => failedStages.push(stage)), /transport/);
+  assert.deepEqual(failedStages, ["references", "build"], "No validation stage is reported when the provider request fails.");
   status = await builderStatus("uncertain");
   assert.ok(status.reservedSek > 0);
   assert.equal(status.spentSek, 0);

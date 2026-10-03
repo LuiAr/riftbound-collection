@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Copy, Plus, Save, Sparkles, X } from "lucide-react";
+import { Check, Copy, LoaderCircle, Plus, Save, Sparkles, X } from "lucide-react";
 import { assessDeck, builderCards, cardsById, cardIdFor, compatible, eligibleReferences, exportDeck, ownedInventory, references, representativeCard, RULES, type BuilderInput, type DeckProposal, type FxSnapshot } from "../lib/deck-builder";
 import { readBuilderDeck } from "../lib/saved-builder-deck";
 import type { SavedDeck } from "../lib/server-decks";
 import type { DisplayCard } from "../lib/collection";
 import type { PriceSnapshot } from "../lib/prices";
 import MissingCardButton from "../components/missing-card-button";
+import FavouriteCardPicker, { preferredFavouritePrinting } from "../components/favourite-card-picker";
+import { BUILD_STEPS, readBuilderStream, type BuildStage } from "../lib/builder-progress";
 
 type Generated = { ownedOnly: DeckProposal | null; budget: DeckProposal | null; explanation: string; rejected: string[]; input: BuilderInput; rulesCheckedAt: string; pricesAt: string | null; fx: FxSnapshot; costSek: number; model: string; createdAt: string };
 type Status = { enabled: boolean; model: string; capSek: number; spentSek: number; reservedSek: number; month: string; fx: FxSnapshot | null; rulesCheckedAt: string | null; rulesError: string | null; fxError: string | null; history: { id: string; createdAt: string; result: Generated }[] };
@@ -22,6 +24,7 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
   const [allowPurchases, setAllowPurchases] = useState(true);
   const [budget, setBudget] = useState(1000);
   const [favourites, setFavourites] = useState<string[]>([]);
+  const [favouriteCodes, setFavouriteCodes] = useState<Record<string, string>>({});
   const [extras, setExtras] = useState<Record<string, number>>({});
   const [extraId, setExtraId] = useState("akali deadly weapon");
   const [extraQuantity, setExtraQuantity] = useState(1);
@@ -30,6 +33,8 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
   const [savedError, setSavedError] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [buildStage, setBuildStage] = useState<BuildStage | null>(null);
+  const [buildState, setBuildState] = useState<"running" | "complete" | "failed">("running");
   const [saving, setSaving] = useState(false);
   const [openDeck, setOpenDeck] = useState<OpenDeck | null>(null);
   const [failureDetails, setFailureDetails] = useState<Generated | null>(null);
@@ -38,7 +43,7 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
   const owned = useMemo(() => ownedInventory(cards, extras), [cards, extras]);
   const deckOwned = useMemo(() => ownedInventory(cards, openDeck?.result?.input.extras ?? {}), [cards, openDeck]);
   const legends = useMemo(() => builderCards.filter((c) => c.type === "Legend" && eligibleReferences(c.id).length && (mode === "competitive" || favourites.every((id) => compatible(cardsById.get(id)!, c)))).sort((a, b) => legendLabel(a.id).localeCompare(legendLabel(b.id))), [mode, favourites]);
-  const favouriteCards = builderCards.filter((c) => ["Unit", "Spell", "Gear"].includes(c.type) && owned[c.id] > 0).sort((a, b) => a.name.localeCompare(b.name));
+  const preferredPrintings = favourites.map((id) => favouriteCodes[id] ?? preferredFavouritePrinting(cards, id)).filter((code): code is string => Boolean(code));
   const saved = savedDecks.map((deck) => ({ deck, proposal: readBuilderDeck(deck.name, deck.deckText) })).filter((item) => item.proposal !== null);
   const input: BuilderInput = { mode, legendId, favouriteIds: mode === "fun" ? favourites : [], budgetSek: allowPurchases ? budget : 0, extras };
   const proposal = openDeck?.proposal;
@@ -67,19 +72,31 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
   function open(proposal: DeckProposal, result: Generated | null, deckId?: string) {
     setOpenDeck({ proposal, result, deckId }); setName(proposal.name.slice(0, 80)); setNotice(""); setError(""); setFailureDetails(null);
   }
+  function chooseFavourite(card: DisplayCard) {
+    const id = cardIdFor(card);
+    if (!id) return;
+    if (favourites.includes(id) && (favouriteCodes[id] ?? preferredFavouritePrinting(cards, id)) === card.code) {
+      setFavourites(favourites.filter((item) => item !== id));
+      const next = { ...favouriteCodes }; delete next[id]; setFavouriteCodes(next);
+    } else if (favourites.includes(id) || favourites.length < 5) {
+      if (!favourites.includes(id)) setFavourites([...favourites, id]);
+      setFavouriteCodes({ ...favouriteCodes, [id]: card.code });
+    }
+  }
   async function generate() {
     setBusy(true); setError(""); setNotice(""); setFailureDetails(null);
+    setBuildStage(null); setBuildState("running");
     try {
-      const response = await fetch("/api/builder", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(input) });
-      const data = await response.json() as Generated & { error?: string };
-      if (!response.ok) throw new Error(data.error || "This deck could not be generated.");
+      const response = await fetch("/api/builder", { method: "POST", headers: { "content-type": "application/json", accept: "application/x-ndjson" }, body: JSON.stringify(input) });
+      const data = await readBuilderStream<Generated>(response, setBuildStage);
       const selected = allowPurchases ? data.budget ?? data.ownedOnly : data.ownedOnly;
       if (!selected) {
+        setBuildState("failed");
         setOpenDeck(null);
         setError("No deck passed the checks with these options. Try a different champion or budget.");
         setFailureDetails(data);
-      } else { open(selected, data); setFailureDetails(null); }
-    } catch (e) { setError(e instanceof Error ? e.message : "Generation failed. Please try again."); }
+      } else { open(selected, data); setFailureDetails(null); setBuildState("complete"); }
+    } catch (e) { setBuildState("failed"); setError(e instanceof Error ? e.message : "Generation failed. Please try again."); }
     finally { setBusy(false); refreshStatus().catch(() => {}); }
   }
   async function save() {
@@ -110,11 +127,21 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
         {allowPurchases && <label><span className="field-label">Budget (SEK)</span><input type="number" min="0" max="100000" step="50" value={budget} disabled={busy} onChange={(e) => setBudget(Math.max(0, Math.min(100000, Number(e.target.value))))} /></label>}
       </div>
       <button className="primary-button builder-main-action" type="button" onClick={generate} disabled={busy || saving || Boolean(unavailable) || !status?.rulesCheckedAt || !status?.fx} aria-busy={busy}><Sparkles aria-hidden="true" />{busy ? "Generating your deck…" : "Generate deck"}</button>
-      {busy && <p className="head-note" role="status">This can take a couple of minutes.</p>}
+      {(busy || (buildStage && buildState === "failed")) && <div className="builder-progress" aria-busy={busy}>
+        <div className="builder-progress-heading"><strong>{buildState === "complete" ? "Your deck is ready" : buildState === "failed" ? "Generation stopped" : "Making your deck"}</strong><span role="status" aria-live="polite">{buildState === "complete" ? "All checks completed" : buildState === "failed" ? "See the message below" : buildStage ? BUILD_STEPS.find((step) => step.id === buildStage)?.title : "Connecting…"}</span></div>
+        <ol>{BUILD_STEPS.map((step, index) => {
+          const current = BUILD_STEPS.findIndex((item) => item.id === buildStage);
+          const done = buildState === "complete" || index < current;
+          const active = index === current && buildState !== "complete";
+          return <li className={done ? "done" : active ? buildState === "failed" ? "failed" : "active" : "pending"} key={step.id} aria-current={active ? "step" : undefined}><span className="builder-step-icon">{done ? <Check aria-hidden="true" /> : active && buildState === "running" ? <LoaderCircle aria-hidden="true" /> : active && buildState === "failed" ? <X aria-hidden="true" /> : index + 1}</span><div><strong>{step.title}</strong><p>{step.detail}</p><span className="visually-hidden">{done ? "Completed" : active ? buildState === "failed" ? "Stopped" : "In progress" : "Waiting"}</span></div></li>;
+        })}</ol>
+        {busy && buildStage === "build" && <p className="builder-progress-wait">The AI is working on the strategy. This step can take a couple of minutes.</p>}
+      </div>}
+      {!busy && buildState === "complete" && <div className="builder-generated" role="status"><Check aria-hidden="true" />Deck ready. Review it and save when you’re happy.</div>}
       {unavailable && <p className="head-note">{unavailable}</p>}
       <details className="builder-options"><summary>More options</summary>
         <label><span className="field-label">Deck style</span><select value={mode} disabled={busy} onChange={(e) => { const next = e.target.value as "competitive" | "fun"; setMode(next); if (next === "fun" && !favourites.length && owned["diana no longer human"] > 0) setFavourites(["diana no longer human"]); }}><option value="competitive">Competitive</option><option value="fun">Fun with favourites</option></select></label>
-        {mode === "fun" && <div><label><span className="field-label">Favourite cards</span><select value="" disabled={busy} onChange={(e) => { if (e.target.value && !favourites.includes(e.target.value) && favourites.length < 5) setFavourites([...favourites, e.target.value]); }}><option value="">Choose an owned card</option>{favouriteCards.map((c) => <option value={c.id} key={c.id}>{c.name}</option>)}</select></label><div className="builder-chips">{favourites.map((id) => <button disabled={busy} key={id} type="button" onClick={() => setFavourites(favourites.filter((x) => x !== id))}>{cardsById.get(id)?.name}<X aria-hidden="true" /></button>)}</div></div>}
+        {mode === "fun" && <div><FavouriteCardPicker cards={cards} selected={favourites} printingCodes={favouriteCodes} disabled={busy} onSelect={chooseFavourite} /><div className="builder-chips">{favourites.map((id) => <button disabled={busy} key={id} type="button" onClick={() => setFavourites(favourites.filter((x) => x !== id))}>{cardsById.get(id)?.name}<X aria-hidden="true" /></button>)}</div></div>}
         <details><summary>Add cards I haven’t imported yet</summary><p className="head-note">Extra copies for this build only. Your collection may be incomplete.</p><div className="builder-extra-form"><label><span className="field-label">Card</span><select value={extraId} disabled={busy} onChange={(e) => setExtraId(e.target.value)}>{builderCards.filter((c) => c.type !== "Token").sort((a, b) => a.name.localeCompare(b.name)).map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select></label><label><span className="field-label">Extra copies</span><input type="number" disabled={busy} value={extraQuantity} min="1" max="1000" onChange={(e) => setExtraQuantity(Math.max(1, Math.min(1000, Math.floor(Number(e.target.value)) || 1)))} /></label><button type="button" disabled={busy} className="secondary-button" onClick={() => setExtras({ ...extras, [extraId]: Math.min(1000, (extras[extraId] ?? 0) + extraQuantity) })}><Plus aria-hidden="true" />Add</button></div><div className="builder-chips">{Object.entries(extras).map(([id, count]) => <button disabled={busy} type="button" key={id} onClick={() => { const next = { ...extras }; delete next[id]; setExtras(next); }}>{cardsById.get(id)?.name} +{count}<X aria-hidden="true" /></button>)}</div></details>
         {status && <p className="head-note">AI usage: {money(status.spentSek)} of {money(status.capSek)} this month{status.reservedSek ? ` · ${money(status.reservedSek)} reserved` : ""}. Up to 10 SEK reserved per generation, excluding taxes and fees.</p>}
         {(status?.rulesError || status?.fxError) && <p className="head-note">{status.rulesError ?? status.fxError}</p>}
@@ -136,7 +163,7 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
         if (!entries.length) return null;
         return <section className="builder-card-section" key={section}><h3>{label}<span>{entries.reduce((sum, e) => sum + e.quantity, 0)} cards</span></h3><div className="builder-card-grid">{entries.map((entry) => {
           const line = assessment.lines.find((l) => l.cardId === entry.cardId)!;
-          const card = representativeCard(entry.cardId, cards);
+          const card = representativeCard(entry.cardId, cards, preferredPrintings);
           return card ? <div className="builder-card-row" key={entry.cardId}><MissingCardButton card={card} name={cardsById.get(entry.cardId)!.name} detail={`${line.owned} owned · ${line.required} needed · ${line.missing} missing`} count={entry.quantity} onOpen={onOpenCard} /></div> : <p key={entry.cardId}>{entry.quantity} {cardsById.get(entry.cardId)?.name ?? entry.cardId}</p>;
         })}</div></section>;
       })}</div>

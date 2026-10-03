@@ -2,6 +2,7 @@ import { env } from "cloudflare:workers";
 import { z } from "zod";
 import { RULES, isBannedCard, builderCards, cardsById, compatible, eligibleReferences, assessDeck, strategyProfile, type BuilderInput, type DeckProposal, type FxSnapshot } from "./deck-builder";
 import type { PriceSnapshot } from "./prices";
+import type { BuildProgress } from "./builder-progress";
 
 export const MONTHLY_CAP_ORE = 10000;
 const MODEL = "gpt-6.1-sol";
@@ -59,8 +60,9 @@ const outputSchema = {
     }] }])),
   },
 };
-export async function generateDecks(userId: string, input: BuilderInput, owned: Record<string, number>, prices: PriceSnapshot | null, fx: FxSnapshot) {
+export async function generateDecks(userId: string, input: BuilderInput, owned: Record<string, number>, prices: PriceSnapshot | null, fx: FxSnapshot, progress?: BuildProgress) {
   if (!env.OPENAI_API_KEY) throw new Error("AI is not connected yet. A separately billed OpenAI API key must be configured securely for this website.");
+  progress?.("references");
   const rulesCheckedAt = await verifyCurrentRules();
   const refs = eligibleReferences(input.legendId).filter((r) => Date.now() - Date.parse(r.date) < 90 * 86400000);
   if (!refs.length) throw new Error("This Legend has no recent legal reference deck in the current source pool.");
@@ -83,11 +85,13 @@ export async function generateDecks(userId: string, input: BuilderInput, owned: 
   await db().prepare("INSERT INTO builder_calls (user_id, call_id, month, reserved_ore, status, created_at) VALUES (?, ?, ?, ?, 'running', ?)").bind(userId, callId, month, reservationOre, new Date().toISOString()).run();
   let actualOre: number | null = null;
   try {
+    progress?.("build");
     const response = await fetch("https://api.openai.com/v1/responses", { method: "POST", headers: { authorization: `Bearer ${env.OPENAI_API_KEY}`, "content-type": "application/json" }, body, signal: AbortSignal.timeout(150000) });
     const raw = await response.json() as { status?: string; usage?: { input_tokens: number; output_tokens: number }; output?: { type: string; content?: { type: string; text?: string }[] }[] };
     if (raw.usage && Number.isSafeInteger(raw.usage.input_tokens) && Number.isSafeInteger(raw.usage.output_tokens) && raw.usage.input_tokens >= 0 && raw.usage.output_tokens >= 0) actualOre = Math.ceil((raw.usage.input_tokens * 2 + raw.usage.output_tokens * 10) / 1e6 * fx.usdSek * 100);
     if (!response.ok || raw.status !== "completed") throw new Error("The AI service could not complete this build. No deck was accepted.");
     if (actualOre === null || actualOre > reservationOre) throw new Error("The AI service returned unexpected usage. This build was not accepted.");
+    progress?.("validate");
     const text = raw.output?.flatMap((o) => o.content ?? []).filter((c) => c.type === "output_text").map((c) => c.text).join("");
     const generated = resultSchema.parse(JSON.parse(text || ""));
     const rejected: string[] = [];
