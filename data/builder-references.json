@@ -1,5 +1,7758 @@
 [
   {
+    "id": "ref-7bb69052e164699b",
+    "name": "Heron Baron Irelia :3 14th RQ LA",
+    "url": "https://piltoverarchive.com/decks/view/0b6d8eee-4503-4d4e-9a3a-2555c3e86817",
+    "source": "Piltover Archive",
+    "date": "2026-10-03",
+    "dateKind": "Collection date (exact update unavailable)",
+    "event": null,
+    "placement": null,
+    "accessedAt": "2026-10-03",
+    "legendId": "blade dancer",
+    "strategy": "Irelia Heron",
+    "evidence": "Reported 14th at LA; not independently verified",
+    "evidenceKind": "community",
+    "strategyReviewed": true,
+    "updatedLabel": "5 days ago",
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "blade dancer",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "forgotten monument",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sigil of the storm",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "abandoned hall",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "irelia fervent",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "defiant dance",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "abandon",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "flash",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "rebuke",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "boots of swiftness",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "pyke returned",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "baron nashor",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "hard bargain",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "rebuke",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ravenbloom prefect",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "adaptatron",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "tomb raider barbara",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-658f20504e62734c",
+    "name": "Irelia, Blade Dancer / Xeno",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 2,
+    "accessedAt": "2026-10-03",
+    "legendId": "blade dancer",
+    "strategy": "Irelia mobile tempo",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": true,
+    "updatedLabel": null,
+    "aliases": [
+      {
+        "url": "https://piltoverarchive.com/decks/view/44553388-c5cd-4c26-ba18-60fb88fc4833",
+        "source": "Piltover Archive",
+        "name": "Irelia best of LA"
+      }
+    ],
+    "entries": [
+      {
+        "cardId": "blade dancer",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "targon s peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sunken temple",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "abandoned hall",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "irelia fervent",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "en garde",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "twilight shroud",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "defiant dance",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "abandon",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "flash",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "guardian angel",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "boots of swiftness",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "pyke returned",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "pyke returned",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ravenbloom prefect",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "adaptatron",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-f99777e92412ef9b",
+    "name": "Queen Bee (Devin's Tempo Irelia)",
+    "url": "https://piltoverarchive.com/decks/view/0e3ffd49-7f24-43f2-930f-368610ebf871",
+    "source": "Piltover Archive",
+    "date": "2026-10-03",
+    "dateKind": "Collection date (exact update unavailable)",
+    "event": null,
+    "placement": null,
+    "accessedAt": "2026-10-03",
+    "legendId": "blade dancer",
+    "strategy": "Irelia mobile tempo",
+    "evidence": "Community strategy explanation; no verified event result",
+    "evidenceKind": "community",
+    "strategyReviewed": true,
+    "updatedLabel": "2 days ago",
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "blade dancer",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "targon s peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "rockfall path",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "abandoned hall",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "irelia fervent",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "en garde",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "defiant dance",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "flash",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "guardian angel",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "treasure hunter",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "rebuke",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "boots of swiftness",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "twilight shroud",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "rebuke",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "caitlyn patrolling",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "disarming rake",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "adaptatron",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 2,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-f184b2ca5cca1e07",
+    "name": "diana allen wu best of LA",
+    "url": "https://piltoverarchive.com/decks/view/56399a74-8fbd-4f82-abcd-fde2fd3820b8",
+    "source": "Piltover Archive",
+    "date": "2026-10-03",
+    "dateKind": "Collection date (exact update unavailable)",
+    "event": null,
+    "placement": null,
+    "accessedAt": "2026-10-03",
+    "legendId": "scorn of the moon",
+    "strategy": "Diana Hwei spell tempo",
+    "evidence": "Community LA attribution; main matches ASC nalkpas but sideboard differs",
+    "evidenceKind": "community",
+    "strategyReviewed": true,
+    "updatedLabel": "4 days ago",
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "scorn of the moon",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "abandoned hall",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "seat of power",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "targon s peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "diana lunari",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "stupefy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "flash",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "hard bargain",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ravenbloom student",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "traveling merchant",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "smoke screen",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "sprite fountain",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "rebuke",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "eclipse",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "moonfall",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "hwei brooding painter",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of insight",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "turn to dust",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "up from the deep",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "tail cloaked matriarch",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "singularity",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-ae57fbbf721577ac",
+    "name": "Diana, Scorn of the Moon / ASC nalkpas",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 22,
+    "accessedAt": "2026-10-03",
+    "legendId": "scorn of the moon",
+    "strategy": "Diana Hwei spell tempo",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": true,
+    "updatedLabel": null,
+    "aliases": [
+      {
+        "url": "https://piltoverarchive.com/decks/view/d09fd209-11e0-45ba-8a25-d4088b69e512",
+        "source": "Piltover Archive",
+        "name": "Best of Los Angeles Diana ASC nalkpas"
+      }
+    ],
+    "entries": [
+      {
+        "cardId": "scorn of the moon",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "abandoned hall",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "seat of power",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "targon s peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "diana lunari",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "stupefy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "flash",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "hard bargain",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ravenbloom student",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "traveling merchant",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "smoke screen",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "sprite fountain",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "rebuke",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "eclipse",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "moonfall",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "hwei brooding painter",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of insight",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "turn to dust",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "up from the deep",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "tail cloaked matriarch",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "singularity",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-c0c200f09d305fb2",
+    "name": "Diana Hwei v100 (VEN post ban)",
+    "url": "https://piltoverarchive.com/decks/view/44379da0-710a-40d9-9d18-6670d05ab829",
+    "source": "Piltover Archive",
+    "date": "2026-10-03",
+    "dateKind": "Collection date (exact update unavailable)",
+    "event": null,
+    "placement": null,
+    "accessedAt": "2026-10-03",
+    "legendId": "scorn of the moon",
+    "strategy": "Diana Hwei spell tempo",
+    "evidence": "Community list; no verified event result",
+    "evidenceKind": "community",
+    "strategyReviewed": true,
+    "updatedLabel": "13 days ago",
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "scorn of the moon",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "abandoned hall",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "seat of power",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "targon s peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "diana lunari",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "stupefy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "flash",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "hard bargain",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ravenbloom student",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "traveling merchant",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "smoke screen",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "sprite fountain",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "moonfall",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "hwei brooding painter",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "decree of insight",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "turn to dust",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "pickpocket",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "kha zix mutating horror",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "angler beast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "vex cheerless",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-15d738b47dfbcfcd",
+    "name": "4th - Dekawuel11 - RRO23",
+    "url": "https://piltoverarchive.com/decks/view/bb7f1da0-f35d-47d1-a1fb-95e8f42d571f",
+    "source": "Piltover Archive",
+    "date": "2026-10-03",
+    "dateKind": "Collection date (exact update unavailable)",
+    "event": null,
+    "placement": null,
+    "accessedAt": "2026-10-03",
+    "legendId": "scorn of the moon",
+    "strategy": "Diana Hwei recursion",
+    "evidence": "Reported RRO23 #4; event date, field size and result unverified",
+    "evidenceKind": "community",
+    "strategyReviewed": true,
+    "updatedLabel": "8 days ago",
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "scorn of the moon",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "ravenbloom conservatory",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "abandoned hall",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "ripper s bay",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "diana lunari",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "retreat",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "stupefy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "flash",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "hard bargain",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "ravenbloom student",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "traveling merchant",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "smoke screen",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "moonfall",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "consult the past",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "deadly flourish",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "hwei brooding painter",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "thousand tailed watcher",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of insight",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "abandon",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "turn to dust",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "invert timelines",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "vex cheerless",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-57f874a5e839600e",
+    "name": "diana chill with some vendetta",
+    "url": "https://piltoverarchive.com/decks/view/866effb9-9f7e-425f-88c6-b8ffb6fceaa5",
+    "source": "Piltover Archive",
+    "date": "2026-10-03",
+    "dateKind": "Collection date (exact update unavailable)",
+    "event": null,
+    "placement": null,
+    "accessedAt": "2026-10-03",
+    "legendId": "scorn of the moon",
+    "strategy": "Diana Hwei spell tempo",
+    "evidence": "Community list; no verified event result",
+    "evidenceKind": "community",
+    "strategyReviewed": true,
+    "updatedLabel": "4 days ago",
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "scorn of the moon",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "abandoned hall",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "seat of power",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "targon s peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "diana lunari",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "stupefy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "flash",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "hard bargain",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ravenbloom student",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "traveling merchant",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "turn to dust",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "smoke screen",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "eclipse",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "moonfall",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "hwei brooding painter",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "vex cheerless",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of insight",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "turn to dust",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "sprite fountain",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "up from the deep",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-a02e1a2c5715c713",
+    "name": "Diana Temporal",
+    "url": "https://piltoverarchive.com/decks/view/14e5053e-7d48-4a73-93de-45c43880154e",
+    "source": "Piltover Archive",
+    "date": "2026-10-03",
+    "dateKind": "Collection date (exact update unavailable)",
+    "event": null,
+    "placement": null,
+    "accessedAt": "2026-10-03",
+    "legendId": "scorn of the moon",
+    "strategy": "Diana Hwei temporal variant",
+    "evidence": "Community list; no verified event result",
+    "evidenceKind": "community",
+    "strategyReviewed": true,
+    "updatedLabel": "4 days ago",
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "scorn of the moon",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "abandoned hall",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "rockfall path",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "targon s peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "diana lunari",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "stupefy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "flash",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "hard bargain",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ravenbloom student",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "traveling merchant",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "turn to dust",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sprite fountain",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "temporal breach",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "eclipse",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "moonfall",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "hwei brooding painter",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "thousand tailed watcher",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "turn to dust",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "up from the deep",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "invert timelines",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "angler beast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "singularity",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "thousand tailed watcher",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-7237d23f0f082295",
+    "name": "Renata Glasc, Chem-Baroness / Cliffsunder",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 567,
+    "accessedAt": "2026-10-03",
+    "legendId": "chem baroness",
+    "strategy": "Benchmark Renata Glasc, Chem-Baroness",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "chem baroness",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "renata glasc industrialist",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "ashe focused",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "baited hook",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "deathgrip",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "hidden blade",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "honest broker",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "hostile takeover",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "imperial decree",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "kennen keeper of balance",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "lillia fae fawn",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "noxian emissary",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "renata glasc mastermind",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "safety inspector",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "seal of unity",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "spectral matron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sprite burst",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "trusty ramhound",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "vanguard captain",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "xin zhao vigilant",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "forbidding waste",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "seat of power",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "trifarian war camp",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "order rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "ashe focused",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "hostile takeover",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "imperial decree",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ornn forge god",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "pickpocket",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "safety inspector",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "time warp",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "zaun punk",
+        "quantity": 2,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-83bcbe01a059f329",
+    "name": "Shen, Eye of Twilight / Lunar",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 549,
+    "accessedAt": "2026-10-03",
+    "legendId": "eye of twilight",
+    "strategy": "Benchmark Shen, Eye of Twilight",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "eye of twilight",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "shen leader of the kinkou order",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "block",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "divining shells",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "fiora victorious",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "irelia fervent",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "kayle justified",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ki barrier",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "shadow dash",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "shepherd s heirloom",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sterak s gage",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "forgotten monument",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "kinkou temple",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "risen altar",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "order rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of unity",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "salvage",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "tomb raider barbara",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "vengeance",
+        "quantity": 2,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-baad869c1a6ba0b1",
+    "name": "Mel, Soul's Reflection / DSG Alanzq",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 480,
+    "accessedAt": "2026-10-03",
+    "legendId": "soul s reflection",
+    "strategy": "Benchmark Mel, Soul's Reflection",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "soul s reflection",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "mel newly awakened",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "applied researchers",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "dredge up",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "hwei brooding painter",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ravenbloom student",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rebuttal",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "shock blast",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "smoke screen",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "stupefy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "time warp",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "traveling merchant",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "frozen fortress",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "rockfall path",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "targon s peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "decree of insight",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "pickpocket",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ravenbloom prefect",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "turn to dust",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "unchecked power",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-821180261c522e20",
+    "name": "Renekton, Butcher of the Sands / TheKryptonian",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 410,
+    "accessedAt": "2026-10-03",
+    "legendId": "butcher of the sands",
+    "strategy": "Benchmark Renekton, Butcher of the Sands",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "butcher of the sands",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "renekton rage fueled",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "cleave",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "darius trifarian",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "dominus",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "first mate",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "grim apothecary",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "inferna",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "irresistible faefolk",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "kinkou initiate",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "nidalee cat form",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "noxus hopeful",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "pit rookie",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "punch first",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rampage",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "rengar trophy hunter",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ruin runner",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "tools of empire",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "forbidding waste",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "seat of power",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "star spring",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "body rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "brittle steel",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of rage",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of strength",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "repulse",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "thermo beam",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "unyielding spirit",
+        "quantity": 2,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-6a08e47c61b28ac6",
+    "name": "Rumble, Mechanized Menace / Gremello",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 394,
+    "accessedAt": "2026-10-03",
+    "legendId": "mechanized menace",
+    "strategy": "Benchmark Rumble, Mechanized Menace",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "mechanized menace",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "rumble hotheaded",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "brynhir thundersong",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "bubble bot",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "forecaster",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "gem jammer",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "hextech formula",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "long sword",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "patched porobot",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "perfect execution",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "production surge",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "pyke dockside butcher",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "questionable tome",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "rage amplifier",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rengar pouncing",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "rumble hotheaded",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "sprite fountain",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "temporal breach",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "trifarian war camp",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "veiled temple",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "zaun warrens",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "brittle steel",
+        "quantity": 3,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "brynhir thundersong",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of insight",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "pickpocket",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "unchecked power",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-c7e8115f369202f1",
+    "name": "Vi, Piltover Enforcer / aydeedee",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 374,
+    "accessedAt": "2026-10-03",
+    "legendId": "piltover enforcer",
+    "strategy": "Benchmark Vi, Piltover Enforcer",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "piltover enforcer",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "vi peacekeeper",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "against the odds",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "b f sword",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "brynhir thundersong",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "cleave",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "deathgrip",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "gem jammer",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "hextech gauntlets",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "hidden blade",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "honest broker",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "kennen keeper of balance",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "long sword",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "perfect execution",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "rek sai breacher",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "rengar unseen",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "rumble hotheaded",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sacrifice",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "salvage",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "trusty ramhound",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "forge of the fluft",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "reckoner s arena",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "zaun warrens",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "order rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "ashe focused",
+        "quantity": 3,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "imperial decree",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "noxus saboteur",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "salvage",
+        "quantity": 2,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-3f8b499b0e049941",
+    "name": "Zed, Master of Shadows / Egoist",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 330,
+    "accessedAt": "2026-10-03",
+    "legendId": "master of shadows",
+    "strategy": "Benchmark Zed, Master of Shadows",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "master of shadows",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "zed without a sound",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "baron nashor",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "blood rush",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "brittle steel",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "cleave",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "death mark",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "hard bargain",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "perfect execution",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "shadow order disciple",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "the harrowing",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "traveling merchant",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "up from the deep",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "vi destructive",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "forbidding waste",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "minefield",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "zaun warrens",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 8,
+        "section": "runes"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 4,
+        "section": "runes"
+      },
+      {
+        "cardId": "abandon",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "brittle steel",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ravenbloom prefect",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "thermo beam",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "up from the deep",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-70cbc454df6e4615",
+    "name": "Poppy, Keeper of the Hammer / Rubbjo",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 257,
+    "accessedAt": "2026-10-03",
+    "legendId": "keeper of the hammer",
+    "strategy": "Benchmark Poppy, Keeper of the Hammer",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "keeper of the hammer",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "poppy paragon",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "blood money",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "catalyst of aeons",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "challenge",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "confront",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "dazzling aurora",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "elder dragon",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "flurry of blades",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "forge of the future",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "harnessed dragon",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "mobilize",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rift herald",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "sacrifice",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "salvage",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "the ruination",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "vanguard armory",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "forgotten monument",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sigil of the storm",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "threshold of the gray",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "body rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "order rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "cataclysmic duel",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of strength",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "divine judgment",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "rengar trophy hunter",
+        "quantity": 3,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "salvage",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "vanguard armory",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-79d9edac3e4227bf",
+    "name": "Master Yi, Wuju Master / VinzHS",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 253,
+    "accessedAt": "2026-10-03",
+    "legendId": "wuju master",
+    "strategy": "Benchmark Master Yi, Wuju Master",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "wuju master",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "master yi tempered",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "alpha strike",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "arachnoid horror",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "concentrate",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "emperor s divide",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "gemhand hunter",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "grim resolve",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "herald of spring",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "master yi tempered",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "master yi unstoppable",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "punch first",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "voracious gromp",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "wuju apprentice",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "gardens of becoming",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "reckoner s arena",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "targon s peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "body rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "disarming rake",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "rampage",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "unyielding spirit",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-e7103db099c5e114",
+    "name": "Draven, Glorious Executioner / I Missed My Q",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 204,
+    "accessedAt": "2026-10-03",
+    "legendId": "glorious executioner",
+    "strategy": "Benchmark Draven, Glorious Executioner",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "glorious executioner",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "draven showboat",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "blood rush",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "edge of night",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "evelynn entrancing",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "inferna",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "kha zix mutating horror",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "noxus hopeful",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "overzealous fan",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "pyke dockside butcher",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "pyke returned",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "rebuke",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rengar pouncing",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "spinning axe",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "up from the deep",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "grove of the god willow",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "star spring",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "zaun warrens",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "brittle steel",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "brynhir thundersong",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ravenbloom prefect",
+        "quantity": 3,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-1de3c1b5adc1b817",
+    "name": "Ambessa, Matriarch of War / TSS RiftboundTee",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 201,
+    "accessedAt": "2026-10-03",
+    "legendId": "matriarch of war",
+    "strategy": "Benchmark Ambessa, Matriarch of War",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "matriarch of war",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "ambessa the wolf",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "ambessa the wolf",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "challenge",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "first mate",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "guttural roar",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "irresistible faefolk",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "kayle justified",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "kennen keeper of balance",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "legion marauder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "lucian merciless",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "noxian emissary",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "onslaught",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "pit rookie",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "primal strength",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "public execution",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "punch first",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rampage",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rengar trophy hunter",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "tactical retreat",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "vi peacekeeper",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "risen altar",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sandswept tomb",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "star spring",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "body rune",
+        "quantity": 8,
+        "section": "runes"
+      },
+      {
+        "cardId": "order rune",
+        "quantity": 4,
+        "section": "runes"
+      },
+      {
+        "cardId": "ambessa respected and feared",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of strength",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "kayle justified",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "public execution",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "repulse",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "salvage",
+        "quantity": 2,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-92253fdedf2fd31d",
+    "name": "Jax, Grandmaster at Arms / T1WIN",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 162,
+    "accessedAt": "2026-10-03",
+    "legendId": "grandmaster at arms",
+    "strategy": "Benchmark Jax, Grandmaster at Arms",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "grandmaster at arms",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "jax unmatched",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "brutalizer",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "counter strike",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "doran s blade",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "first mate",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "guardian angel",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "irelia fervent",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "irresistible faefolk",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "lucian merciless",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "punch first",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "rampage",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rengar trophy hunter",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "forbidding waste",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "ornn s forge",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sunken temple",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "body rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "disarming rake",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "onslaught",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ruin runner",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "tomb raider barbara",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-34fda15e1f937981",
+    "name": "Ivern, Green Father / Aserty",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 151,
+    "accessedAt": "2026-10-03",
+    "legendId": "green father",
+    "strategy": "Benchmark Ivern, Green Father",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "green father",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "ivern nurturer",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "affectionate poro",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "block",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "call to glory",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "daisy",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "emperor s divide",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "fallen feline",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "friendship",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "frisky hunter",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "grand strategem",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ivern nurturer",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "janna savior",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "kennen keeper of balance",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "mutated mouser",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "stalwart poro",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "trusty ramhound",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "vilemaw",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "forbidding waste",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "rockfall path",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "vilemaw s lair",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "order rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "ashe focused",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "blitzcrank impassive",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "cull the weak",
+        "quantity": 3,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "disarming rake",
+        "quantity": 3,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-2ff82edcd30777de",
+    "name": "Sivir, Battle Mistress / Randyyy",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 146,
+    "accessedAt": "2026-10-03",
+    "legendId": "battle mistress",
+    "strategy": "Benchmark Sivir, Battle Mistress",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "battle mistress",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "sivir mercenary",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "edge of night",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ezreal prodigy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "grim resolve",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "last rites",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "punch first",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "pyke returned",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "rampage",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "shadow order disciple",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "tail cloaked matriarch",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "tornado warrior",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "traveling merchant",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sandswept tomb",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sigil of the storm",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "zaun warrens",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "body rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "akshan mischievous",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of strength",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ravenbloom prefect",
+        "quantity": 3,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "unyielding spirit",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-42fb9e59ba47d428",
+    "name": "Nasus, Curator of the Sands / Niguel",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 142,
+    "accessedAt": "2026-10-03",
+    "legendId": "curator of the sands",
+    "strategy": "Benchmark Nasus, Curator of the Sands",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "curator of the sands",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "nasus ascended",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "bellows breath",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "find your center",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "lecturing yordle",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "lonely poro",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "ravenbloom student",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sprite burst",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sprite queen",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "stupefy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "tasty faefolk",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "thousand tailed watcher",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "time warp",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "frozen fortress",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "rockfall path",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "vilemaw s lair",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of insight",
+        "quantity": 3,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "tomb raider barbara",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "turn to dust",
+        "quantity": 2,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-ad3a2636798e9ab6",
+    "name": "Pyke, Bloodharbor Ripper / C4lcioSF",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 113,
+    "accessedAt": "2026-10-03",
+    "legendId": "bloodharbor ripper",
+    "strategy": "Benchmark Pyke, Bloodharbor Ripper",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "bloodharbor ripper",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "pyke dockside butcher",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "bewitching spirit",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "blast corps cadet",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "blood rush",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "brittle steel",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "cleave",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "ezreal prodigy",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "gust monk",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "hard bargain",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "piercing light",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "seal of rage",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "sharkling",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "tail cloaked matriarch",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "traveling merchant",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "treasure hunter",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "void seeker",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "frozen fortress",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "rockfall path",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "void gate",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "angler beast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "baron nashor",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of rage",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "downwell",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ravenbloom prefect",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "rebuke",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "smite",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "thermo beam",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-a4832b6efcc7e198",
+    "name": "Jhin, Virtuoso / Jibbs",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 107,
+    "accessedAt": "2026-10-03",
+    "legendId": "virtuoso",
+    "strategy": "Benchmark Jhin, Virtuoso",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "virtuoso",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "jhin meticulous killer",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "consult the past",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "curtain call",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "deadly flourish",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "downstage dramatics",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "forecaster",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "frigid touch",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "noxus hopeful",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "orb of regret",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "plundering poro",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rocket barrage",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "singularity",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "sprite burst",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "stupefy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "thousand tailed watcher",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "time warp",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "unchecked power",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "forbidding waste",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "frozen fortress",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sigil of the storm",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "brittle steel",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of insight",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "sharkling",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "sprite fountain",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "thermo beam",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "unchecked power",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-6e24fecde9168fcd",
+    "name": "Lillia, Bashful Bloom / DanOz",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 43,
+    "accessedAt": "2026-10-03",
+    "legendId": "bashful bloom",
+    "strategy": "Benchmark Lillia, Bashful Bloom",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "bashful bloom",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "lillia fae fawn",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "brutalizer",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "en garde",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "lillia fae fawn",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "lonely poro",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "mask of foresight",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ravenbloom student",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "smoke and mirrors",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "smoke screen",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "sprite burst",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sprite fountain",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "stupefy",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "thousand tailed watcher",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "tomb raider barbara",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "unchecked power",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "black flame altar",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "dusk rose lab",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "seat of power",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of insight",
+        "quantity": 3,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "disarming rake",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "lilting lullaby",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "tomb raider barbara",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-038bb5dfaf10c35d",
+    "name": "Jayce, Defender of Tomorrow / ASC Brandon",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 42,
+    "accessedAt": "2026-10-03",
+    "legendId": "defender of tomorrow",
+    "strategy": "Benchmark Jayce, Defender of Tomorrow",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "defender of tomorrow",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "jayce brilliant inventor",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "bellows breath",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "catalyst of aeons",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "clairvoyance",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "dazzling aurora",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "dredge up",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "elder dragon",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "flurry of blades",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "garbage grabber",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "gutter palace",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "mobilize",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "platewyrm egg",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "promising future",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rocket barrage",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "sprite burst",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "sprite fountain",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "forgotten monument",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "frozen fortress",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sigil of the storm",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "body rune",
+        "quantity": 8,
+        "section": "runes"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 4,
+        "section": "runes"
+      },
+      {
+        "cardId": "deadly flourish",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "flurry of blades",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "sprite burst",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "stupefy",
+        "quantity": 3,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "wages of pain",
+        "quantity": 2,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-a73bc2b10016d4d6",
+    "name": "Rek'Sai, Void Burrower / Sinzari",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 41,
+    "accessedAt": "2026-10-03",
+    "legendId": "void burrower",
+    "strategy": "Benchmark Rek'Sai, Void Burrower",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "void burrower",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "rek sai breacher",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "blood rush",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "carrion dredger",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "cleave",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "cull the weak",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "faithful manufactor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "hextech ray",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "hidden blade",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "honest broker",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "imperial decree",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "inferna",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "mischievous marai",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "noxian emissary",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "noxus hopeful",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "shadow fiend",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "undertitan",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "void rush",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "forbidding waste",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "rockfall path",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "void gate",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "order rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "brittle steel",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 3,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "forge of the future",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "imperial decree",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "salvage",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "smite",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "thermo beam",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-630454ba2ed6c37f",
+    "name": "Ezreal, Prodigal Explorer / KactusxKing",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 37,
+    "accessedAt": "2026-10-03",
+    "legendId": "prodigal explorer",
+    "strategy": "Benchmark Ezreal, Prodigal Explorer",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "prodigal explorer",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "ezreal prodigy",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "bellows breath",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "bewitching spirit",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "deadly flourish",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "pack of wonders",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "singularity",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "sprite fountain",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "stupefy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "the list",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "thousand tailed watcher",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "treasure trove",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "turn to dust",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "wages of pain",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "frozen fortress",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sigil of the storm",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "vilemaw s lair",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "angler beast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "kha zix mutating horror",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "pickpocket",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ravenbloom prefect",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "singularity",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "turn to dust",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-7c51bd61f1d1898f",
+    "name": "Fiora, Grand Duelist / VVES",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 32,
+    "accessedAt": "2026-10-03",
+    "legendId": "grand duelist",
+    "strategy": "Benchmark Fiora, Grand Duelist",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "grand duelist",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "fiora victorious",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "akshan mischievous",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "doran s blade",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "elder dragon",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "harnessed dragon",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "kayle justified",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "kinkou initiate",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "pit rookie",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "punch first",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rampage",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rengar trophy hunter",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rift herald",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "riposte",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sacrifice",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "shepherd s heirloom",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "amateur recital",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "risen altar",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sunken temple",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "body rune",
+        "quantity": 8,
+        "section": "runes"
+      },
+      {
+        "cardId": "order rune",
+        "quantity": 4,
+        "section": "runes"
+      },
+      {
+        "cardId": "challenge",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of strength",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "flurry of blades",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "repulse",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "salvage",
+        "quantity": 2,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-f63d4f7df5678bb8",
+    "name": "Lucian, Purifier / ASC Deamon",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 25,
+    "accessedAt": "2026-10-03",
+    "legendId": "purifier",
+    "strategy": "Benchmark Lucian, Purifier",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "purifier",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "lucian merciless",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "blighted battleaxe",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "first mate",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "gem jammer",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "irresistible faefolk",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "jhin murderous artist",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "long sword",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "poppy paragon",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "punch first",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rampage",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "red brambleback",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "relentless pursuit",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ruin runner",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "skyfall of areion",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "trinity force",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "forge of the fluft",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "trapping grounds",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "zaun warrens",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "body rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "ambessa the wolf",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "brittle steel",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of strength",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "pendulum blade",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "rampage",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "unyielding spirit",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-e4875ab8a71e8715",
+    "name": "Vex, Gloomist / bsweitz",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 23,
+    "accessedAt": "2026-10-03",
+    "legendId": "gloomist",
+    "strategy": "Benchmark Vex, Gloomist",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "gloomist",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "boots of swiftness",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "clockwork keeper",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "edge of night",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "en garde",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "evelynn entrancing",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "existential dread",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "janna savior",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "meditation",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "mutated mouser",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "pyke returned",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "rebuke",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "vilemaw",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "fortified position",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "startipped peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "targon s peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "baron nashor",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "disarming rake",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ravenbloom prefect",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "vex cheerless",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-5c4be3a296ff63db",
+    "name": "Kha'Zix, Voidreaver / Cuoemrei",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 20,
+    "accessedAt": "2026-10-03",
+    "legendId": "voidreaver",
+    "strategy": "Benchmark Kha'Zix, Voidreaver",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "voidreaver",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "kha zix mutating horror",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "evelynn entrancing",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "irresistible faefolk",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "kinkou initiate",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "punch first",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rampage",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "rengar trophy hunter",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "shadow order disciple",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "tail cloaked matriarch",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "tornado warrior",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "traveling merchant",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "up from the deep",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "void assault",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "zed without a sound",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "sandswept tomb",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "star spring",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "zaun warrens",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "body rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of strength",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "hard bargain",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "rampage",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ravenbloom prefect",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-876b2e6cad401fdb",
+    "name": "Kennen, Heart of the Tempest / DSG AwesumRosum",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 13,
+    "accessedAt": "2026-10-03",
+    "legendId": "heart of the tempest",
+    "strategy": "Benchmark Kennen, Heart of the Tempest",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "heart of the tempest",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "kennen storm of shuriken",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "carrion dredger",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "ezreal prodigy",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "flash",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "hard bargain",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "last rites",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "lightning rush",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rhasa the sunderer",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "salvage",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "seal of discord",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "shadow order disciple",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "tail cloaked matriarch",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "tornado warrior",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "traveling merchant",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "up from the deep",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "minefield",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "shadow temple",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "zaun warrens",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 9,
+        "section": "runes"
+      },
+      {
+        "cardId": "order rune",
+        "quantity": 3,
+        "section": "runes"
+      },
+      {
+        "cardId": "decree of unity",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "hard bargain",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "lacerate",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ravenbloom prefect",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "rebuke",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "salvage",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "up from the deep",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-8f0ab2a498060454",
+    "name": "LeBlanc, Deceiver / MILL TwistedTCG",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 12,
+    "accessedAt": "2026-10-03",
+    "legendId": "deceiver",
+    "strategy": "Benchmark LeBlanc, Deceiver",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "deceiver",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "leblanc fragmented",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "baited hook",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "black rose dignitary",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "deathgrip",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "glasc mixologist",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "harnessed dragon",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "hidden blade",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "honest broker",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "karthus eternal",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "mirror image",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "rift herald",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ruined rex",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sacrifice",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "soaring scout",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "thousand tailed watcher",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "vi peacekeeper",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "watchful sentry",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "dusk rose lab",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "star spring",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "windswept hillock",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 4,
+        "section": "runes"
+      },
+      {
+        "cardId": "order rune",
+        "quantity": 8,
+        "section": "runes"
+      },
+      {
+        "cardId": "ashe focused",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "bellows breath",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of unity",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "mirror image",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "salvage",
+        "quantity": 3,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "thousand tailed watcher",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-3c2758bf06c77d75",
+    "name": "Ornn, Fire Below the Mountain / MICE TheManLand",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 8,
+    "accessedAt": "2026-10-03",
+    "legendId": "fire below the mountain",
+    "strategy": "Benchmark Ornn, Fire Below the Mountain",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "fire below the mountain",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "ornn blacksmith",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "aspiring engineer",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "brutalizer",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "clockwork keeper",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "cloth armor",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "guardian angel",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "lecturing yordle",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "mask of foresight",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "patched porobot",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "pit crew",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "poro snax",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "seal of focus",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sprite fountain",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sterak s gage",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ornn s forge",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "seat of power",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "veiled temple",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 8,
+        "section": "runes"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 4,
+        "section": "runes"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of insight",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "disarming rake",
+        "quantity": 3,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "twilight shroud",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "01c04a0e-833c-47e6-94eb-f0686e1f93ba",
+    "name": "Akali, Rogue Assassin / HXN TEMPETE一些雪",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 7,
+    "accessedAt": "2026-10-03",
+    "legendId": "rogue assassin",
+    "strategy": "Akali movement and empower",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": true,
+    "updatedLabel": null,
+    "aliases": [
+      {
+        "url": "https://piltoverarchive.com/decks/view/01c04a0e-833c-47e6-94eb-f0686e1f93ba",
+        "source": "Piltover Archive",
+        "name": "RQ Los Angeles Best-Of Akali (Tempete)"
+      }
+    ],
+    "entries": [
+      {
+        "cardId": "rogue assassin",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "akali deadly weapon",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "shuriken flip",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "darius trifarian",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "long sword",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "block",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "blitzcrank impassive",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "sterak s gage",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "mournful witness",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "mischievous marai",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "sigil of the storm",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "void gate",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "forgotten monument",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "irelia fervent",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "against the odds",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "disarming rake",
+        "quantity": 2,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-669bc54a4f278916",
+    "name": "Azir, Emperor of the Sands / MICE Squirtle",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 3,
+    "accessedAt": "2026-10-03",
+    "legendId": "emperor of the sands",
+    "strategy": "Benchmark Azir, Emperor of the Sands",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "emperor of the sands",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "azir sovereign",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "arise",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "b f sword",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "brutalizer",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "deathgrip",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "doran s shield",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "en garde",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "eye of the herald",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "guards",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "hand hammer",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "hidden blade",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "soul sword",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "hall of legends",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "seat of power",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "trifarian war camp",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "order rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "ashe focused",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of unity",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "disarming rake",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "salvage",
+        "quantity": 2,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-98439651bb22ae62",
+    "name": "Rengar, Pridestalker / DSG Prismaticism",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 1,
+    "accessedAt": "2026-10-03",
+    "legendId": "pridestalker",
+    "strategy": "Benchmark Rengar, Pridestalker",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "pridestalker",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "rengar trophy hunter",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "darius trifarian",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "first mate",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "grim apothecary",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "inferna",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "irresistible faefolk",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "kinkou initiate",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "nidalee cat form",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "noxus hopeful",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "pakaa cub",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "pit rookie",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "punch first",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "pyke dockside butcher",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "rampage",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "thrill of the hunt",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "emperor s dais",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "seat of power",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "star spring",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "body rune",
+        "quantity": 8,
+        "section": "runes"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 4,
+        "section": "runes"
+      },
+      {
+        "cardId": "brittle steel",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "brynhir thundersong",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of strength",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "noxian demolitionist",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "pyke dockside butcher",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "rampage",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-7f0b9afcf2408a3a",
+    "name": "Master Yi, Wuju Bladesman / SWAGALISK",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 6,
+    "accessedAt": "2026-10-03",
+    "legendId": "wuju bladesman starter",
+    "strategy": "Benchmark Master Yi, Wuju Bladesman",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "wuju bladesman starter",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "master yi tempered",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "en garde",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "first mate",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "legion marauder",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "lonely poro",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "onslaught",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "pit rookie",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "punch first",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rampage",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "rengar trophy hunter",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ruin runner",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "sabotage",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "emperor s dais",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "seat of power",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "star spring",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "body rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "alpha strike",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of strength",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "disarming rake",
+        "quantity": 3,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "repulse",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ruin runner",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "unyielding spirit",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-931339d8eae36e0f",
+    "name": "Irelia, Blade Dancer / TM2",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 5,
+    "accessedAt": "2026-10-03",
+    "legendId": "blade dancer",
+    "strategy": "Irelia Heron",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": true,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "blade dancer",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "irelia fervent",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "boots of swiftness",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "defiant dance",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "lonely poro",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "pyke returned",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "rebuke",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "abandoned hall",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sunken temple",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "targon s peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "abandon",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "adaptatron",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ravenbloom prefect",
+        "quantity": 3,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ref-d1b6e42383e2bfba",
+    "name": "Azir, Emperor of the Sands / NRW Rocklho",
+    "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "source": "Riot Games",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional Qualifier",
+    "placement": 4,
+    "accessedAt": "2026-10-03",
+    "legendId": "emperor of the sands",
+    "strategy": "Benchmark Azir, Emperor of the Sands",
+    "evidence": "Official event list and overall placement",
+    "evidenceKind": "official",
+    "strategyReviewed": false,
+    "updatedLabel": null,
+    "aliases": [],
+    "entries": [
+      {
+        "cardId": "emperor of the sands",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "azir sovereign",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "arise",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "b f sword",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "brutalizer",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "deathgrip",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "desert s call",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "doran s shield",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "eye of the herald",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "guards",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "hand hammer",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "hidden blade",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sacrifice",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "soul sword",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "vi peacekeeper",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "hall of legends",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "seat of power",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "trifarian war camp",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "order rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "ashe focused",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "disarming rake",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "sacrifice",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "salvage",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "vi peacekeeper",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
     "id": "s4-shanghai-city-challenge-2026-09-27-4th-tikizz-akali",
     "name": "Shanghai City Challenge · 4 place",
     "url": "https://riftboundfrance.fr/en/decks/s4-shanghai-city-challenge-2026-09-27-4th-tikizz-akali",
@@ -12,6 +7765,10 @@
     "legendId": "rogue assassin",
     "strategy": "Akali movement and empower",
     "evidence": "Tournament result reported by source",
+    "evidenceKind": "reported",
+    "strategyReviewed": true,
+    "updatedLabel": null,
+    "aliases": [],
     "entries": [
       {
         "cardId": "forbidding waste",
@@ -183,6 +7940,10 @@
     "legendId": "rogue assassin",
     "strategy": "Akali movement and empower",
     "evidence": "Tournament result reported by source",
+    "evidenceKind": "reported",
+    "strategyReviewed": true,
+    "updatedLabel": null,
+    "aliases": [],
     "entries": [
       {
         "cardId": "forgotten monument",
@@ -369,6 +8130,10 @@
     "legendId": "rogue assassin",
     "strategy": "Akali movement and empower",
     "evidence": "Tournament result reported by source",
+    "evidenceKind": "reported",
+    "strategyReviewed": true,
+    "updatedLabel": null,
+    "aliases": [],
     "entries": [
       {
         "cardId": "forgotten monument",
@@ -550,6 +8315,10 @@
     "legendId": "rogue assassin",
     "strategy": "Akali movement and empower",
     "evidence": "Tournament result reported by source",
+    "evidenceKind": "reported",
+    "strategyReviewed": true,
+    "updatedLabel": null,
+    "aliases": [],
     "entries": [
       {
         "cardId": "abandoned hall",
@@ -716,6 +8485,10 @@
     "legendId": "rogue assassin",
     "strategy": "Akali movement and empower",
     "evidence": "Tournament result reported by source",
+    "evidenceKind": "reported",
+    "strategyReviewed": true,
+    "updatedLabel": null,
+    "aliases": [],
     "entries": [
       {
         "cardId": "forbidding waste",
@@ -877,6 +8650,10 @@
     "legendId": "rogue assassin",
     "strategy": "Akali movement and empower",
     "evidence": "Tournament result reported by source",
+    "evidenceKind": "reported",
+    "strategyReviewed": true,
+    "updatedLabel": null,
+    "aliases": [],
     "entries": [
       {
         "cardId": "back alley bar",
@@ -1053,6 +8830,10 @@
     "legendId": "rogue assassin",
     "strategy": "Akali movement and empower",
     "evidence": "Tournament result reported by source",
+    "evidenceKind": "reported",
+    "strategyReviewed": true,
+    "updatedLabel": null,
+    "aliases": [],
     "entries": [
       {
         "cardId": "forgotten monument",
@@ -1229,6 +9010,10 @@
     "legendId": "rogue assassin",
     "strategy": "Akali movement and empower",
     "evidence": "Tournament result reported by source",
+    "evidenceKind": "reported",
+    "strategyReviewed": true,
+    "updatedLabel": null,
+    "aliases": [],
     "entries": [
       {
         "cardId": "forgotten monument",
@@ -1393,187 +9178,6 @@
     ]
   },
   {
-    "id": "01c04a0e-833c-47e6-94eb-f0686e1f93ba",
-    "name": "RQ Los Angeles Best-Of Akali (Tempete)",
-    "url": "https://piltoverarchive.com/decks/view/01c04a0e-833c-47e6-94eb-f0686e1f93ba",
-    "source": "Piltover Archive",
-    "date": "2026-09-27",
-    "dateKind": "Event date",
-    "event": "Los Angeles Regional",
-    "placement": 7,
-    "accessedAt": "2026-10-03",
-    "legendId": "rogue assassin",
-    "strategy": "Akali movement and empower",
-    "evidence": "Tournament result reported by source",
-    "entries": [
-      {
-        "cardId": "rogue assassin",
-        "quantity": 1,
-        "section": "legend"
-      },
-      {
-        "cardId": "akali deadly weapon",
-        "quantity": 1,
-        "section": "chosen"
-      },
-      {
-        "cardId": "shuriken flip",
-        "quantity": 3,
-        "section": "main"
-      },
-      {
-        "cardId": "falling star",
-        "quantity": 3,
-        "section": "main"
-      },
-      {
-        "cardId": "darius trifarian",
-        "quantity": 1,
-        "section": "main"
-      },
-      {
-        "cardId": "kai sa survivor",
-        "quantity": 3,
-        "section": "main"
-      },
-      {
-        "cardId": "long sword",
-        "quantity": 2,
-        "section": "main"
-      },
-      {
-        "cardId": "ferrous forerunner",
-        "quantity": 1,
-        "section": "main"
-      },
-      {
-        "cardId": "defy",
-        "quantity": 3,
-        "section": "main"
-      },
-      {
-        "cardId": "block",
-        "quantity": 1,
-        "section": "main"
-      },
-      {
-        "cardId": "discipline",
-        "quantity": 3,
-        "section": "main"
-      },
-      {
-        "cardId": "blitzcrank impassive",
-        "quantity": 1,
-        "section": "main"
-      },
-      {
-        "cardId": "zhonya s hourglass",
-        "quantity": 3,
-        "section": "main"
-      },
-      {
-        "cardId": "not so fast",
-        "quantity": 1,
-        "section": "main"
-      },
-      {
-        "cardId": "sterak s gage",
-        "quantity": 1,
-        "section": "main"
-      },
-      {
-        "cardId": "back off",
-        "quantity": 2,
-        "section": "main"
-      },
-      {
-        "cardId": "scuttle crab",
-        "quantity": 2,
-        "section": "main"
-      },
-      {
-        "cardId": "mournful witness",
-        "quantity": 1,
-        "section": "main"
-      },
-      {
-        "cardId": "mischievous marai",
-        "quantity": 2,
-        "section": "main"
-      },
-      {
-        "cardId": "stellacorn herder",
-        "quantity": 3,
-        "section": "main"
-      },
-      {
-        "cardId": "astral heron",
-        "quantity": 3,
-        "section": "main"
-      },
-      {
-        "cardId": "fury rune",
-        "quantity": 6,
-        "section": "runes"
-      },
-      {
-        "cardId": "calm rune",
-        "quantity": 6,
-        "section": "runes"
-      },
-      {
-        "cardId": "sigil of the storm",
-        "quantity": 1,
-        "section": "battlefields"
-      },
-      {
-        "cardId": "void gate",
-        "quantity": 1,
-        "section": "battlefields"
-      },
-      {
-        "cardId": "forgotten monument",
-        "quantity": 1,
-        "section": "battlefields"
-      },
-      {
-        "cardId": "ferrous forerunner",
-        "quantity": 2,
-        "section": "sideboard"
-      },
-      {
-        "cardId": "irelia fervent",
-        "quantity": 2,
-        "section": "sideboard"
-      },
-      {
-        "cardId": "akali silent",
-        "quantity": 1,
-        "section": "sideboard"
-      },
-      {
-        "cardId": "decree of focus",
-        "quantity": 1,
-        "section": "sideboard"
-      },
-      {
-        "cardId": "not so fast",
-        "quantity": 1,
-        "section": "sideboard"
-      },
-      {
-        "cardId": "against the odds",
-        "quantity": 1,
-        "section": "sideboard"
-      },
-      {
-        "cardId": "disarming rake",
-        "quantity": 2,
-        "section": "sideboard"
-      }
-    ]
-  },
-  {
     "id": "ae198cdf-6dcf-4579-a7c9-316c7b6d5374",
     "name": "Singapore Best of Akali (Grand Winner) | Gorica",
     "url": "https://piltoverarchive.com/decks/view/ae198cdf-6dcf-4579-a7c9-316c7b6d5374",
@@ -1586,6 +9190,10 @@
     "legendId": "rogue assassin",
     "strategy": "Akali movement and empower",
     "evidence": "Tournament result reported by source",
+    "evidenceKind": "reported",
+    "strategyReviewed": true,
+    "updatedLabel": null,
+    "aliases": [],
     "entries": [
       {
         "cardId": "rogue assassin",
@@ -1765,8 +9373,12 @@
     "placement": null,
     "accessedAt": "2026-10-03",
     "legendId": "blade dancer",
-    "strategy": "Irelia spell tempo",
+    "strategy": "Irelia Heron",
     "evidence": "Community list, no tournament result verified",
+    "evidenceKind": "community",
+    "strategyReviewed": true,
+    "updatedLabel": null,
+    "aliases": [],
     "entries": [
       {
         "cardId": "blade dancer",
@@ -1956,8 +9568,12 @@
     "placement": null,
     "accessedAt": "2026-10-03",
     "legendId": "scorn of the moon",
-    "strategy": "Diana spell ambush",
+    "strategy": "Diana Hwei spell tempo",
     "evidence": "Community list, no tournament result verified",
+    "evidenceKind": "community",
+    "strategyReviewed": true,
+    "updatedLabel": null,
+    "aliases": [],
     "entries": [
       {
         "cardId": "scorn of the moon",

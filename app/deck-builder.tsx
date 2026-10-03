@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, LoaderCircle, Plus, Save, Sparkles, Trash2, X } from "lucide-react";
-import { assessDeck, builderCards, cardsById, cardIdFor, compatible, eligibleReferences, exportDeck, ownedInventory, references, representativeCard, RULES, type BuilderInput, type DeckProposal, type FxSnapshot } from "../lib/deck-builder";
+import { assessDeck, builderCards, cardsById, cardIdFor, compatible, exportDeck, ownedInventory, references, representativeCard, RULES, type BuilderInput, type DeckProposal, type FxSnapshot } from "../lib/deck-builder";
 import { activeJob, type BuilderJob } from "../lib/builder-jobs";
 import { readBuilderDeck } from "../lib/saved-builder-deck";
 import type { SavedDeck } from "../lib/server-decks";
@@ -11,6 +11,7 @@ import type { PriceSnapshot } from "../lib/prices";
 import MissingCardButton from "../components/missing-card-button";
 import FavouriteCardPicker, { preferredFavouritePrinting } from "../components/favourite-card-picker";
 import { BUILD_STEPS, type BuildStage } from "../lib/builder-progress";
+import { qualityChecks, referenceEvidence, selectReferences } from "../lib/deck-quality";
 
 type Generated = NonNullable<BuilderJob["result"]>;
 type Status = { enabled: boolean; model: string; capSek: number; spentSek: number; reservedSek: number; month: string; jobs: BuilderJob[]; nextCursor: string | null; fx: FxSnapshot | null; rulesCheckedAt: string | null; rulesError: string | null; fxError: string | null; history: { id: string; createdAt: string; result: Generated }[] };
@@ -46,11 +47,15 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
   const [notice, setNotice] = useState("");
   const owned = useMemo(() => ownedInventory(cards, extras), [cards, extras]);
   const deckOwned = useMemo(() => ownedInventory(cards, openDeck?.result?.input.extras ?? {}), [cards, openDeck]);
-  const legends = useMemo(() => builderCards.filter((c) => c.type === "Legend" && eligibleReferences(c.id).length && (mode === "competitive" || favourites.every((id) => compatible(cardsById.get(id)!, c)))).sort((a, b) => legendLabel(a.id).localeCompare(legendLabel(b.id))), [mode, favourites]);
+  const legends = useMemo(() => builderCards.filter((c) => c.type === "Legend" && selectReferences(c.id).length && (mode === "competitive" || favourites.every((id) => compatible(cardsById.get(id)!, c)))).sort((a, b) => legendLabel(a.id).localeCompare(legendLabel(b.id))), [mode, favourites]);
   const preferredPrintings = favourites.map((id) => favouriteCodes[id] ?? preferredFavouritePrinting(cards, id)).filter((code): code is string => Boolean(code));
   const saved = savedDecks.map((deck) => ({ deck, proposal: readBuilderDeck(deck.name, deck.deckText) })).filter((item) => item.proposal !== null);
   const input: BuilderInput = { mode, legendId, favouriteIds: mode === "fun" ? favourites : [], budgetSek: allowPurchases ? budget : 0, extras };
   const proposal = openDeck?.proposal;
+  const selectedReferences = selectReferences(legendId);
+  const coverage = referenceEvidence(selectedReferences);
+  const quality = proposal ? openDeck?.result?.quality?.[proposal === openDeck.result.ownedOnly ? "ownedOnly" : "budget"] ?? qualityChecks(proposal, references) : null;
+  const percentage = (value: number | null) => value === null ? "Unavailable" : `${(value * 100).toFixed(1)}%`;
   const assessment = proposal ? assessDeck(proposal.entries, deckOwned, prices, status?.fx ?? null, openDeck?.result?.input.budgetSek ?? budget) : null;
   const unavailable = !status ? "Getting ready…" : !status.enabled ? "AI setup is needed before generating a deck." : status.rulesError ? "Generation is paused until current rules can be verified." : status.fxError ? "Generation is paused until prices can be converted to SEK." : !legends.length ? "No reference decks match these favourites yet." : mode === "fun" && !favourites.length ? "Choose a favourite card in More options." : "";
 
@@ -203,7 +208,7 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
         <details><summary>Add cards I haven’t imported yet</summary><p className="head-note">Extra copies for this build only. Your collection may be incomplete.</p><div className="builder-extra-form"><label><span className="field-label">Card</span><select value={extraId} disabled={busy} onChange={(e) => setExtraId(e.target.value)}>{builderCards.filter((c) => c.type !== "Token").sort((a, b) => a.name.localeCompare(b.name)).map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select></label><label><span className="field-label">Extra copies</span><input type="number" disabled={busy} value={extraQuantity} min="1" max="1000" onChange={(e) => setExtraQuantity(Math.max(1, Math.min(1000, Math.floor(Number(e.target.value)) || 1)))} /></label><button type="button" disabled={busy} className="secondary-button" onClick={() => setExtras({ ...extras, [extraId]: Math.min(1000, (extras[extraId] ?? 0) + extraQuantity) })}><Plus aria-hidden="true" />Add</button></div><div className="builder-chips">{Object.entries(extras).map(([id, count]) => <button disabled={busy} type="button" key={id} onClick={() => { const next = { ...extras }; delete next[id]; setExtras(next); }}>{cardsById.get(id)?.name} +{count}<X aria-hidden="true" /></button>)}</div></details>
         {status && <p className="head-note">AI usage: {money(status.spentSek)} of {money(status.capSek)} this month{status.reservedSek ? ` · ${money(status.reservedSek)} reserved` : ""}. Up to 10 SEK reserved per generation, excluding taxes and fees.</p>}
         {(status?.rulesError || status?.fxError) && <p className="head-note">{status.rulesError ?? status.fxError}</p>}
-        <p className="head-note">Available champions have curated reference lists. Competitive starts with Akali; other champions currently have fewer sources.</p>
+        <details><summary>Reference coverage for this champion</summary><p className="head-note">{coverage.references} full lists · {coverage.independentMainLists} distinct main lists · {coverage.official} official event lists. {coverage.label}.</p>{coverage.warnings.map((warning) => <p className="head-note" key={warning}>{warning}</p>)}</details>
       </details>
     </div>
     {error && <p className="error-note" role="alert">{error}</p>}
@@ -227,11 +232,17 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
       })}</div>
       <details className="builder-details"><summary>Details: purchases, strategy & sources</summary>
         {proposal.summary && <p>{proposal.summary}</p>}
+        {quality && <details className="builder-quality"><summary>Evidence &amp; consistency checks</summary><p><strong>{quality.evidence.label}</strong>. This generated deck has not been competitively tested.</p><p className="head-note">{quality.evidence.references} reference lists · {quality.evidence.independentMainLists} distinct main lists · {quality.evidence.resultEvents} named events.</p>
+          {quality.engine.length > 0 && <div className="builder-table-wrap"><table><thead><tr><th>Key card</th><th>Drawn copies</th><th>Access in {quality.seen} cards</th><th>Reference access</th></tr></thead><tbody>{quality.engine.map((card) => <tr key={card.cardId}><td>{cardsById.get(card.cardId)?.name}<small>{card.role}</small></td><td>{card.copies}{card.chosen ? " + chosen" : ""}</td><td>{card.chosen ? "Chosen available separately" : percentage(card.access)}</td><td>{percentage(card.referenceAccess)}</td></tr>)}</tbody></table></div>}
+          <p className="head-note">{quality.earlyUnits} drawn units with printed Energy 0–2 · chance of seeing one in {quality.seen} cards: {percentage(quality.earlyUnitAccess)}. {quality.highCost} drawn cards cost 6+ printed Energy.</p><p className="head-note">Printed Energy curve: {Object.entries(quality.energyCurve).map(([energy, copies]) => `${energy}: ${copies}`).join(" · ")}. Chosen champion excluded.</p>
+          {quality.benchmarkId && <p className="head-note">Quantity comparison: {references.find((ref) => ref.id === quality.benchmarkId)?.name ?? quality.benchmarkId}.</p>}
+          {[...quality.evidence.warnings, ...quality.warnings].map((warning) => <p className="head-note" key={warning}>{warning}</p>)}<p className="head-note">{quality.assumptions}</p>
+        </details>}
         {assessment.missingCopies > 0 && <section className="builder-purchases"><h3>Suggested purchases</h3><div className="builder-table-wrap"><table><thead><tr><th>Card / printing</th><th>Missing</th><th>Each</th><th>Total</th></tr></thead><tbody>{assessment.lines.filter((l) => l.missing).map((l) => <tr key={l.cardId}><td>{cardsById.get(l.cardId)?.name}<small>{l.price ? `${l.price.printingCode} · ${l.price.finish}${l.price.printingVerified === false ? " · printing unverified" : ""} · Cardmarket #${l.price.productId}` : "Price unavailable"}</small></td><td>{l.missing}</td><td>{l.price ? money(l.price.unitSek) : "Unknown"}</td><td>{l.price ? money(l.price.unitSek * l.missing) : "Unknown"}</td></tr>)}</tbody></table></div></section>}
         <p className="head-note">Cardmarket 7-day sale averages for affordable playable products, not seller offers. EU prices; shipping excluded. Stock and delivery to Sweden need checking. Prices: {prices?.createdAt ?? "unavailable"}. EUR/SEK: {status?.fx ? `${status.fx.eurSek} on ${status.fx.date}` : "unavailable"} via <a href="https://frankfurter.dev/v1/" target="_blank" rel="noreferrer">Frankfurter</a>.</p>
         {proposal.replacements.length > 0 && <section className="builder-replacements"><h3>Replacements</h3>{proposal.replacements.map((r, i) => <div key={i}><strong>{cardsById.get(r.fromCardId)?.name} → {cardsById.get(r.toCardId)?.name}</strong><p>{r.reason} {r.compromise}</p></div>)}</section>}
         {proposal.limitations.map((l, i) => <p key={i}>{l}</p>)}
-        {references.filter((r) => proposal.referenceIds.includes(r.id)).map((r) => <p key={r.id}><a href={r.url} target="_blank" rel="noreferrer">{r.name}</a><small className="head-note"> · {r.source} · {r.dateKind}: {r.date} · accessed {r.accessedAt}. {r.evidence}.</small></p>)}
+        {references.filter((r) => proposal.referenceIds.includes(r.id)).map((r) => <p key={r.id}><a href={r.url} target="_blank" rel="noreferrer">{r.name}</a><small className="head-note"> · {r.source} · {r.dateKind}: {r.date} · accessed {r.accessedAt}. {r.evidence}.{r.updatedLabel ? ` Updated ${r.updatedLabel} when collected; exact date unavailable.` : ""}{r.placement ? ` Overall placement: #${r.placement}.` : ""}</small></p>)}
         {openDeck.result && <p className="head-note">Generated {new Date(openDeck.result.createdAt).toLocaleString()} · {openDeck.result.model} · estimated AI cost {money(openDeck.result.costSek)}. Rules checked {new Date(openDeck.result.rulesCheckedAt).toLocaleString()}. {openDeck.result.explanation}</p>}
         {openDeck.result && Object.keys(openDeck.result.input.extras).length > 0 && <p className="head-note">Owned counts include temporary extra copies from this build. Saved decks use your imported collection when reopened.</p>}
         {assessment.errors.map((e) => <p className="error-note" key={e}>{e}</p>)}

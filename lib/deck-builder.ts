@@ -7,7 +7,7 @@ import { priceKey, type PriceSnapshot } from "./prices";
 export type BuilderCard = { id: string; name: string; type: string; super: string | null; tags: string[]; domains: string[]; energy: number | null; power: string | null; might: string | null; text: string; printings: string[] };
 export type DeckSection = "legend" | "chosen" | "main" | "runes" | "battlefields" | "sideboard";
 export type DeckEntry = { cardId: string; quantity: number; section: DeckSection };
-export type ReferenceDeck = { id: string; name: string; url: string; source: string; date: string; dateKind: string; event: string | null; placement: number | null; accessedAt: string; legendId: string; strategy: string; evidence: string; entries: DeckEntry[] };
+export type ReferenceDeck = { id: string; name: string; url: string; source: string; date: string; dateKind: string; event: string | null; placement: number | null; accessedAt: string; legendId: string; strategy: string; evidence: string; evidenceKind?: "official" | "reported" | "community"; strategyReviewed?: boolean; updatedLabel?: string | null; aliases?: { url: string; source: string; name: string }[]; entries: DeckEntry[] };
 export type FxSnapshot = { date: string; eurSek: number; usdSek: number };
 export type PurchasePrice = { unitSek: number; unitEur: number; printingCode: string; finish: string; productId: number; printingVerified?: boolean; set?: string };
 export type BuilderLine = { cardId: string; required: number; owned: number; missing: number; price: PurchasePrice | null };
@@ -119,8 +119,17 @@ export function strategyProfile(refs: ReferenceDeck[]) {
     for (const entry of ref.entries.filter((e) => ["main", "chosen"].includes(e.section))) counts.set(entry.cardId, (counts.get(entry.cardId) ?? 0) + entry.quantity);
     for (const [id, quantity] of counts) { frequencies.set(id, (frequencies.get(id) ?? 0) + 1); mainCopies.set(id, [...(mainCopies.get(id) ?? []), quantity]); }
   }
-  const akaliStrategy = refs.length > 0 && refs.every((ref) => ref.legendId === "rogue assassin");
-  return [...frequencies].map(([cardId, decks]) => ({ cardId, decks, total: refs.length, medianCopies: [...mainCopies.get(cardId)!].sort((a, b) => a - b)[Math.floor(decks / 2)], essential: akaliStrategy && ["shuriken flip", "akali deadly weapon", "astral heron"].includes(cardId) }));
+  const sameStrategy = refs.length > 0 && new Set(refs.map((ref) => `${ref.legendId}|${ref.strategy}`)).size === 1;
+  const strategy = sameStrategy ? refs[0].strategy : "";
+  const engine: Record<string, string[]> = {
+    "Akali movement and empower": ["shuriken flip", "akali deadly weapon", "astral heron"],
+    "Diana Hwei spell tempo": ["moonfall", "ravenbloom student", "hwei brooding painter"],
+    "Diana Hwei recursion": ["moonfall", "ravenbloom student", "hwei brooding painter"],
+    "Diana Hwei temporal variant": ["moonfall", "ravenbloom student", "hwei brooding painter"],
+    "Irelia mobile tempo": ["defiant dance"],
+    "Irelia Heron": ["defiant dance", "astral heron"],
+  };
+  return [...frequencies].map(([cardId, decks]) => ({ cardId, decks, total: refs.length, medianCopies: [...mainCopies.get(cardId)!].sort((a, b) => a - b)[Math.floor(decks / 2)], essential: (engine[strategy] ?? []).includes(cardId) }));
 }
 export function representativeCard(id: string, inventory: readonly DisplayCard[], preferredCodes: string[] = []): DisplayCard | undefined {
   const owned = inventory.filter((c) => cardIdFor(c) === id);

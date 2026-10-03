@@ -71,4 +71,4 @@ assert.equal(readBuilderDeck("Empty", ""), null);
 assert.equal(readBuilderDeck("Malformed", "1 Akali, Deadly Weapon"), null);
 const outdated = { name: "Needs review", entries: [...anchor, { cardId: "shuriken flip", quantity: 3, section: "sideboard" as const }], strategy: "", summary: "", referenceIds: [], replacements: [], limitations: [] };
 assert.ok(readBuilderDeck(outdated.name, exportDeck(outdated)), "A saved deck with legality warnings must remain visible.");
-console.log("Deck builder checks passed: 12 source lists, legality, printing identity, incomplete inventory, missing-copy costs and unpriced budgets.");
+console.log(`Deck builder checks passed: ${references.length} source lists, legality, printing identity, incomplete inventory, missing-copy costs and unpriced budgets.`);

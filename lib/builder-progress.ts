@@ -2,7 +2,7 @@ export const BUILD_STEPS = [
   { id: "inventory", title: "Your collection", detail: "Counting owned copies and loading purchase estimates." },
   { id: "references", title: "Reference decks", detail: "Checking current rules and reviewing reference strategies." },
   { id: "build", title: "Building your deck", detail: "Choosing a coherent strategy, key cards and affordable replacements." },
-  { id: "validate", title: "Final checks", detail: "Checking deck rules, required copies and your purchase budget." },
+  { id: "validate", title: "Final checks", detail: "Checking rules, purchase costs and access to key cards." },
 ] as const;
 export type BuildStage = typeof BUILD_STEPS[number]["id"];
 export type BuildProgress = (stage: BuildStage) => void;
