@@ -3,7 +3,7 @@ import type { DisplayCard } from "./collection";
 
 type Category = "cards" | "runes" | "tokens";
 type Metadata = { fullName: string; type: string };
-export type DeckMatch = { name: string; required: number; owned: number; missing: number; category: Category };
+export type DeckMatch = { name: string; required: number; owned: number; missing: number; category: Category; card: DisplayCard };
 export type DeckAnalysis = { matches: DeckMatch[]; unmatched: string[]; parsedLines: number };
 
 const metadata = deckMetadata as Record<string, Metadata>;
@@ -16,7 +16,7 @@ const normalizeCode = (value: string) => {
 const cardCode = (card: DisplayCard) => card.code.match(/^([a-z]+-(?:sp\d+-)?[a-z]?\d+[a-z]?)(?:-|$)/i)?.[1];
 
 export function analyzeDeck(input: string, cards: DisplayCard[], { hideRunes = true, hideTokens = true } = {}): DeckAnalysis {
-  const byName = new Map<string, { fullName: string; quantity: number; type: string; token: boolean }>();
+  const byName = new Map<string, { fullName: string; quantity: number; type: string; token: boolean; card: DisplayCard }>();
   const byCode = new Map<string, string>();
   const shortNames = new Map<string, Set<string>>();
   for (const card of cards) {
@@ -24,7 +24,7 @@ export function analyzeDeck(input: string, cards: DisplayCard[], { hideRunes = t
     const fullName = info?.fullName || card.name;
     const key = normalize(fullName);
     const previous = byName.get(key);
-    byName.set(key, { fullName, quantity: (previous?.quantity ?? 0) + card.quantity, type: info?.type || "", token: (previous?.token ?? true) && /-t\d+/i.test(card.code) });
+    byName.set(key, { fullName, quantity: (previous?.quantity ?? 0) + card.quantity, type: info?.type || "", token: (previous?.token ?? true) && /-t\d+/i.test(card.code), card: previous?.card ?? card });
     const code = cardCode(card);
     if (code) byCode.set(normalizeCode(code), key);
     const shortKey = normalize(card.name);
@@ -75,8 +75,9 @@ export function analyzeDeck(input: string, cards: DisplayCard[], { hideRunes = t
   }
 
   const matches = [...requested].map(([key, { name, required, category }]) => {
-    const owned = byName.get(key)?.quantity ?? 0;
-    return { name, required, owned: Math.min(owned, required), missing: Math.max(0, required - owned), category };
+    const matched = byName.get(key)!;
+    const owned = matched.quantity;
+    return { name, required, owned: Math.min(owned, required), missing: Math.max(0, required - owned), category, card: matched.card };
   });
   return { matches, unmatched, parsedLines };
 }

@@ -7,8 +7,9 @@ import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogTit
 import type { DisplayCard } from "../lib/collection";
 import { analyzeDeck, missingList } from "../lib/deck";
 import type { SavedDeck } from "../lib/server-decks";
+import MissingCardButton from "../components/missing-card-button";
 
-export default function DeckMatcher({ cards }: { cards: DisplayCard[] }) {
+export default function DeckMatcher({ cards, onOpenCard }: { cards: DisplayCard[]; onOpenCard: (card: DisplayCard) => void }) {
   const [decks, setDecks] = useState<SavedDeck[]>([]);
   const [activeDeckId, setActiveDeckId] = useState<string | null>(null);
   const [deckName, setDeckName] = useState("");
@@ -130,7 +131,7 @@ export default function DeckMatcher({ cards }: { cards: DisplayCard[] }) {
         <div className="deck-result-top panel-heading"><div><h2>Missing cards</h2><p>Latest collection</p></div><button className="primary-button" type="button" onClick={copyMissing} disabled={!missingText}><Copy aria-hidden="true" />Copy missing list</button></div>
         {deckText.trim() ? <>
           <div className="stat-tiles deck-totals"><div><strong>{requiredCopies}</strong><span>Needed</span></div><div><strong>{ownedCopies}</strong><span>Covered</span></div><div className="accent"><strong>{requiredCopies - ownedCopies}</strong><span>Missing</span></div></div>
-          {missing.length ? <div className="deck-missing-list">{missing.map((item) => <div className="deck-missing-row" key={item.name}><strong>{item.missing}x</strong><span>{item.name}<small>{item.owned} of {item.required} owned</small></span></div>)}</div> : <p className="deck-empty">{analysis.matches.length ? "You have every matched card in this deck." : "No matching cards to compare. Check the pasted format or filters."}</p>}
+          {missing.length ? <div className="deck-missing-list">{missing.map((item) => <MissingCardButton key={item.name} card={item.card} name={item.name} count={item.missing} detail={`${item.owned} of ${item.required} owned · ${item.card.set}`} onOpen={onOpenCard} />)}</div> : <p className="deck-empty">{analysis.matches.length ? "You have every matched card in this deck." : "No matching cards to compare. Check the pasted format or filters."}</p>}
           {missingText && <textarea className="deck-copy-text" aria-label="Missing cards as copyable text" readOnly value={missingText} onFocus={(event) => event.target.select()} />}
           {analysis.unmatched.length > 0 && <div className="deck-unmatched"><h3>Couldn’t match {analysis.unmatched.length} {analysis.unmatched.length === 1 ? "line" : "lines"}</h3><p>Check these names against the catalog. They are left out of the copied list.</p><ul>{analysis.unmatched.map((line, index) => <li key={`${line}-${index}`}>{line}</li>)}</ul></div>}
         </> : <p className="deck-empty">Your missing list will appear here after you paste a deck.</p>}
