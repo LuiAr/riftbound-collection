@@ -1,134 +1,163 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Copy, Plus, Sparkles, X } from "lucide-react";
-import { assessDeck, builderCards, cardsById, cardIdFor, compatible, eligibleReferences, exportDeck, ownedInventory, references, representativeCard, RULES, strategyProfile, validateDeck, type BuilderInput, type DeckProposal, type FxSnapshot, type ReferenceDeck } from "../lib/deck-builder";
+import { Copy, Plus, Save, Sparkles, X } from "lucide-react";
+import { assessDeck, builderCards, cardsById, cardIdFor, compatible, eligibleReferences, exportDeck, ownedInventory, references, representativeCard, RULES, type BuilderInput, type DeckProposal, type FxSnapshot } from "../lib/deck-builder";
+import { readBuilderDeck } from "../lib/saved-builder-deck";
+import type { SavedDeck } from "../lib/server-decks";
 import type { DisplayCard } from "../lib/collection";
 import type { PriceSnapshot } from "../lib/prices";
 import MissingCardButton from "../components/missing-card-button";
 
 type Generated = { ownedOnly: DeckProposal | null; budget: DeckProposal | null; explanation: string; rejected: string[]; input: BuilderInput; rulesCheckedAt: string; pricesAt: string | null; fx: FxSnapshot; costSek: number; model: string; createdAt: string };
 type Status = { enabled: boolean; model: string; capSek: number; spentSek: number; reservedSek: number; month: string; fx: FxSnapshot | null; rulesCheckedAt: string | null; rulesError: string | null; fxError: string | null; history: { id: string; createdAt: string; result: Generated }[] };
+type OpenDeck = { proposal: DeckProposal; result: Generated | null; deckId?: string };
 const money = (amount: number) => new Intl.NumberFormat("en-SE", { style: "currency", currency: "SEK", maximumFractionDigits: 2 }).format(amount);
 const legendLabel = (id: string) => { const c = cardsById.get(id)!; return `${c.tags[0] ?? ""}${c.tags[0] ? ", " : ""}${c.name}`; };
-const labels = { legend: "Legend", chosen: "Chosen champion", main: "Main Deck", runes: "Rune Deck", battlefields: "Battlefields", sideboard: "Sideboard" };
+const labels = { legend: "Legend", chosen: "Chosen champion", main: "Main deck", runes: "Runes", battlefields: "Battlefields", sideboard: "Sideboard" };
 
 export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: DisplayCard[]; prices: PriceSnapshot | null; onOpenCard: (card: DisplayCard) => void }) {
   const [mode, setMode] = useState<"competitive" | "fun">("competitive");
   const [legendId, setLegendId] = useState("rogue assassin");
+  const [allowPurchases, setAllowPurchases] = useState(true);
   const [budget, setBudget] = useState(1000);
   const [favourites, setFavourites] = useState<string[]>([]);
-  const [favouriteCodes, setFavouriteCodes] = useState<string[]>([]);
   const [extras, setExtras] = useState<Record<string, number>>({});
   const [extraId, setExtraId] = useState("akali deadly weapon");
   const [extraQuantity, setExtraQuantity] = useState(1);
   const [status, setStatus] = useState<Status | null>(null);
+  const [savedDecks, setSavedDecks] = useState<SavedDeck[]>([]);
+  const [savedError, setSavedError] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
-  const [generated, setGenerated] = useState<Generated | null>(null);
-  const [selectedRef, setSelectedRef] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [openDeck, setOpenDeck] = useState<OpenDeck | null>(null);
+  const [failureDetails, setFailureDetails] = useState<Generated | null>(null);
+  const [name, setName] = useState("");
   const [notice, setNotice] = useState("");
   const owned = useMemo(() => ownedInventory(cards, extras), [cards, extras]);
-  const legends = useMemo(() => builderCards.filter((c) => c.type === "Legend" && (mode === "competitive" || favourites.every((id) => compatible(cardsById.get(id)!, c)))).sort((a, b) => legendLabel(a.id).localeCompare(legendLabel(b.id))), [mode, favourites]);
-  const legalRefs = useMemo(() => eligibleReferences(legendId), [legendId]);
-  const availableRefs = references.filter((r) => r.legendId === legendId);
-  const sortedRefs = useMemo(() => [...legalRefs].sort((a, b) => {
-    const left = assessDeck(a.entries, owned, prices, status?.fx ?? null, budget);
-    const right = assessDeck(b.entries, owned, prices, status?.fx ?? null, budget);
-    return Number(Boolean(b.event)) - Number(Boolean(a.event)) || Number(right.budgetValid) - Number(left.budgetValid) || (a.placement ?? 1000) - (b.placement ?? 1000) || right.lines.reduce((s, l) => s + Math.min(l.required, l.owned), 0) - left.lines.reduce((s, l) => s + Math.min(l.required, l.owned), 0);
-  }), [legalRefs, owned, prices, status?.fx, budget]);
-  const anchor = sortedRefs.find((r) => r.id === selectedRef) ?? sortedRefs[0];
-  const input: BuilderInput = { mode, legendId, favouriteIds: mode === "fun" ? favourites : [], budgetSek: budget, extras };
-  const favouritePrintings = cards.filter((card) => card.quantity > 0 && ["Unit", "Spell", "Gear"].includes(cardsById.get(cardIdFor(card) ?? "")?.type ?? "")).sort((a, b) => Number(b.set === "Vendetta") - Number(a.set === "Vendetta") || a.name.localeCompare(b.name));
-  const dirty = generated && JSON.stringify(generated.input) !== JSON.stringify(input);
+  const deckOwned = useMemo(() => ownedInventory(cards, openDeck?.result?.input.extras ?? {}), [cards, openDeck]);
+  const legends = useMemo(() => builderCards.filter((c) => c.type === "Legend" && eligibleReferences(c.id).length && (mode === "competitive" || favourites.every((id) => compatible(cardsById.get(id)!, c)))).sort((a, b) => legendLabel(a.id).localeCompare(legendLabel(b.id))), [mode, favourites]);
+  const favouriteCards = builderCards.filter((c) => ["Unit", "Spell", "Gear"].includes(c.type) && owned[c.id] > 0).sort((a, b) => a.name.localeCompare(b.name));
+  const saved = savedDecks.map((deck) => ({ deck, proposal: readBuilderDeck(deck.name, deck.deckText) })).filter((item) => item.proposal !== null);
+  const input: BuilderInput = { mode, legendId, favouriteIds: mode === "fun" ? favourites : [], budgetSek: allowPurchases ? budget : 0, extras };
+  const proposal = openDeck?.proposal;
+  const assessment = proposal ? assessDeck(proposal.entries, deckOwned, prices, status?.fx ?? null, openDeck?.result?.input.budgetSek ?? budget) : null;
+  const unavailable = !status ? "Getting ready…" : !status.enabled ? "AI setup is needed before generating a deck." : status.rulesError ? "Generation is paused until current rules can be verified." : status.fxError ? "Generation is paused until prices can be converted to SEK." : !legends.length ? "No reference decks match these favourites yet." : mode === "fun" && !favourites.length ? "Choose a favourite card in More options." : "";
 
   async function refreshStatus() {
     const response = await fetch("/api/builder", { cache: "no-store" });
     const data = await response.json() as Status & { error?: string };
-    if (!response.ok) throw new Error(data.error || "Deck builder status could not be loaded.");
-    setStatus(data as Status);
+    if (!response.ok) throw new Error(data.error || "Deck builder could not be loaded.");
+    setStatus(data);
   }
-  useEffect(() => { refreshStatus().catch((e) => setError(e.message)); }, []);
+  async function refreshSaved() {
+    const response = await fetch("/api/decks", { cache: "no-store" });
+    const data = await response.json() as { decks: SavedDeck[]; error?: string };
+    if (!response.ok) throw new Error(data.error || "Saved decks could not be loaded.");
+    setSavedDecks(data.decks); setSavedError("");
+  }
   useEffect(() => {
-    if (mode === "fun" && !favourites.length) {
-      const diana = favouritePrintings.find((c) => cardIdFor(c) === "diana no longer human");
-      if (diana) { setFavourites(["diana no longer human"]); setFavouriteCodes([diana.code]); }
-    }
-  }, [mode, cards]);
+    refreshStatus().catch((e) => setError(e.message));
+    refreshSaved().catch((e) => setSavedError(e.message));
+  }, []);
   useEffect(() => {
-    if (!legends.some((c) => c.id === legendId) && legends.length) setLegendId(legends.find((c) => eligibleReferences(c.id).length)?.id ?? legends[0].id);
+    if (!legends.some((c) => c.id === legendId) && legends.length) setLegendId(legends[0].id);
   }, [legends, legendId]);
+  function open(proposal: DeckProposal, result: Generated | null, deckId?: string) {
+    setOpenDeck({ proposal, result, deckId }); setName(proposal.name.slice(0, 80)); setNotice(""); setError(""); setFailureDetails(null);
+  }
   async function generate() {
-    setBusy(true); setError(""); setNotice("");
+    setBusy(true); setError(""); setNotice(""); setFailureDetails(null);
     try {
       const response = await fetch("/api/builder", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(input) });
       const data = await response.json() as Generated & { error?: string };
-      if (!response.ok) throw new Error(data.error || "This build could not be completed.");
-      setGenerated(data as Generated);
-    } catch (e) { setError(e instanceof Error ? e.message : "The build failed."); }
+      if (!response.ok) throw new Error(data.error || "This deck could not be generated.");
+      const selected = allowPurchases ? data.budget ?? data.ownedOnly : data.ownedOnly;
+      if (!selected) {
+        setOpenDeck(null);
+        setError("No deck passed the checks with these options. Try a different champion or budget.");
+        setFailureDetails(data);
+      } else { open(selected, data); setFailureDetails(null); }
+    } catch (e) { setError(e instanceof Error ? e.message : "Generation failed. Please try again."); }
     finally { setBusy(false); refreshStatus().catch(() => {}); }
   }
-  function addFavourite(code: string) {
-    const card = cards.find((c) => c.code === code);
-    const id = card && cardIdFor(card);
-    if (!id || favourites.includes(id) || favourites.length >= 5) return;
-    setFavourites([...favourites, id]); setFavouriteCodes([...favouriteCodes, code]);
+  async function save() {
+    if (!proposal || !name.trim() || assessment?.errors.length) return;
+    setSaving(true); setError(""); setNotice("");
+    try {
+      const response = await fetch("/api/decks", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ deckId: openDeck?.deckId, name: name.trim(), deckText: exportDeck(proposal), hideRunes: false, hideTokens: false }) });
+      const data = await response.json() as { deck: SavedDeck; error?: string };
+      if (!response.ok) throw new Error(data.error || "The deck could not be saved.");
+      setOpenDeck((current) => current ? { ...current, deckId: data.deck.deckId, proposal: { ...current.proposal, name: data.deck.name } } : current);
+      setSavedDecks((current) => [data.deck, ...current.filter((d) => d.deckId !== data.deck.deckId)]);
+      setNotice("Deck saved.");
+    } catch (e) { setError(e instanceof Error ? e.message : "The deck could not be saved. Try again."); }
+    finally { setSaving(false); }
   }
-  async function copy(proposal: DeckProposal) {
+  async function copy() {
+    if (!proposal) return;
     try { await navigator.clipboard.writeText(exportDeck(proposal)); setNotice("Decklist copied."); }
-    catch { setNotice("Copy is unavailable in this browser. Use the export text below."); }
+    catch { setError("Copy is unavailable. Open Details to copy the decklist text."); }
   }
-  function showDeck(proposal: DeckProposal, title: string, ownedOnly: boolean, isReference = false) {
-    const assessment = assessDeck(proposal.entries, owned, prices, status?.fx ?? null, budget);
-    const valid = ownedOnly ? assessment.ownedOnlyValid : assessment.budgetValid;
-    const refs = references.filter((r) => proposal.referenceIds.includes(r.id));
-    const essentialMissing = strategyProfile(refs).filter((p) => p.essential && assessment.lines.some((l) => l.cardId === p.cardId && l.missing));
-    return <article className="builder-deck panel" key={title}>
-      <div className="builder-deck-head"><div><p className="head-note">{title}</p><h2>{proposal.name}</h2></div><button className="secondary-button" type="button" onClick={() => copy(proposal)}><Copy aria-hidden="true" />Copy</button></div>
-      <p className="builder-tag">{isReference ? "Unchanged reference target" : "AI adaptation"} · {assessment.errors.length ? "Legality check failed" : `Passes ${RULES.format} snapshot checks`}</p>
-      <p>{proposal.summary}</p>
-      <div className="builder-totals"><span><strong>{assessment.lines.reduce((s, l) => s + Math.min(l.required, l.owned), 0)}</strong> confirmed owned</span><span><strong>{assessment.missingCopies}</strong> missing</span><span><strong>{ownedOnly ? money(0) : money(assessment.totalSek)}</strong> {assessment.unpricedCopies && !ownedOnly ? "known subtotal" : "estimated purchases"}</span></div>
-      {ownedOnly && assessment.missingCopies > 0 && <p className="builder-warning">This is a target with {assessment.missingCopies} missing copies, not a playable owned-only recommendation. Add unrecorded cards or use AI to assess a coherent alternative.</p>}
-      {!ownedOnly && !valid && <p className="builder-warning">{assessment.unpricedCopies ? `${assessment.unpricedCopies} missing copies have no reliable price. The budget cannot be confirmed.` : `${money(assessment.totalSek)} exceeds your ${money(budget)} budget.`}</p>}
-      {!isReference && valid && <p className="notice">{ownedOnly ? "All required copies are confirmed owned." : "All missing copies are priced within your card budget. Shipping is excluded."}</p>}
-      {essentialMissing.length > 0 && <p className="builder-warning">Essential to this reference strategy: {essentialMissing.map((p) => cardsById.get(p.cardId)!.name).join(", ")}. Movement damage, retreat/ready and Heron cost reduction are engine effects; a cheaper body or generic damage spell does not replace the whole package.</p>}
-      {assessment.errors.map((e) => <p className="error-note" key={e}>{e}</p>)}
-      {Object.entries(labels).map(([section, label]) => {
+
+  return <section className="feature-page view builder-page builder-simple">
+    <div className="page-head"><div><h1>Deck builder</h1><p className="head-note">Choose a champion. Generate a deck. Save it.</p></div></div>
+    <div className="builder-controls panel">
+      <div className="builder-simple-form">
+        <label><span className="field-label">Champion</span><select value={legendId} disabled={busy} onChange={(e) => setLegendId(e.target.value)}>{legends.map((c) => <option key={c.id} value={c.id}>{legendLabel(c.id)}</option>)}</select></label>
+        <label><span className="field-label">Cards to use</span><select value={allowPurchases ? "budget" : "owned"} disabled={busy} onChange={(e) => setAllowPurchases(e.target.value === "budget")}><option value="budget">My collection + purchases</option><option value="owned">My collection only</option></select></label>
+        {allowPurchases && <label><span className="field-label">Budget (SEK)</span><input type="number" min="0" max="100000" step="50" value={budget} disabled={busy} onChange={(e) => setBudget(Math.max(0, Math.min(100000, Number(e.target.value))))} /></label>}
+      </div>
+      <button className="primary-button builder-main-action" type="button" onClick={generate} disabled={busy || saving || Boolean(unavailable) || !status?.rulesCheckedAt || !status?.fx} aria-busy={busy}><Sparkles aria-hidden="true" />{busy ? "Generating your deck…" : "Generate deck"}</button>
+      {busy && <p className="head-note" role="status">This can take a couple of minutes.</p>}
+      {unavailable && <p className="head-note">{unavailable}</p>}
+      <details className="builder-options"><summary>More options</summary>
+        <label><span className="field-label">Deck style</span><select value={mode} disabled={busy} onChange={(e) => { const next = e.target.value as "competitive" | "fun"; setMode(next); if (next === "fun" && !favourites.length && owned["diana no longer human"] > 0) setFavourites(["diana no longer human"]); }}><option value="competitive">Competitive</option><option value="fun">Fun with favourites</option></select></label>
+        {mode === "fun" && <div><label><span className="field-label">Favourite cards</span><select value="" disabled={busy} onChange={(e) => { if (e.target.value && !favourites.includes(e.target.value) && favourites.length < 5) setFavourites([...favourites, e.target.value]); }}><option value="">Choose an owned card</option>{favouriteCards.map((c) => <option value={c.id} key={c.id}>{c.name}</option>)}</select></label><div className="builder-chips">{favourites.map((id) => <button disabled={busy} key={id} type="button" onClick={() => setFavourites(favourites.filter((x) => x !== id))}>{cardsById.get(id)?.name}<X aria-hidden="true" /></button>)}</div></div>}
+        <details><summary>Add cards I haven’t imported yet</summary><p className="head-note">Extra copies for this build only. Your collection may be incomplete.</p><div className="builder-extra-form"><label><span className="field-label">Card</span><select value={extraId} disabled={busy} onChange={(e) => setExtraId(e.target.value)}>{builderCards.filter((c) => c.type !== "Token").sort((a, b) => a.name.localeCompare(b.name)).map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select></label><label><span className="field-label">Extra copies</span><input type="number" disabled={busy} value={extraQuantity} min="1" max="1000" onChange={(e) => setExtraQuantity(Math.max(1, Math.min(1000, Math.floor(Number(e.target.value)) || 1)))} /></label><button type="button" disabled={busy} className="secondary-button" onClick={() => setExtras({ ...extras, [extraId]: Math.min(1000, (extras[extraId] ?? 0) + extraQuantity) })}><Plus aria-hidden="true" />Add</button></div><div className="builder-chips">{Object.entries(extras).map(([id, count]) => <button disabled={busy} type="button" key={id} onClick={() => { const next = { ...extras }; delete next[id]; setExtras(next); }}>{cardsById.get(id)?.name} +{count}<X aria-hidden="true" /></button>)}</div></details>
+        {status && <p className="head-note">AI usage: {money(status.spentSek)} of {money(status.capSek)} this month{status.reservedSek ? ` · ${money(status.reservedSek)} reserved` : ""}. Up to 10 SEK reserved per generation, excluding taxes and fees.</p>}
+        {(status?.rulesError || status?.fxError) && <p className="head-note">{status.rulesError ?? status.fxError}</p>}
+        <p className="head-note">Available champions have curated reference lists. Competitive starts with Akali; other champions currently have fewer sources.</p>
+      </details>
+    </div>
+    {error && <p className="error-note" role="alert">{error}</p>}
+    {failureDetails && <details className="panel builder-failure"><summary>Why no deck was generated</summary><p>{failureDetails.explanation}</p>{failureDetails.rejected.map((r) => <p key={r}>{r}</p>)}</details>}
+    {notice && <p className="notice" role="status">{notice}</p>}
+    {proposal && assessment && <article className="builder-deck panel">
+      <div className="builder-save-bar"><label><span className="field-label">Deck name</span><input maxLength={80} value={name} disabled={saving || busy} onChange={(e) => setName(e.target.value)} /></label><button className="primary-button" type="button" onClick={save} disabled={saving || busy || !name.trim() || Boolean(assessment.errors.length)} aria-busy={saving}><Save aria-hidden="true" />{saving ? "Saving…" : "Save deck"}</button></div>
+      {openDeck?.result?.ownedOnly && openDeck.result.budget && <div className="builder-mode" role="group" aria-label="Deck version"><button disabled={busy || saving} type="button" className={proposal.entries === openDeck.result.ownedOnly.entries ? "active" : ""} onClick={() => open(openDeck.result!.ownedOnly!, openDeck.result)}>Owned only</button><button disabled={busy || saving} type="button" className={proposal.entries === openDeck.result.budget.entries ? "active" : ""} onClick={() => open(openDeck.result!.budget!, openDeck.result)}>With purchases</button></div>}
+      <div className="builder-totals"><span><strong>{assessment.lines.reduce((sum, line) => sum + Math.min(line.required, line.owned), 0)}</strong> owned copies</span><span><strong>{assessment.missingCopies}</strong> missing copies</span><span><strong>{assessment.unpricedCopies ? `${money(assessment.totalSek)} + ?` : money(assessment.totalSek)}</strong> estimated purchases · no shipping</span></div>
+      {assessment.errors.length > 0 && <p className="builder-warning">This saved deck needs a rules update before it can be saved again. See Details.</p>}
+      {assessment.unpricedCopies > 0 && <p className="head-note">{assessment.unpricedCopies} missing copies have no price yet.</p>}
+      {openDeck.result && assessment.totalSek > openDeck.result.input.budgetSek && <p className="head-note">Current prices exceed this build’s budget. See Details.</p>}
+      <div className="builder-card-list">{Object.entries(labels).map(([section, label]) => {
         const entries = proposal.entries.filter((e) => e.section === section);
         if (!entries.length) return null;
-        return <section className="builder-card-section" key={section}><h3>{label} <span>{entries.reduce((s, e) => s + e.quantity, 0)} cards</span></h3>{entries.map((entry) => {
+        return <section className="builder-card-section" key={section}><h3>{label}<span>{entries.reduce((sum, e) => sum + e.quantity, 0)} cards</span></h3><div className="builder-card-grid">{entries.map((entry) => {
           const line = assessment.lines.find((l) => l.cardId === entry.cardId)!;
-          const card = representativeCard(entry.cardId, cards, favouriteCodes);
-          return card ? <div className="builder-card-row" key={entry.cardId}><MissingCardButton card={card} name={cardsById.get(entry.cardId)!.name} detail={`${line.owned} owned · ${line.required} needed across deck · ${line.missing} missing`} count={entry.quantity} onOpen={onOpenCard} /></div> : <p key={entry.cardId}>{entry.quantity} {entry.cardId}</p>;
-        })}</section>;
-      })}
-      {!ownedOnly && <section className="builder-purchases"><h3>Missing-copy shopping list</h3>{assessment.missingCopies ? <div className="builder-table-wrap"><table><thead><tr><th>Card / printing</th><th>Copies</th><th>Each</th><th>Total</th></tr></thead><tbody>{assessment.lines.filter((l) => l.missing).map((l) => <tr key={l.cardId}><td>{cardsById.get(l.cardId)?.name}<small>{l.price ? `${l.price.printingCode}${l.price.printingVerified === false ? " (printing unverified)" : ""} · ${l.price.finish} · Cardmarket #${l.price.productId}` : "Price unavailable"}</small></td><td>{l.missing}</td><td>{l.price ? money(l.price.unitSek) : "Unknown"}</td><td>{l.price ? money(l.price.unitSek * l.missing) : "Unknown"}</td></tr>)}</tbody></table></div> : <p>No purchases required.</p>}<p className="head-note">Cardmarket 7-day sale averages, not seller offers. Lowest reliable estimate across matching playable products and finishes. Exact printing is unverified where the public guide has variants. EU market; seller delivery to Sweden and stock must be checked. Shipping excluded.</p><p className="head-note">Price guide: {prices?.createdAt ?? "unavailable"}. EUR/SEK: {status?.fx ? `${status.fx.eurSek.toFixed(4)} on ${status.fx.date}` : "unavailable"} via <a href="https://frankfurter.dev/v1/" target="_blank" rel="noreferrer">Frankfurter</a>. <a href="https://www.cardmarket.com/en/Riftbound" target="_blank" rel="noreferrer">Check Cardmarket</a></p></section>}
-      {proposal.replacements.length > 0 && <section className="builder-replacements"><h3>Replacements and compromises</h3>{proposal.replacements.map((r, i) => <div key={i}><strong>{cardsById.get(r.fromCardId)?.name} → {cardsById.get(r.toCardId)?.name}</strong><p>{r.reason}</p><p className="head-note">{r.compromise}</p></div>)}</section>}
-      {proposal.limitations.length > 0 && <section><h3>Limitations</h3><ul>{proposal.limitations.map((l, i) => <li key={i}>{l}</li>)}</ul></section>}
-      <section className="builder-sources"><h3>Inspired by</h3>{refs.map((r) => <p key={r.id}><a href={r.url} target="_blank" rel="noreferrer">{r.name}</a><small>{r.source} · {r.dateKind}: {r.date} · accessed {r.accessedAt}. {r.evidence}.</small></p>)}</section>
-      <details><summary>Decklist text</summary><textarea className="deck-textarea" aria-label={`${title} decklist text`} readOnly value={exportDeck(proposal)} /></details>
-    </article>;
-  }
-  const target: DeckProposal | null = anchor ? { name: anchor.name, strategy: anchor.strategy, summary: anchor.strategy === "Akali movement and empower" ? "Build around Akali's movement damage, Shuriken Flip and the Legend's retreat/ready ability. Empower converts those interactions into stronger combat control and repeated scoring pressure. This target preserves a complete source list; inventory overlap alone is not evidence of strategic strength." : `Reference strategy: ${anchor.strategy}. The unchanged source list provides a coherent starting point for adaptation.`, referenceIds: [anchor.id], entries: anchor.entries, replacements: [], limitations: ["Reference results apply to the original list, not to a future adaptation.", "Official English errata has been applied to the card text snapshot. Unusual interactions and event-specific restrictions still need a rules review."] } : null;
-
-  return <section className="feature-page view builder-page">
-    <div className="page-head"><div><h1>Deck builder</h1><p className="head-note">A strategy first, then the cards to make it work.</p></div><span className="builder-tag">Standard 1v1 · SEK · Sweden / EU</span></div>
-    <div className="builder-controls panel">
-      <div className="builder-mode" role="group" aria-label="Deck objective"><button type="button" className={mode === "competitive" ? "active" : ""} onClick={() => { setMode("competitive"); setLegendId("rogue assassin"); setGenerated(null); }}>Competitive</button><button type="button" className={mode === "fun" ? "active" : ""} onClick={() => { setMode("fun"); setGenerated(null); }}>Fun with favourites</button></div>
-      <p>{mode === "competitive" ? "Start with Akali and recent tournament lists. Preserve the engine and compare your holdings before buying." : "Choose up to five owned favourites, including special printings, then a compatible Legend. Art and finish never change playable card identity."}</p>
-      {mode === "fun" && <div className="builder-favourites"><label className="field-label" htmlFor="builder-favourite">Add an owned favourite</label><select id="builder-favourite" value="" onChange={(e) => addFavourite(e.target.value)}><option value="">Choose a card and printing</option>{favouritePrintings.map((c) => <option value={c.code} key={c.code}>{cardsById.get(cardIdFor(c)!)?.name} · {c.set} {c.number} · {c.quantity} owned</option>)}</select><div className="builder-chips">{favourites.map((id, i) => <button key={id} type="button" onClick={() => { setFavourites(favourites.filter((x) => x !== id)); setFavouriteCodes(favouriteCodes.filter((_, n) => n !== i)); }}>{cardsById.get(id)?.name}<X aria-hidden="true" /></button>)}</div></div>}
-      <div className="builder-form-grid"><label><span className="field-label">Champion Legend</span><select value={legendId} onChange={(e) => { setLegendId(e.target.value); setSelectedRef(""); }}>{legends.map((c) => <option key={c.id} value={c.id}>{legendLabel(c.id)}{eligibleReferences(c.id).length ? ` · ${eligibleReferences(c.id).length} references` : " · sources needed"}</option>)}</select></label><label><span className="field-label">Maximum card purchases (SEK)</span><input type="number" min="0" max="100000" step="50" value={budget} onChange={(e) => setBudget(Math.max(0, Math.min(100000, Number(e.target.value))))} /></label></div>
-      <details className="builder-inventory"><summary>My inventory is incomplete: add temporary copies</summary><p>These additions apply only to this build. Your saved collection stays as imported. Enter extra copies beyond your recorded total, including runes and battlefields.</p><div className="builder-extra-form"><label><span className="field-label">Card</span><select value={extraId} onChange={(e) => setExtraId(e.target.value)}>{builderCards.filter((c) => c.type !== "Token").sort((a, b) => a.name.localeCompare(b.name)).map((c) => <option key={c.id} value={c.id}>{c.name} ({owned[c.id] ?? 0} confirmed)</option>)}</select></label><label><span className="field-label">Extra copies</span><input type="number" value={extraQuantity} min="1" max="1000" onChange={(e) => setExtraQuantity(Math.max(1, Math.min(1000, Math.floor(Number(e.target.value)) || 1)))} /></label><button type="button" className="secondary-button" onClick={() => setExtras({ ...extras, [extraId]: (extras[extraId] ?? 0) + extraQuantity })}><Plus aria-hidden="true" />Add</button></div><div className="builder-chips">{Object.entries(extras).map(([id, count]) => <button type="button" key={id} onClick={() => { const next = { ...extras }; delete next[id]; setExtras(next); }}>{cardsById.get(id)?.name} +{count}<X aria-hidden="true" /></button>)}</div></details>
-      <div className="builder-generate"><button className="primary-button" type="button" onClick={generate} disabled={busy || !status?.enabled || !status.rulesCheckedAt || !status.fx || !legalRefs.length || (mode === "fun" && !favourites.length)} aria-busy={busy}><Sparkles aria-hidden="true" />{busy ? "Assessing strategy…" : "Build both versions"}</button><p className="head-note">{status ? `${money(status.spentSek)} used · ${money(status.reservedSek)} reserved · ${money(status.capSek)} monthly limit (${status.month} UTC).` : "Loading AI allowance…"} Maximum reservation per build: 10 SEK. AI allowance uses published token rates, excluding taxes and payment fees. Simple inventory and budget checks use no AI tokens.</p></div>
-      {status && !status.enabled && <p className="builder-warning">AI setup required: connect a separately billed OpenAI API key securely to this website. Your ChatGPT subscription does not supply API credits. Reference comparisons below work now; strategic replacements require the AI connection.</p>}
-      {status?.reservedSek ? <p className="head-note">Reservations cover in-progress requests and requests whose billed usage could not be confirmed. Uncertain usage stays reserved to protect your monthly limit.</p> : null}
-      {status?.rulesError && <p className="builder-warning">{status.rulesError}</p>}{status?.fxError && <p className="builder-warning">{status.fxError}</p>}
-      {error && <p className="error-note" role="alert">{error}</p>}{notice && <p className="notice" role="status">{notice}</p>}
-    </div>
-    <section className="builder-reference-panel panel"><h2>Strategy and reference evidence</h2><p>{legalRefs.length} legal reference {legalRefs.length === 1 ? "list" : "lists"} in this source snapshot. {availableRefs.length - legalRefs.length > 0 ? `${availableRefs.length - legalRefs.length} excluded by current snapshot checks.` : ""} Sources accessed 3 October 2026. {legalRefs.length < 10 ? "Fewer than 10 lists: evidence is limited for this Legend." : ""}</p>{[...new Set(legalRefs.map((r) => r.strategy))].map((strategy) => <div key={strategy}><h3>{strategy}</h3><p>{strategy === "Akali movement and empower" ? "Engine: Akali, Deadly Weapon + Shuriken Flip + Astral Heron + retreat/ready. Protect movement and empower interactions. Other recurrent cards can be flexible only after their role and curve are assessed." : "A separate source strategy; its slots should be assessed together."}</p><details><summary>Recurring cards and flexible slots</summary><ul className="builder-frequency">{strategyProfile(legalRefs.filter((r) => r.strategy === strategy)).sort((a, b) => b.decks - a.decks).map((p) => <li key={p.cardId}><strong>{cardsById.get(p.cardId)?.name}</strong><span>{p.decks}/{p.total} lists · median {p.medianCopies} · {p.essential ? "essential engine card" : "role review required"}</span></li>)}</ul><p className="head-note">Frequency is evidence of inclusion, not proof a card is essential or interchangeable.</p></details></div>)}{legalRefs.length > 0 && <label><span className="field-label">Reference target</span><select value={anchor?.id ?? ""} onChange={(e) => setSelectedRef(e.target.value)}>{sortedRefs.map((r) => <option value={r.id} key={r.id}>{r.name} · {r.date} · {r.source}</option>)}</select></label>}{availableRefs.filter((r) => validateDeck(r.entries).length).map((r) => <details key={r.id}><summary>Excluded: {r.name}</summary><p>{validateDeck(r.entries).join(" ")}</p><a href={r.url} target="_blank" rel="noreferrer">Original source</a></details>)}{!legalRefs.length && <p className="builder-warning">No legal reference list is available for this Legend yet. Choose a Legend with references. Shared deck sources have no verified public import API; this version uses dated, curated public lists.</p>}</section>
-    {generated && <section className="builder-results"><h2>Your strategy comparison</h2><p>{generated.explanation}</p><p className="head-note">Generated {new Date(generated.createdAt).toLocaleString()} with {generated.model}. AI charge estimate {money(generated.costSek)}. Rules checked {new Date(generated.rulesCheckedAt).toLocaleString()}.</p>{dirty && <p className="builder-warning">Your options changed since this build. Counts and costs below use current holdings and prices; rebuild before treating it as your requested recommendation.</p>}<div className="builder-comparison">{generated.ownedOnly ? showDeck(generated.ownedOnly, "Owned only", true) : <article className="panel builder-deck"><h2>Owned only</h2><p>No coherent validated owned-only proposal was accepted. Review the explanation and confirm unrecorded copies before rebuilding.</p></article>}{generated.budget ? showDeck(generated.budget, "With purchase budget", false) : <article className="panel builder-deck"><h2>With purchase budget</h2><p>No fully priced, validated proposal within budget was accepted. Review essential cards and missing prices before rebuilding.</p></article>}</div>{generated.rejected.length > 0 && <details><summary>Validation rejected a proposal</summary>{generated.rejected.map((r) => <p key={r}>{r}</p>)}</details>}</section>}
-    {target && <section className="builder-results"><h2>{generated ? "Original reference comparison" : "Compare the reference with your collection"}</h2><p>Keep the successful source deck intact while checking what you can actually assemble. AI adaptations appear separately after generation.</p><div className="builder-comparison">{showDeck(target, "Owned-only feasibility", true, true)}{showDeck(target, "Reference purchase estimate", false, true)}</div></section>}
-    {status?.history.length ? <section className="panel builder-history"><h2>Recent saved builds</h2><p>Previous AI builds are saved to your account. Loading one rechecks counts against your current collection.</p>{status.history.map((item) => <button type="button" className="secondary-button" key={item.id} onClick={() => { setMode(item.result.input.mode); setLegendId(item.result.input.legendId); setBudget(item.result.input.budgetSek); setFavourites(item.result.input.favouriteIds); setExtras(item.result.input.extras); setGenerated(item.result); }}>{item.result.budget?.name ?? item.result.ownedOnly?.name ?? "Build assessment"} · {new Date(item.createdAt).toLocaleDateString()}</button>)}</section> : null}
-    <p className="builder-footer head-note"><a href={RULES.source} target="_blank" rel="noreferrer">Official rules and restrictions</a> · snapshot checked {RULES.checkedAt}, bans effective {RULES.effectiveAt}. {status?.rulesCheckedAt ? "Live source confirmed this session." : "Current live verification unavailable; snapshot checks only."} Event-specific restrictions and unusual card exceptions require a separate review. Card text and art © Riot Games, with <a href="https://github.com/slimtreble/Riftbound-card-data" target="_blank" rel="noreferrer">Riot-derived card metadata</a>. Deck references are linked to their original publishers.</p>
+          const card = representativeCard(entry.cardId, cards);
+          return card ? <div className="builder-card-row" key={entry.cardId}><MissingCardButton card={card} name={cardsById.get(entry.cardId)!.name} detail={`${line.owned} owned · ${line.required} needed · ${line.missing} missing`} count={entry.quantity} onOpen={onOpenCard} /></div> : <p key={entry.cardId}>{entry.quantity} {cardsById.get(entry.cardId)?.name ?? entry.cardId}</p>;
+        })}</div></section>;
+      })}</div>
+      <details className="builder-details"><summary>Details: purchases, strategy & sources</summary>
+        {proposal.summary && <p>{proposal.summary}</p>}
+        {assessment.missingCopies > 0 && <section className="builder-purchases"><h3>Suggested purchases</h3><div className="builder-table-wrap"><table><thead><tr><th>Card / printing</th><th>Missing</th><th>Each</th><th>Total</th></tr></thead><tbody>{assessment.lines.filter((l) => l.missing).map((l) => <tr key={l.cardId}><td>{cardsById.get(l.cardId)?.name}<small>{l.price ? `${l.price.printingCode} · ${l.price.finish}${l.price.printingVerified === false ? " · printing unverified" : ""} · Cardmarket #${l.price.productId}` : "Price unavailable"}</small></td><td>{l.missing}</td><td>{l.price ? money(l.price.unitSek) : "Unknown"}</td><td>{l.price ? money(l.price.unitSek * l.missing) : "Unknown"}</td></tr>)}</tbody></table></div></section>}
+        <p className="head-note">Cardmarket 7-day sale averages for affordable playable products, not seller offers. EU prices; shipping excluded. Stock and delivery to Sweden need checking. Prices: {prices?.createdAt ?? "unavailable"}. EUR/SEK: {status?.fx ? `${status.fx.eurSek} on ${status.fx.date}` : "unavailable"} via <a href="https://frankfurter.dev/v1/" target="_blank" rel="noreferrer">Frankfurter</a>.</p>
+        {proposal.replacements.length > 0 && <section className="builder-replacements"><h3>Replacements</h3>{proposal.replacements.map((r, i) => <div key={i}><strong>{cardsById.get(r.fromCardId)?.name} → {cardsById.get(r.toCardId)?.name}</strong><p>{r.reason} {r.compromise}</p></div>)}</section>}
+        {proposal.limitations.map((l, i) => <p key={i}>{l}</p>)}
+        {references.filter((r) => proposal.referenceIds.includes(r.id)).map((r) => <p key={r.id}><a href={r.url} target="_blank" rel="noreferrer">{r.name}</a><small className="head-note"> · {r.source} · {r.dateKind}: {r.date} · accessed {r.accessedAt}. {r.evidence}.</small></p>)}
+        {openDeck.result && <p className="head-note">Generated {new Date(openDeck.result.createdAt).toLocaleString()} · {openDeck.result.model} · estimated AI cost {money(openDeck.result.costSek)}. Rules checked {new Date(openDeck.result.rulesCheckedAt).toLocaleString()}. {openDeck.result.explanation}</p>}
+        {openDeck.result && Object.keys(openDeck.result.input.extras).length > 0 && <p className="head-note">Owned counts include temporary extra copies from this build. Saved decks use your imported collection when reopened.</p>}
+        {assessment.errors.map((e) => <p className="error-note" key={e}>{e}</p>)}
+        <p className="head-note"><a href={RULES.source} target="_blank" rel="noreferrer">Official rules</a> · {RULES.format} snapshot {RULES.checkedAt}. Event-specific exceptions require review. Card text and art © Riot Games, with <a href="https://github.com/slimtreble/Riftbound-card-data" target="_blank" rel="noreferrer">Riot-derived metadata</a>.</p>
+        <button className="secondary-button" type="button" onClick={copy}><Copy aria-hidden="true" />Copy decklist</button><textarea className="deck-textarea" aria-label="Decklist text" readOnly value={exportDeck(proposal)} />
+      </details>
+    </article>}
+    <section className="panel builder-history builder-saved"><h2>Saved decks</h2>
+      {saved.length ? <div className="builder-saved-list">{saved.map(({ deck, proposal }) => <button disabled={busy || saving} type="button" className="builder-saved-item" key={deck.deckId} onClick={() => open(proposal!, null, deck.deckId)}><span>{deck.name}</span><small>{new Date(deck.updatedAt).toLocaleDateString()}</small></button>)}</div> : <p className="head-note">Your decks will appear here after you save them.</p>}
+      {savedError && <p className="error-note" role="alert">{savedError} <button type="button" className="secondary-button" onClick={() => refreshSaved().catch((e) => setSavedError(e.message))}>Retry</button></p>}
+      {status?.history.length ? <details><summary>Recent generations</summary>{status.history.filter((item) => item.result.budget || item.result.ownedOnly).map((item) => <button disabled={busy || saving} type="button" className="secondary-button" key={item.id} onClick={() => open((item.result.input.budgetSek ? item.result.budget ?? item.result.ownedOnly : item.result.ownedOnly ?? item.result.budget)!, item.result)}>{item.result.budget?.name ?? item.result.ownedOnly?.name} · {new Date(item.createdAt).toLocaleDateString()}</button>)}</details> : null}
+    </section>
   </section>;
 }

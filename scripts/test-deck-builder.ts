@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
-import { builderCards, cardsById, eligibleReferences, references, validateDeck, ownedInventory, representativeCard, assessDeck, cheapestPrice, cardIdFor, isBannedCard } from "../lib/deck-builder";
+import { builderCards, cardsById, eligibleReferences, references, validateDeck, ownedInventory, representativeCard, assessDeck, cheapestPrice, cardIdFor, isBannedCard, exportDeck } from "../lib/deck-builder";
 import { displayCards } from "../lib/collection";
 import { priceKey } from "../lib/prices";
+import { readBuilderDeck } from "../lib/saved-builder-deck";
 import inventory from "../data/initial-inventory.json";
 
 const refs = eligibleReferences("rogue assassin");
@@ -50,4 +51,17 @@ const purchase = assessDeck([{ cardId: "diana no longer human", quantity: 3, sec
 assert.equal(purchase.lines[0].missing, 2);
 assert.equal(purchase.totalSek, 100);
 assert.equal(cardsById.get("astral heron")?.text.includes("this turn"), true);
+for (const ref of references) {
+  const proposal = { ...ref, summary: "", referenceIds: [ref.id], replacements: [], limitations: [] };
+  const restored = readBuilderDeck(ref.name, exportDeck(proposal));
+  assert.ok(restored, ref.name);
+  assert.equal(restored.name, ref.name);
+  assert.equal(exportDeck(restored), exportDeck(proposal), "Saving and reopening must preserve every quantity and section.");
+  assert.deepEqual(validateDeck(restored.entries), []);
+}
+assert.equal(readBuilderDeck("Invalid", "legend\n1 Unknown Card"), null);
+assert.equal(readBuilderDeck("Empty", ""), null);
+assert.equal(readBuilderDeck("Malformed", "1 Akali, Deadly Weapon"), null);
+const outdated = { name: "Needs review", entries: [...anchor, { cardId: "shuriken flip", quantity: 3, section: "sideboard" as const }], strategy: "", summary: "", referenceIds: [], replacements: [], limitations: [] };
+assert.ok(readBuilderDeck(outdated.name, exportDeck(outdated)), "A saved deck with legality warnings must remain visible.");
 console.log("Deck builder checks passed: 12 source lists, legality, printing identity, incomplete inventory, missing-copy costs and unpriced budgets.");
