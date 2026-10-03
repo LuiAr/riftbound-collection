@@ -13,6 +13,7 @@ import SingleFilter from "../components/single-filter";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../components/ui/dialog";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../components/ui/dropdown-menu";
 import DeckMatcher from "./deck-matcher";
+import DeckBuilder from "./deck-builder";
 import HistoryCompare from "./history-compare";
 import CardArtwork from "../components/card-artwork";
 import MissingCardButton from "../components/missing-card-button";
@@ -71,7 +72,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
   const [currentSnapshot, setCurrentSnapshot] = useState(initial);
   const [viewedSnapshot, setViewedSnapshot] = useState<CollectionSnapshot | null>(null);
   const [history, setHistory] = useState(initialHistory);
-  const [section, setSection] = useState<"collection" | "decks" | "history">("collection");
+  const [section, setSection] = useState<"collection" | "decks" | "builder" | "history">("collection");
   const [historyBusy, setHistoryBusy] = useState(false);
   const [historyError, setHistoryError] = useState("");
   const snapshot = viewedSnapshot ?? currentSnapshot;
@@ -236,6 +237,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
         <nav className="section-nav" aria-label="Website sections">
           <button type="button" className={section === "collection" ? "active" : ""} aria-current={section === "collection" ? "page" : undefined} onClick={() => setSection("collection")}>My collection</button>
           <button type="button" className={section === "decks" ? "active" : ""} aria-current={section === "decks" ? "page" : undefined} onClick={() => setSection("decks")}>Deck matcher</button>
+          <button type="button" className={section === "builder" ? "active" : ""} aria-current={section === "builder" ? "page" : undefined} onClick={() => setSection("builder")}>Deck builder</button>
           <button type="button" className={section === "history" ? "active" : ""} aria-current={section === "history" ? "page" : undefined} onClick={() => setSection("history")}>History</button>
         </nav>
         <div className="account-area"><span className="account-name" title={accountName}>{accountName}</span><a href={signOutPath}>Sign out</a></div>
@@ -249,6 +251,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
       {historyError && <p className="error-note" role="alert">{historyError}</p>}
       {history.length ? <div className="history-list">{history.map((item) => <button type="button" className={`history-item ${snapshot.importId === item.importId ? "selected" : ""}`} key={item.importId} disabled={historyBusy} onClick={() => viewVersion(item.importId)}><span><strong>{item.sourceName}</strong><small>{new Date(item.importedAt).toLocaleString("en-US", { day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "2-digit" })}</small></span><span className="history-item-side">{item.importId === currentSnapshot.importId ? "Latest" : `Version ${item.version}`}<ArrowRight aria-hidden="true" /></span></button>)}</div> : <div className="empty-state">Import a Card Nexus CSV to create your first collection version.</div>}
     </section>}
+    {section === "builder" && <DeckBuilder cards={latestCards} prices={prices} onOpenCard={openCard} />}
     {section === "decks" && <DeckMatcher cards={latestCards} onOpenCard={openCard} />}
     {section === "collection" && <div className="view">
     <section className="page-head">

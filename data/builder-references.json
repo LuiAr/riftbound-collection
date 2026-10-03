@@ -1,0 +1,2144 @@
+[
+  {
+    "id": "s4-shanghai-city-challenge-2026-09-27-4th-tikizz-akali",
+    "name": "Shanghai City Challenge · 4 place",
+    "url": "https://riftboundfrance.fr/en/decks/s4-shanghai-city-challenge-2026-09-27-4th-tikizz-akali",
+    "source": "Riftbound France",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Shanghai City Challenge",
+    "placement": 4,
+    "accessedAt": "2026-10-03",
+    "legendId": "rogue assassin",
+    "strategy": "Akali movement and empower",
+    "evidence": "Tournament result reported by source",
+    "entries": [
+      {
+        "cardId": "forbidding waste",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sigil of the storm",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "void gate",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "akali deadly weapon",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "rogue assassin",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "blitzcrank impassive",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "darius trifarian",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "lonely poro",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "long sword",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "mischievous marai",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "mournful witness",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "shuriken flip",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sterak s gage",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "against the odds",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of rage",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "tomb raider barbara",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "twilight shroud",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "s4-shanghai-city-challenge-2026-09-27-30th-akali",
+    "name": "Shanghai City Challenge · 30 place",
+    "url": "https://riftboundfrance.fr/en/decks/s4-shanghai-city-challenge-2026-09-27-30th-akali",
+    "source": "Riftbound France",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Shanghai City Challenge",
+    "placement": 30,
+    "accessedAt": "2026-10-03",
+    "legendId": "rogue assassin",
+    "strategy": "Akali movement and empower",
+    "evidence": "Tournament result reported by source",
+    "entries": [
+      {
+        "cardId": "forgotten monument",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "targon s peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "void gate",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "akali deadly weapon",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "rogue assassin",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "block",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "irelia fervent",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "long sword",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "mischievous marai",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "noxus hopeful",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "shuriken flip",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sterak s gage",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "brittle steel",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "crumbling sands",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "disarming rake",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "thermo beam",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "s4-shanghai-city-challenge-2026-09-27-18th-akali",
+    "name": "Shanghai City Challenge · 18 place",
+    "url": "https://riftboundfrance.fr/en/decks/s4-shanghai-city-challenge-2026-09-27-18th-akali",
+    "source": "Riftbound France",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Shanghai City Challenge",
+    "placement": 18,
+    "accessedAt": "2026-10-03",
+    "legendId": "rogue assassin",
+    "strategy": "Akali movement and empower",
+    "evidence": "Tournament result reported by source",
+    "entries": [
+      {
+        "cardId": "forgotten monument",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "targon s peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "void gate",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "akali deadly weapon",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "rogue assassin",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "blitzcrank impassive",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "block",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "darius trifarian",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "long sword",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "mischievous marai",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "shuriken flip",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "tomb raider barbara",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "against the odds",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of rage",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "thermo beam",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "tomb raider barbara",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "s4-shanghai-city-challenge-2026-09-27-12th-ost-akali",
+    "name": "Shanghai City Challenge · 12 place",
+    "url": "https://riftboundfrance.fr/en/decks/s4-shanghai-city-challenge-2026-09-27-12th-ost-akali",
+    "source": "Riftbound France",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Shanghai City Challenge",
+    "placement": 12,
+    "accessedAt": "2026-10-03",
+    "legendId": "rogue assassin",
+    "strategy": "Akali movement and empower",
+    "evidence": "Tournament result reported by source",
+    "entries": [
+      {
+        "cardId": "abandoned hall",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "forgotten monument",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sigil of the storm",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "akali deadly weapon",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "rogue assassin",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "en garde",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "gem jammer",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "irelia fervent",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "long sword",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "noxus hopeful",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "shuriken flip",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "adaptatron",
+        "quantity": 3,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "against the odds",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "brittle steel",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "thermo beam",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "void seeker",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "s4-shanghai-city-challenge-2026-09-27-1st-akali",
+    "name": "Shanghai City Challenge · 1 place",
+    "url": "https://riftboundfrance.fr/en/decks/s4-shanghai-city-challenge-2026-09-27-1st-akali",
+    "source": "Riftbound France",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Shanghai City Challenge",
+    "placement": 1,
+    "accessedAt": "2026-10-03",
+    "legendId": "rogue assassin",
+    "strategy": "Akali movement and empower",
+    "evidence": "Tournament result reported by source",
+    "entries": [
+      {
+        "cardId": "forbidding waste",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sigil of the storm",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "void gate",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "akali deadly weapon",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "rogue assassin",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "blitzcrank impassive",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "darius trifarian",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "irelia fervent",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "lonely poro",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "long sword",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "mischievous marai",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "mournful witness",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "shuriken flip",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "against the odds",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of rage",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "tomb raider barbara",
+        "quantity": 2,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "s4-fuzhou-city-challenge-2026-09-27-21st-akali",
+    "name": "Fuzhou City Challenge · 21 place",
+    "url": "https://riftboundfrance.fr/en/decks/s4-fuzhou-city-challenge-2026-09-27-21st-akali",
+    "source": "Riftbound France",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Fuzhou City Challenge",
+    "placement": 21,
+    "accessedAt": "2026-10-03",
+    "legendId": "rogue assassin",
+    "strategy": "Akali movement and empower",
+    "evidence": "Tournament result reported by source",
+    "entries": [
+      {
+        "cardId": "back alley bar",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "forgotten monument",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "void gate",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "akali deadly weapon",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "rogue assassin",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "darius trifarian",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "en garde",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "lonely poro",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "long sword",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "mischievous marai",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "mournful witness",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "shuriken flip",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "against the odds",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "brittle steel",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of rage",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "disarming rake",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "s4-fuzhou-city-challenge-2026-09-27-18th-step-jbg-sa-akali",
+    "name": "Fuzhou City Challenge · 18 place",
+    "url": "https://riftboundfrance.fr/en/decks/s4-fuzhou-city-challenge-2026-09-27-18th-step-jbg-sa-akali",
+    "source": "Riftbound France",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Fuzhou City Challenge",
+    "placement": 18,
+    "accessedAt": "2026-10-03",
+    "legendId": "rogue assassin",
+    "strategy": "Akali movement and empower",
+    "evidence": "Tournament result reported by source",
+    "entries": [
+      {
+        "cardId": "forgotten monument",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "threshold of the gray",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "void gate",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "akali deadly weapon",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "rogue assassin",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "brittle steel",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "darius trifarian",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "lonely poro",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "long sword",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "shuriken flip",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "brittle steel",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "darius trifarian",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of rage",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "vilemaw",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "s4-fuzhou-city-challenge-2026-09-27-13th-akali",
+    "name": "Fuzhou City Challenge · 13 place",
+    "url": "https://riftboundfrance.fr/en/decks/s4-fuzhou-city-challenge-2026-09-27-13th-akali",
+    "source": "Riftbound France",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Fuzhou City Challenge",
+    "placement": 13,
+    "accessedAt": "2026-10-03",
+    "legendId": "rogue assassin",
+    "strategy": "Akali movement and empower",
+    "evidence": "Tournament result reported by source",
+    "entries": [
+      {
+        "cardId": "forgotten monument",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "targon s peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "void gate",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "akali deadly weapon",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "rogue assassin",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "blitzcrank impassive",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "darius trifarian",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "long sword",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "mischievous marai",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "shuriken flip",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of rage",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "disarming rake",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "pendulum blade",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "smite",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "thermo beam",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "twilight shroud",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "01c04a0e-833c-47e6-94eb-f0686e1f93ba",
+    "name": "RQ Los Angeles Best-Of Akali (Tempete)",
+    "url": "https://piltoverarchive.com/decks/view/01c04a0e-833c-47e6-94eb-f0686e1f93ba",
+    "source": "Piltover Archive",
+    "date": "2026-09-27",
+    "dateKind": "Event date",
+    "event": "Los Angeles Regional",
+    "placement": 7,
+    "accessedAt": "2026-10-03",
+    "legendId": "rogue assassin",
+    "strategy": "Akali movement and empower",
+    "evidence": "Tournament result reported by source",
+    "entries": [
+      {
+        "cardId": "rogue assassin",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "akali deadly weapon",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "shuriken flip",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "darius trifarian",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "long sword",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "block",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "blitzcrank impassive",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "sterak s gage",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "mournful witness",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "mischievous marai",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "sigil of the storm",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "void gate",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "forgotten monument",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "irelia fervent",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "against the odds",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "disarming rake",
+        "quantity": 2,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "ae198cdf-6dcf-4579-a7c9-316c7b6d5374",
+    "name": "Singapore Best of Akali (Grand Winner) | Gorica",
+    "url": "https://piltoverarchive.com/decks/view/ae198cdf-6dcf-4579-a7c9-316c7b6d5374",
+    "source": "Piltover Archive",
+    "date": "2026-09-06",
+    "dateKind": "Event date",
+    "event": "Singapore Regional",
+    "placement": 1,
+    "accessedAt": "2026-10-03",
+    "legendId": "rogue assassin",
+    "strategy": "Akali movement and empower",
+    "evidence": "Tournament result reported by source",
+    "entries": [
+      {
+        "cardId": "rogue assassin",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "akali deadly weapon",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "darius trifarian",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "blitzcrank impassive",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "noxus hopeful",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "mischievous marai",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "mournful witness",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "back off",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "block",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "shuriken flip",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "sterak s gage",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "long sword",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "void gate",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sigil of the storm",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "forgotten monument",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "decree of focus",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "en garde",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "against the odds",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "disarming rake",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "akali silent",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "thermo beam",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 2,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "cfb771c1-7740-4719-9f25-dfdfe5fae429",
+    "name": "Koko’s Irelia post ban",
+    "url": "https://piltoverarchive.com/decks/view/cfb771c1-7740-4719-9f25-dfdfe5fae429",
+    "source": "Piltover Archive",
+    "date": "2026-09-24",
+    "dateKind": "Deck updated",
+    "event": null,
+    "placement": null,
+    "accessedAt": "2026-10-03",
+    "legendId": "blade dancer",
+    "strategy": "Irelia spell tempo",
+    "evidence": "Community list, no tournament result verified",
+    "entries": [
+      {
+        "cardId": "blade dancer",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "irelia fervent",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "defiant dance",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "boots of swiftness",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "adaptatron",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "rebuke",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "flash",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "edge of night",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "pyke returned",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "astral heron",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "treasure hunter",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "targon s peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "abandoned hall",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sunken temple",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "ravenbloom prefect",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "hard bargain",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "adaptatron",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "vex cheerless",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "44f0cad2-b511-494e-9d3c-e6926bca074f",
+    "name": "God Save The Queen",
+    "url": "https://piltoverarchive.com/decks/view/44f0cad2-b511-494e-9d3c-e6926bca074f",
+    "source": "Piltover Archive",
+    "date": "2026-09-24",
+    "dateKind": "Deck updated",
+    "event": null,
+    "placement": null,
+    "accessedAt": "2026-10-03",
+    "legendId": "scorn of the moon",
+    "strategy": "Diana spell ambush",
+    "evidence": "Community list, no tournament result verified",
+    "entries": [
+      {
+        "cardId": "scorn of the moon",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "diana lunari",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "eclipse",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "flash",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "hard bargain",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "hwei brooding painter",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "moonfall",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "patched porobot",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ravenbloom student",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "smoke screen",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "stupefy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "abandon",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "turn to dust",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "retreat",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ocean drake",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "mel newly awakened",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "singularity",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "targon s peak",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "ravenbloom conservatory",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "rockfall path",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "baron nashor",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of insight",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ravenbloom prefect",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "unchecked power",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "thousand tailed watcher",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "up from the deep",
+        "quantity": 2,
+        "section": "sideboard"
+      }
+    ]
+  }
+]

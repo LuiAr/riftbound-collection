@@ -7,6 +7,7 @@ export type PriceQuote = {
 export type PriceSnapshot = {
   createdAt: string;
   quotes: Record<string, PriceQuote>;
+  playableOffers?: Record<string, (PriceQuote & { set: string; printingVerified: boolean })[]>;
 };
 
 export function priceKey(set: string, name: string): string {

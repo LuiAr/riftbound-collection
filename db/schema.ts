@@ -28,3 +28,16 @@ export const savedDecks = sqliteTable("saved_decks", {
   hideTokens: integer("hide_tokens", { mode: "boolean" }).notNull(),
   createdAt: text("created_at").notNull(), updatedAt: text("updated_at").notNull(),
 }, (table) => [primaryKey({ columns: [table.userId, table.deckId] })]);
+
+export const builderUsage = sqliteTable("builder_usage", {
+  userId: text("user_id").notNull(), month: text("month").notNull(),
+  reservedOre: integer("reserved_ore").notNull().default(0),
+  spentOre: integer("spent_ore").notNull().default(0),
+}, (table) => [primaryKey({ columns: [table.userId, table.month] })]);
+
+export const builderCalls = sqliteTable("builder_calls", {
+  userId: text("user_id").notNull(), callId: text("call_id").notNull(),
+  month: text("month").notNull(), reservedOre: integer("reserved_ore").notNull(),
+  actualOre: integer("actual_ore"), status: text("status").notNull(),
+  resultJson: text("result_json"), createdAt: text("created_at").notNull(),
+}, (table) => [primaryKey({ columns: [table.userId, table.callId] })]);
