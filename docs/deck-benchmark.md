@@ -88,3 +88,7 @@ Use `pass`, `concern`, or `fail` for each criterion, with a concrete reason and 
 - Improvements require better paired results on unchanged fixtures, not only more accepted lists.
 
 Passing these checks establishes narrower reliability claims. Competitive strength still requires experienced-player review and relevant play results. No predicted tournament win rate follows from this benchmark.
+
+## Live pilot
+
+See [the dated review](deck-benchmark-live-review-2026-10-04.md) for the twelve captured requests, eighteen validated lists, annotation-dependent refusals and limitations. These are genuine AI outputs using synthetic inventories and prices, separate from the controlled baseline. No independent human ratings or simulated games are claimed.
