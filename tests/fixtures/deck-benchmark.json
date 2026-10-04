@@ -1,0 +1,15 @@
+{
+  "version": "deck-benchmark-v1",
+  "referenceDate": "2026-10-04T00:00:00Z",
+  "priceDate": "2026-10-04",
+  "cases": [
+    { "legendId": "rogue assassin", "referenceId": "01c04a0e-833c-47e6-94eb-f0686e1f93ba", "cohort": "reviewed" },
+    { "legendId": "scorn of the moon", "referenceId": "ref-ae57fbbf721577ac", "cohort": "reviewed" },
+    { "legendId": "blade dancer", "referenceId": "ref-658f20504e62734c", "cohort": "reviewed" },
+    { "legendId": "pridestalker", "referenceId": "ref-98439651bb22ae62", "cohort": "unreviewed" },
+    { "legendId": "emperor of the sands", "referenceId": "ref-669bc54a4f278916", "cohort": "unreviewed" },
+    { "legendId": "fire below the mountain", "referenceId": "ref-3c2758bf06c77d75", "cohort": "unreviewed" },
+    { "legendId": "heart of the tempest", "referenceId": "ref-876b2e6cad401fdb", "cohort": "unreviewed" },
+    { "legendId": "prodigal explorer", "referenceId": "ref-630454ba2ed6c37f", "cohort": "unreviewed" }
+  ]
+}

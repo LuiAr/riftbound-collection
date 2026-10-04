@@ -9,6 +9,10 @@ try {
   await build({ entryPoints: ["scripts/test-deck-builder.ts"], bundle: true, platform: "node", outfile: output });
   let result = spawnSync(process.execPath, [output], { stdio: "inherit" });
   if (result.status !== 0) process.exitCode = result.status ?? 1;
+  const feasibilityOutput = join(temporary, "feasibility-tests.mjs");
+  await build({ entryPoints: ["scripts/test-strategy-feasibility.ts"], bundle: true, platform: "node", format: "esm", outfile: feasibilityOutput, alias: { "cloudflare:workers": "./tests/fixtures/builder-env.ts" } });
+  result = spawnSync(process.execPath, [feasibilityOutput], { stdio: "inherit" });
+  if (result.status !== 0) process.exitCode = result.status ?? 1;
   const qualityOutput = join(temporary, "quality-tests.mjs");
   await build({ entryPoints: ["scripts/test-builder-quality.ts"], bundle: true, platform: "node", format: "esm", outfile: qualityOutput, alias: { "cloudflare:workers": "./tests/fixtures/builder-env.ts" } });
   result = spawnSync(process.execPath, [qualityOutput], { stdio: "inherit" });

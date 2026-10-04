@@ -12,6 +12,12 @@ Reference coverage and construction validation are prerequisites. They do not at
 
 The offline checks prepare requests and accept/reject controlled outputs for every supported Legend. Additional fixtures cover Rengar, Azir, Ornn, Kennen and Ezreal, outside the three Legends used to develop engine annotations. Synthetic prices exercise arithmetic only. No new paid model requests or games are part of this suite.
 
+## Strategy feasibility and fixed benchmark
+
+Generation now receives a deterministic comparison of full reference costs, reviewed core quantities and optimistic minimum packages before choosing a strategy. Snapshot costs use confirmed missing copies only and cannot establish gameplay strength.
+
+See [the fixed benchmark protocol](deck-benchmark.md) for 48 cases across eight champions, request export, captured-model-output evaluation and independent player review. [The initial baseline](deck-benchmark-baseline.json) uses unmodified references and contains no captured model samples or games.
+
 ## What would attest quality across Legends?
 
 1. Freeze model, prompt, card/rule version, reference set and evaluator before measuring. Keep some Legends and event lists separate from development. Our five regression fixtures are held out from engine annotation development, not from a scientifically controlled model-training process.

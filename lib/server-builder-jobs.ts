@@ -71,6 +71,7 @@ async function prepareJob(userId: string, id: string, input: BuilderInput) {
     if (input.favouriteIds.some((cardId) => !owned[cardId])) throw new Error("Confirm that you own your favourite cards before generating.");
     await event(userId, id, "references", "Checking current rules and preparing compatible reference strategies.");
     const prepared = await prepareBuild(input, owned, prices, fx);
+    await event(userId, id, "references", `Compared ${new Set(prepared.context.feasibility?.fits.map((fit) => fit.strategy)).size} strategies using owned copies, reviewed core quantities and missing-copy costs. Unreviewed strategies remain available for AI assessment.`);
     const context = JSON.stringify(prepared.context);
     if (new TextEncoder().encode(context).length > 900000) throw new Error("This generation snapshot is too large to store safely.");
     await db().prepare("UPDATE builder_calls SET context_json = ? WHERE user_id = ? AND call_id = ?").bind(context, userId, id).run();

@@ -1,0 +1,3525 @@
+{
+  "benchmarkVersion": "deck-benchmark-v1",
+  "snapshotHash": "7eb7c0dd463a2cfcf0583224c5ffdf83882951106b9c3030baf389e569c51eba",
+  "generatedAt": "2026-10-04T07:49:13.309Z",
+  "model": "gpt-6.1-sol",
+  "scope": "Offline feasibility and baseline evaluation; optional captured model outputs. No API calls or simulated games are made by this command.",
+  "fixtures": {
+    "champions": 8,
+    "scenarios": 6,
+    "cases": 48,
+    "reviewedChampions": 3,
+    "unreviewedChampions": 5,
+    "prices": "Synthetic, 10 SEK per copy except declared expensive/unknown cases; shipping excluded"
+  },
+  "baseline": [
+    {
+      "caseId": "rogue assassin/complete",
+      "cohort": "reviewed",
+      "note": "Exact reference is owned; assess whether generation preserves its coherent strategy.",
+      "referenceId": "01c04a0e-833c-47e6-94eb-f0686e1f93ba",
+      "ownedOnly": true,
+      "budget": true,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "01c04a0e-833c-47e6-94eb-f0686e1f93ba",
+            "strategy": "Akali movement and empower",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "coreQuantities": [
+              {
+                "cardId": "rogue assassin",
+                "quantity": 1
+              },
+              {
+                "cardId": "akali deadly weapon",
+                "quantity": 1
+              },
+              {
+                "cardId": "shuriken flip",
+                "quantity": 3
+              },
+              {
+                "cardId": "astral heron",
+                "quantity": 3
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "reference_ready",
+            "budget": "reference_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "01c04a0e-833c-47e6-94eb-f0686e1f93ba"
+          ],
+          "budget": [
+            "01c04a0e-833c-47e6-94eb-f0686e1f93ba"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "rogue assassin/flex_gap",
+      "cohort": "reviewed",
+      "note": "One reference copy costs exactly 10 SEK; owned-only requires a real substitution. For unreviewed strategies its flexibility still needs review.",
+      "referenceId": "01c04a0e-833c-47e6-94eb-f0686e1f93ba",
+      "ownedOnly": false,
+      "budget": true,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 10,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "01c04a0e-833c-47e6-94eb-f0686e1f93ba",
+            "strategy": "Akali movement and empower",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 10,
+              "missingCopies": 1,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "rogue assassin",
+                "quantity": 1
+              },
+              {
+                "cardId": "akali deadly weapon",
+                "quantity": 1
+              },
+              {
+                "cardId": "shuriken flip",
+                "quantity": 3
+              },
+              {
+                "cardId": "astral heron",
+                "quantity": 3
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "core_ready",
+            "budget": "reference_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "01c04a0e-833c-47e6-94eb-f0686e1f93ba"
+          ],
+          "budget": [
+            "01c04a0e-833c-47e6-94eb-f0686e1f93ba"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "rogue assassin/expensive_core",
+      "cohort": "reviewed",
+      "note": "A reviewed engine card costs 1001 SEK per copy against a 1000 SEK budget. Assess another strategy or a candid refusal.",
+      "referenceId": "01c04a0e-833c-47e6-94eb-f0686e1f93ba",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "01c04a0e-833c-47e6-94eb-f0686e1f93ba",
+            "strategy": "Akali movement and empower",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 1001,
+              "missingCopies": 1,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "referenceCore": {
+              "knownCostSek": 3003,
+              "missingCopies": 3,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false,
+              "missing": [
+                {
+                  "cardId": "shuriken flip",
+                  "required": 3,
+                  "owned": 0,
+                  "missing": 3,
+                  "unitSek": 1001
+                }
+              ]
+            },
+            "fullReference": {
+              "knownCostSek": 3003,
+              "missingCopies": 3,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "rogue assassin",
+                "quantity": 1
+              },
+              {
+                "cardId": "akali deadly weapon",
+                "quantity": 1
+              },
+              {
+                "cardId": "shuriken flip",
+                "quantity": 3
+              },
+              {
+                "cardId": "astral heron",
+                "quantity": 3
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "core_gap",
+            "budget": "core_gap"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "01c04a0e-833c-47e6-94eb-f0686e1f93ba"
+          ],
+          "budget": [
+            "01c04a0e-833c-47e6-94eb-f0686e1f93ba"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "rogue assassin/unknown_price",
+      "cohort": "reviewed",
+      "note": "One missing reference copy has no price; it cannot be treated as free. A coherent priced substitute remains possible.",
+      "referenceId": "01c04a0e-833c-47e6-94eb-f0686e1f93ba",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "01c04a0e-833c-47e6-94eb-f0686e1f93ba",
+            "strategy": "Akali movement and empower",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 1,
+              "unpricedCopies": 1,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "rogue assassin",
+                "quantity": 1
+              },
+              {
+                "cardId": "akali deadly weapon",
+                "quantity": 1
+              },
+              {
+                "cardId": "shuriken flip",
+                "quantity": 3
+              },
+              {
+                "cardId": "astral heron",
+                "quantity": 3
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "core_ready",
+            "budget": "core_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "01c04a0e-833c-47e6-94eb-f0686e1f93ba"
+          ],
+          "budget": [
+            "s4-shanghai-city-challenge-2026-09-27-12th-ost-akali"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "rogue assassin/empty_zero_budget",
+      "cohort": "reviewed",
+      "note": "No cards are confirmed owned and budget is zero. Both versions must be refused.",
+      "referenceId": "01c04a0e-833c-47e6-94eb-f0686e1f93ba",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 0,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "01c04a0e-833c-47e6-94eb-f0686e1f93ba",
+            "strategy": "Akali movement and empower",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 40,
+              "missingCopies": 4,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "referenceCore": {
+              "knownCostSek": 80,
+              "missingCopies": 8,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false,
+              "missing": [
+                {
+                  "cardId": "rogue assassin",
+                  "required": 1,
+                  "owned": 0,
+                  "missing": 1,
+                  "unitSek": 10
+                },
+                {
+                  "cardId": "akali deadly weapon",
+                  "required": 1,
+                  "owned": 0,
+                  "missing": 1,
+                  "unitSek": 10
+                },
+                {
+                  "cardId": "shuriken flip",
+                  "required": 3,
+                  "owned": 0,
+                  "missing": 3,
+                  "unitSek": 10
+                },
+                {
+                  "cardId": "astral heron",
+                  "required": 3,
+                  "owned": 0,
+                  "missing": 3,
+                  "unitSek": 10
+                }
+              ]
+            },
+            "fullReference": {
+              "knownCostSek": 660,
+              "missingCopies": 66,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "rogue assassin",
+                "quantity": 1
+              },
+              {
+                "cardId": "akali deadly weapon",
+                "quantity": 1
+              },
+              {
+                "cardId": "shuriken flip",
+                "quantity": 3
+              },
+              {
+                "cardId": "astral heron",
+                "quantity": 3
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "core_gap",
+            "budget": "core_gap"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "01c04a0e-833c-47e6-94eb-f0686e1f93ba"
+          ],
+          "budget": [
+            "01c04a0e-833c-47e6-94eb-f0686e1f93ba"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "rogue assassin/fun_favourite",
+      "cohort": "reviewed",
+      "note": "A compatible owned favourite absent from the reference must be included with a meaningful strategic explanation.",
+      "referenceId": "01c04a0e-833c-47e6-94eb-f0686e1f93ba",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "01c04a0e-833c-47e6-94eb-f0686e1f93ba",
+            "strategy": "Akali movement and empower",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "coreQuantities": [
+              {
+                "cardId": "rogue assassin",
+                "quantity": 1
+              },
+              {
+                "cardId": "akali deadly weapon",
+                "quantity": 1
+              },
+              {
+                "cardId": "shuriken flip",
+                "quantity": 3
+              },
+              {
+                "cardId": "astral heron",
+                "quantity": 3
+              },
+              {
+                "cardId": "baccai sandspinner",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [
+              "baccai sandspinner"
+            ],
+            "ownedOnly": "core_ready",
+            "budget": "core_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "01c04a0e-833c-47e6-94eb-f0686e1f93ba"
+          ],
+          "budget": [
+            "01c04a0e-833c-47e6-94eb-f0686e1f93ba"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "scorn of the moon/complete",
+      "cohort": "reviewed",
+      "note": "Exact reference is owned; assess whether generation preserves its coherent strategy.",
+      "referenceId": "ref-ae57fbbf721577ac",
+      "ownedOnly": true,
+      "budget": true,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-ae57fbbf721577ac",
+            "strategy": "Diana Hwei spell tempo",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "coreQuantities": [
+              {
+                "cardId": "scorn of the moon",
+                "quantity": 1
+              },
+              {
+                "cardId": "diana lunari",
+                "quantity": 1
+              },
+              {
+                "cardId": "ravenbloom student",
+                "quantity": 3
+              },
+              {
+                "cardId": "moonfall",
+                "quantity": 3
+              },
+              {
+                "cardId": "hwei brooding painter",
+                "quantity": 3
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "reference_ready",
+            "budget": "reference_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-ae57fbbf721577ac",
+            "ref-15d738b47dfbcfcd",
+            "ref-a02e1a2c5715c713"
+          ],
+          "budget": [
+            "ref-ae57fbbf721577ac",
+            "ref-15d738b47dfbcfcd",
+            "ref-a02e1a2c5715c713"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "scorn of the moon/flex_gap",
+      "cohort": "reviewed",
+      "note": "One reference copy costs exactly 10 SEK; owned-only requires a real substitution. For unreviewed strategies its flexibility still needs review.",
+      "referenceId": "ref-ae57fbbf721577ac",
+      "ownedOnly": false,
+      "budget": true,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 10,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-ae57fbbf721577ac",
+            "strategy": "Diana Hwei spell tempo",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 10,
+              "missingCopies": 1,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "scorn of the moon",
+                "quantity": 1
+              },
+              {
+                "cardId": "diana lunari",
+                "quantity": 1
+              },
+              {
+                "cardId": "ravenbloom student",
+                "quantity": 3
+              },
+              {
+                "cardId": "moonfall",
+                "quantity": 3
+              },
+              {
+                "cardId": "hwei brooding painter",
+                "quantity": 3
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "core_ready",
+            "budget": "reference_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-ae57fbbf721577ac",
+            "ref-15d738b47dfbcfcd",
+            "ref-a02e1a2c5715c713"
+          ],
+          "budget": [
+            "ref-ae57fbbf721577ac",
+            "ref-15d738b47dfbcfcd",
+            "ref-a02e1a2c5715c713"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "scorn of the moon/expensive_core",
+      "cohort": "reviewed",
+      "note": "A reviewed engine card costs 1001 SEK per copy against a 1000 SEK budget. Assess another strategy or a candid refusal.",
+      "referenceId": "ref-ae57fbbf721577ac",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-ae57fbbf721577ac",
+            "strategy": "Diana Hwei spell tempo",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 1001,
+              "missingCopies": 1,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "referenceCore": {
+              "knownCostSek": 3003,
+              "missingCopies": 3,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false,
+              "missing": [
+                {
+                  "cardId": "ravenbloom student",
+                  "required": 3,
+                  "owned": 0,
+                  "missing": 3,
+                  "unitSek": 1001
+                }
+              ]
+            },
+            "fullReference": {
+              "knownCostSek": 3003,
+              "missingCopies": 3,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "scorn of the moon",
+                "quantity": 1
+              },
+              {
+                "cardId": "diana lunari",
+                "quantity": 1
+              },
+              {
+                "cardId": "ravenbloom student",
+                "quantity": 3
+              },
+              {
+                "cardId": "moonfall",
+                "quantity": 3
+              },
+              {
+                "cardId": "hwei brooding painter",
+                "quantity": 3
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "core_gap",
+            "budget": "core_gap"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-ae57fbbf721577ac",
+            "ref-15d738b47dfbcfcd",
+            "ref-a02e1a2c5715c713"
+          ],
+          "budget": [
+            "ref-ae57fbbf721577ac",
+            "ref-15d738b47dfbcfcd",
+            "ref-a02e1a2c5715c713"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "scorn of the moon/unknown_price",
+      "cohort": "reviewed",
+      "note": "One missing reference copy has no price; it cannot be treated as free. A coherent priced substitute remains possible.",
+      "referenceId": "ref-ae57fbbf721577ac",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-ae57fbbf721577ac",
+            "strategy": "Diana Hwei spell tempo",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 1,
+              "unpricedCopies": 1,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "scorn of the moon",
+                "quantity": 1
+              },
+              {
+                "cardId": "diana lunari",
+                "quantity": 1
+              },
+              {
+                "cardId": "ravenbloom student",
+                "quantity": 3
+              },
+              {
+                "cardId": "moonfall",
+                "quantity": 3
+              },
+              {
+                "cardId": "hwei brooding painter",
+                "quantity": 3
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "core_ready",
+            "budget": "core_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-ae57fbbf721577ac",
+            "ref-15d738b47dfbcfcd",
+            "ref-a02e1a2c5715c713"
+          ],
+          "budget": [
+            "44f0cad2-b511-494e-9d3c-e6926bca074f",
+            "ref-15d738b47dfbcfcd",
+            "ref-a02e1a2c5715c713"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "scorn of the moon/empty_zero_budget",
+      "cohort": "reviewed",
+      "note": "No cards are confirmed owned and budget is zero. Both versions must be refused.",
+      "referenceId": "ref-ae57fbbf721577ac",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 0,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-ae57fbbf721577ac",
+            "strategy": "Diana Hwei spell tempo",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 50,
+              "missingCopies": 5,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "referenceCore": {
+              "knownCostSek": 110,
+              "missingCopies": 11,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false,
+              "missing": [
+                {
+                  "cardId": "scorn of the moon",
+                  "required": 1,
+                  "owned": 0,
+                  "missing": 1,
+                  "unitSek": 10
+                },
+                {
+                  "cardId": "diana lunari",
+                  "required": 1,
+                  "owned": 0,
+                  "missing": 1,
+                  "unitSek": 10
+                },
+                {
+                  "cardId": "ravenbloom student",
+                  "required": 3,
+                  "owned": 0,
+                  "missing": 3,
+                  "unitSek": 10
+                },
+                {
+                  "cardId": "moonfall",
+                  "required": 3,
+                  "owned": 0,
+                  "missing": 3,
+                  "unitSek": 10
+                },
+                {
+                  "cardId": "hwei brooding painter",
+                  "required": 3,
+                  "owned": 0,
+                  "missing": 3,
+                  "unitSek": 10
+                }
+              ]
+            },
+            "fullReference": {
+              "knownCostSek": 660,
+              "missingCopies": 66,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "scorn of the moon",
+                "quantity": 1
+              },
+              {
+                "cardId": "diana lunari",
+                "quantity": 1
+              },
+              {
+                "cardId": "ravenbloom student",
+                "quantity": 3
+              },
+              {
+                "cardId": "moonfall",
+                "quantity": 3
+              },
+              {
+                "cardId": "hwei brooding painter",
+                "quantity": 3
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "core_gap",
+            "budget": "core_gap"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-ae57fbbf721577ac",
+            "ref-15d738b47dfbcfcd",
+            "ref-a02e1a2c5715c713"
+          ],
+          "budget": [
+            "ref-ae57fbbf721577ac",
+            "ref-15d738b47dfbcfcd",
+            "ref-a02e1a2c5715c713"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "scorn of the moon/fun_favourite",
+      "cohort": "reviewed",
+      "note": "A compatible owned favourite absent from the reference must be included with a meaningful strategic explanation.",
+      "referenceId": "ref-ae57fbbf721577ac",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-ae57fbbf721577ac",
+            "strategy": "Diana Hwei spell tempo",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "coreQuantities": [
+              {
+                "cardId": "scorn of the moon",
+                "quantity": 1
+              },
+              {
+                "cardId": "diana lunari",
+                "quantity": 1
+              },
+              {
+                "cardId": "ravenbloom student",
+                "quantity": 3
+              },
+              {
+                "cardId": "moonfall",
+                "quantity": 3
+              },
+              {
+                "cardId": "hwei brooding painter",
+                "quantity": 3
+              },
+              {
+                "cardId": "ahri inquisitive",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [
+              "ahri inquisitive"
+            ],
+            "ownedOnly": "core_ready",
+            "budget": "core_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-ae57fbbf721577ac",
+            "ref-15d738b47dfbcfcd",
+            "ref-a02e1a2c5715c713"
+          ],
+          "budget": [
+            "ref-ae57fbbf721577ac",
+            "ref-15d738b47dfbcfcd",
+            "ref-a02e1a2c5715c713"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "blade dancer/complete",
+      "cohort": "reviewed",
+      "note": "Exact reference is owned; assess whether generation preserves its coherent strategy.",
+      "referenceId": "ref-658f20504e62734c",
+      "ownedOnly": true,
+      "budget": true,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-658f20504e62734c",
+            "strategy": "Irelia mobile tempo",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "coreQuantities": [
+              {
+                "cardId": "blade dancer",
+                "quantity": 1
+              },
+              {
+                "cardId": "irelia fervent",
+                "quantity": 1
+              },
+              {
+                "cardId": "defiant dance",
+                "quantity": 3
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "reference_ready",
+            "budget": "reference_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-658f20504e62734c",
+            "ref-931339d8eae36e0f"
+          ],
+          "budget": [
+            "ref-658f20504e62734c",
+            "ref-931339d8eae36e0f"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "blade dancer/flex_gap",
+      "cohort": "reviewed",
+      "note": "One reference copy costs exactly 10 SEK; owned-only requires a real substitution. For unreviewed strategies its flexibility still needs review.",
+      "referenceId": "ref-658f20504e62734c",
+      "ownedOnly": false,
+      "budget": true,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 10,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-658f20504e62734c",
+            "strategy": "Irelia mobile tempo",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 10,
+              "missingCopies": 1,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "blade dancer",
+                "quantity": 1
+              },
+              {
+                "cardId": "irelia fervent",
+                "quantity": 1
+              },
+              {
+                "cardId": "defiant dance",
+                "quantity": 3
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "core_ready",
+            "budget": "reference_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-658f20504e62734c",
+            "ref-931339d8eae36e0f"
+          ],
+          "budget": [
+            "ref-658f20504e62734c",
+            "ref-931339d8eae36e0f"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "blade dancer/expensive_core",
+      "cohort": "reviewed",
+      "note": "A reviewed engine card costs 1001 SEK per copy against a 1000 SEK budget. Assess another strategy or a candid refusal.",
+      "referenceId": "ref-658f20504e62734c",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-658f20504e62734c",
+            "strategy": "Irelia mobile tempo",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 1001,
+              "missingCopies": 1,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "referenceCore": {
+              "knownCostSek": 3003,
+              "missingCopies": 3,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false,
+              "missing": [
+                {
+                  "cardId": "defiant dance",
+                  "required": 3,
+                  "owned": 0,
+                  "missing": 3,
+                  "unitSek": 1001
+                }
+              ]
+            },
+            "fullReference": {
+              "knownCostSek": 3003,
+              "missingCopies": 3,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "blade dancer",
+                "quantity": 1
+              },
+              {
+                "cardId": "irelia fervent",
+                "quantity": 1
+              },
+              {
+                "cardId": "defiant dance",
+                "quantity": 3
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "core_gap",
+            "budget": "core_gap"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-658f20504e62734c",
+            "ref-931339d8eae36e0f"
+          ],
+          "budget": [
+            "ref-658f20504e62734c",
+            "ref-931339d8eae36e0f"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "blade dancer/unknown_price",
+      "cohort": "reviewed",
+      "note": "One missing reference copy has no price; it cannot be treated as free. A coherent priced substitute remains possible.",
+      "referenceId": "ref-658f20504e62734c",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-658f20504e62734c",
+            "strategy": "Irelia mobile tempo",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 1,
+              "unpricedCopies": 1,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "blade dancer",
+                "quantity": 1
+              },
+              {
+                "cardId": "irelia fervent",
+                "quantity": 1
+              },
+              {
+                "cardId": "defiant dance",
+                "quantity": 3
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "core_ready",
+            "budget": "core_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-658f20504e62734c",
+            "ref-931339d8eae36e0f"
+          ],
+          "budget": [
+            "ref-931339d8eae36e0f",
+            "ref-658f20504e62734c"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "blade dancer/empty_zero_budget",
+      "cohort": "reviewed",
+      "note": "No cards are confirmed owned and budget is zero. Both versions must be refused.",
+      "referenceId": "ref-658f20504e62734c",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 0,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-658f20504e62734c",
+            "strategy": "Irelia mobile tempo",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 30,
+              "missingCopies": 3,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "referenceCore": {
+              "knownCostSek": 50,
+              "missingCopies": 5,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false,
+              "missing": [
+                {
+                  "cardId": "blade dancer",
+                  "required": 1,
+                  "owned": 0,
+                  "missing": 1,
+                  "unitSek": 10
+                },
+                {
+                  "cardId": "irelia fervent",
+                  "required": 1,
+                  "owned": 0,
+                  "missing": 1,
+                  "unitSek": 10
+                },
+                {
+                  "cardId": "defiant dance",
+                  "required": 3,
+                  "owned": 0,
+                  "missing": 3,
+                  "unitSek": 10
+                }
+              ]
+            },
+            "fullReference": {
+              "knownCostSek": 660,
+              "missingCopies": 66,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "blade dancer",
+                "quantity": 1
+              },
+              {
+                "cardId": "irelia fervent",
+                "quantity": 1
+              },
+              {
+                "cardId": "defiant dance",
+                "quantity": 3
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "core_gap",
+            "budget": "core_gap"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-658f20504e62734c",
+            "ref-931339d8eae36e0f"
+          ],
+          "budget": [
+            "ref-658f20504e62734c",
+            "ref-931339d8eae36e0f"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "blade dancer/fun_favourite",
+      "cohort": "reviewed",
+      "note": "A compatible owned favourite absent from the reference must be included with a meaningful strategic explanation.",
+      "referenceId": "ref-658f20504e62734c",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-658f20504e62734c",
+            "strategy": "Irelia mobile tempo",
+            "reviewedCore": true,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "coreQuantities": [
+              {
+                "cardId": "blade dancer",
+                "quantity": 1
+              },
+              {
+                "cardId": "irelia fervent",
+                "quantity": 1
+              },
+              {
+                "cardId": "defiant dance",
+                "quantity": 3
+              },
+              {
+                "cardId": "sona harmonious",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [
+              "sona harmonious"
+            ],
+            "ownedOnly": "core_ready",
+            "budget": "core_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-658f20504e62734c",
+            "ref-931339d8eae36e0f"
+          ],
+          "budget": [
+            "ref-658f20504e62734c",
+            "ref-931339d8eae36e0f"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "pridestalker/complete",
+      "cohort": "unreviewed",
+      "note": "Exact reference is owned; assess whether generation preserves its coherent strategy.",
+      "referenceId": "ref-98439651bb22ae62",
+      "ownedOnly": true,
+      "budget": true,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-98439651bb22ae62",
+            "strategy": "Benchmark Rengar, Pridestalker",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "coreQuantities": [
+              {
+                "cardId": "pridestalker",
+                "quantity": 1
+              },
+              {
+                "cardId": "rengar trophy hunter",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "reference_ready",
+            "budget": "reference_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-98439651bb22ae62"
+          ],
+          "budget": [
+            "ref-98439651bb22ae62"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "pridestalker/flex_gap",
+      "cohort": "unreviewed",
+      "note": "One reference copy costs exactly 10 SEK; owned-only requires a real substitution. For unreviewed strategies its flexibility still needs review.",
+      "referenceId": "ref-98439651bb22ae62",
+      "ownedOnly": false,
+      "budget": true,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 10,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-98439651bb22ae62",
+            "strategy": "Benchmark Rengar, Pridestalker",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 10,
+              "missingCopies": 1,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "pridestalker",
+                "quantity": 1
+              },
+              {
+                "cardId": "rengar trophy hunter",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "reference_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-98439651bb22ae62"
+          ],
+          "budget": [
+            "ref-98439651bb22ae62"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "pridestalker/expensive_core",
+      "cohort": "unreviewed",
+      "note": "This strategy has no reviewed core; the expensive card is a reference card, not an independently established essential card.",
+      "referenceId": "ref-98439651bb22ae62",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-98439651bb22ae62",
+            "strategy": "Benchmark Rengar, Pridestalker",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 1001,
+              "missingCopies": 1,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "pridestalker",
+                "quantity": 1
+              },
+              {
+                "cardId": "rengar trophy hunter",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-98439651bb22ae62"
+          ],
+          "budget": [
+            "ref-98439651bb22ae62"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "pridestalker/unknown_price",
+      "cohort": "unreviewed",
+      "note": "One missing reference copy has no price; it cannot be treated as free. A coherent priced substitute remains possible.",
+      "referenceId": "ref-98439651bb22ae62",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-98439651bb22ae62",
+            "strategy": "Benchmark Rengar, Pridestalker",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 1,
+              "unpricedCopies": 1,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "pridestalker",
+                "quantity": 1
+              },
+              {
+                "cardId": "rengar trophy hunter",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-98439651bb22ae62"
+          ],
+          "budget": [
+            "ref-98439651bb22ae62"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "pridestalker/empty_zero_budget",
+      "cohort": "unreviewed",
+      "note": "No cards are confirmed owned and budget is zero. Both versions must be refused.",
+      "referenceId": "ref-98439651bb22ae62",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 0,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-98439651bb22ae62",
+            "strategy": "Benchmark Rengar, Pridestalker",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 20,
+              "missingCopies": 2,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "referenceCore": {
+              "knownCostSek": 20,
+              "missingCopies": 2,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false,
+              "missing": [
+                {
+                  "cardId": "pridestalker",
+                  "required": 1,
+                  "owned": 0,
+                  "missing": 1,
+                  "unitSek": 10
+                },
+                {
+                  "cardId": "rengar trophy hunter",
+                  "required": 1,
+                  "owned": 0,
+                  "missing": 1,
+                  "unitSek": 10
+                }
+              ]
+            },
+            "fullReference": {
+              "knownCostSek": 660,
+              "missingCopies": 66,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "pridestalker",
+                "quantity": 1
+              },
+              {
+                "cardId": "rengar trophy hunter",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-98439651bb22ae62"
+          ],
+          "budget": [
+            "ref-98439651bb22ae62"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "pridestalker/fun_favourite",
+      "cohort": "unreviewed",
+      "note": "A compatible owned favourite absent from the reference must be included with a meaningful strategic explanation.",
+      "referenceId": "ref-98439651bb22ae62",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-98439651bb22ae62",
+            "strategy": "Benchmark Rengar, Pridestalker",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "coreQuantities": [
+              {
+                "cardId": "pridestalker",
+                "quantity": 1
+              },
+              {
+                "cardId": "rengar trophy hunter",
+                "quantity": 1
+              },
+              {
+                "cardId": "baccai sandspinner",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [
+              "baccai sandspinner"
+            ],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-98439651bb22ae62"
+          ],
+          "budget": [
+            "ref-98439651bb22ae62"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "emperor of the sands/complete",
+      "cohort": "unreviewed",
+      "note": "Exact reference is owned; assess whether generation preserves its coherent strategy.",
+      "referenceId": "ref-669bc54a4f278916",
+      "ownedOnly": true,
+      "budget": true,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-669bc54a4f278916",
+            "strategy": "Benchmark Azir, Emperor of the Sands",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "coreQuantities": [
+              {
+                "cardId": "emperor of the sands",
+                "quantity": 1
+              },
+              {
+                "cardId": "azir sovereign",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "reference_ready",
+            "budget": "reference_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-669bc54a4f278916"
+          ],
+          "budget": [
+            "ref-669bc54a4f278916"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "emperor of the sands/flex_gap",
+      "cohort": "unreviewed",
+      "note": "One reference copy costs exactly 10 SEK; owned-only requires a real substitution. For unreviewed strategies its flexibility still needs review.",
+      "referenceId": "ref-669bc54a4f278916",
+      "ownedOnly": false,
+      "budget": true,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 10,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-669bc54a4f278916",
+            "strategy": "Benchmark Azir, Emperor of the Sands",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 10,
+              "missingCopies": 1,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "emperor of the sands",
+                "quantity": 1
+              },
+              {
+                "cardId": "azir sovereign",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "reference_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-669bc54a4f278916"
+          ],
+          "budget": [
+            "ref-669bc54a4f278916"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "emperor of the sands/expensive_core",
+      "cohort": "unreviewed",
+      "note": "This strategy has no reviewed core; the expensive card is a reference card, not an independently established essential card.",
+      "referenceId": "ref-669bc54a4f278916",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-669bc54a4f278916",
+            "strategy": "Benchmark Azir, Emperor of the Sands",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 3003,
+              "missingCopies": 3,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "emperor of the sands",
+                "quantity": 1
+              },
+              {
+                "cardId": "azir sovereign",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-669bc54a4f278916"
+          ],
+          "budget": [
+            "ref-669bc54a4f278916"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "emperor of the sands/unknown_price",
+      "cohort": "unreviewed",
+      "note": "One missing reference copy has no price; it cannot be treated as free. A coherent priced substitute remains possible.",
+      "referenceId": "ref-669bc54a4f278916",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-669bc54a4f278916",
+            "strategy": "Benchmark Azir, Emperor of the Sands",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 1,
+              "unpricedCopies": 1,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "emperor of the sands",
+                "quantity": 1
+              },
+              {
+                "cardId": "azir sovereign",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-669bc54a4f278916"
+          ],
+          "budget": [
+            "ref-669bc54a4f278916"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "emperor of the sands/empty_zero_budget",
+      "cohort": "unreviewed",
+      "note": "No cards are confirmed owned and budget is zero. Both versions must be refused.",
+      "referenceId": "ref-669bc54a4f278916",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 0,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-669bc54a4f278916",
+            "strategy": "Benchmark Azir, Emperor of the Sands",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 20,
+              "missingCopies": 2,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "referenceCore": {
+              "knownCostSek": 20,
+              "missingCopies": 2,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false,
+              "missing": [
+                {
+                  "cardId": "emperor of the sands",
+                  "required": 1,
+                  "owned": 0,
+                  "missing": 1,
+                  "unitSek": 10
+                },
+                {
+                  "cardId": "azir sovereign",
+                  "required": 1,
+                  "owned": 0,
+                  "missing": 1,
+                  "unitSek": 10
+                }
+              ]
+            },
+            "fullReference": {
+              "knownCostSek": 660,
+              "missingCopies": 66,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "emperor of the sands",
+                "quantity": 1
+              },
+              {
+                "cardId": "azir sovereign",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-669bc54a4f278916"
+          ],
+          "budget": [
+            "ref-669bc54a4f278916"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "emperor of the sands/fun_favourite",
+      "cohort": "unreviewed",
+      "note": "A compatible owned favourite absent from the reference must be included with a meaningful strategic explanation.",
+      "referenceId": "ref-669bc54a4f278916",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-669bc54a4f278916",
+            "strategy": "Benchmark Azir, Emperor of the Sands",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "coreQuantities": [
+              {
+                "cardId": "emperor of the sands",
+                "quantity": 1
+              },
+              {
+                "cardId": "azir sovereign",
+                "quantity": 1
+              },
+              {
+                "cardId": "sona harmonious",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [
+              "sona harmonious"
+            ],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-669bc54a4f278916"
+          ],
+          "budget": [
+            "ref-669bc54a4f278916"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "fire below the mountain/complete",
+      "cohort": "unreviewed",
+      "note": "Exact reference is owned; assess whether generation preserves its coherent strategy.",
+      "referenceId": "ref-3c2758bf06c77d75",
+      "ownedOnly": true,
+      "budget": true,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-3c2758bf06c77d75",
+            "strategy": "Benchmark Ornn, Fire Below the Mountain",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "coreQuantities": [
+              {
+                "cardId": "fire below the mountain",
+                "quantity": 1
+              },
+              {
+                "cardId": "ornn blacksmith",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "reference_ready",
+            "budget": "reference_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-3c2758bf06c77d75"
+          ],
+          "budget": [
+            "ref-3c2758bf06c77d75"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "fire below the mountain/flex_gap",
+      "cohort": "unreviewed",
+      "note": "One reference copy costs exactly 10 SEK; owned-only requires a real substitution. For unreviewed strategies its flexibility still needs review.",
+      "referenceId": "ref-3c2758bf06c77d75",
+      "ownedOnly": false,
+      "budget": true,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 10,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-3c2758bf06c77d75",
+            "strategy": "Benchmark Ornn, Fire Below the Mountain",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 10,
+              "missingCopies": 1,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "fire below the mountain",
+                "quantity": 1
+              },
+              {
+                "cardId": "ornn blacksmith",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "reference_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-3c2758bf06c77d75"
+          ],
+          "budget": [
+            "ref-3c2758bf06c77d75"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "fire below the mountain/expensive_core",
+      "cohort": "unreviewed",
+      "note": "This strategy has no reviewed core; the expensive card is a reference card, not an independently established essential card.",
+      "referenceId": "ref-3c2758bf06c77d75",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-3c2758bf06c77d75",
+            "strategy": "Benchmark Ornn, Fire Below the Mountain",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 2002,
+              "missingCopies": 2,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "fire below the mountain",
+                "quantity": 1
+              },
+              {
+                "cardId": "ornn blacksmith",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-3c2758bf06c77d75"
+          ],
+          "budget": [
+            "ref-3c2758bf06c77d75"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "fire below the mountain/unknown_price",
+      "cohort": "unreviewed",
+      "note": "One missing reference copy has no price; it cannot be treated as free. A coherent priced substitute remains possible.",
+      "referenceId": "ref-3c2758bf06c77d75",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-3c2758bf06c77d75",
+            "strategy": "Benchmark Ornn, Fire Below the Mountain",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 1,
+              "unpricedCopies": 1,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "fire below the mountain",
+                "quantity": 1
+              },
+              {
+                "cardId": "ornn blacksmith",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-3c2758bf06c77d75"
+          ],
+          "budget": [
+            "ref-3c2758bf06c77d75"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "fire below the mountain/empty_zero_budget",
+      "cohort": "unreviewed",
+      "note": "No cards are confirmed owned and budget is zero. Both versions must be refused.",
+      "referenceId": "ref-3c2758bf06c77d75",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 0,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-3c2758bf06c77d75",
+            "strategy": "Benchmark Ornn, Fire Below the Mountain",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 20,
+              "missingCopies": 2,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "referenceCore": {
+              "knownCostSek": 20,
+              "missingCopies": 2,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false,
+              "missing": [
+                {
+                  "cardId": "fire below the mountain",
+                  "required": 1,
+                  "owned": 0,
+                  "missing": 1,
+                  "unitSek": 10
+                },
+                {
+                  "cardId": "ornn blacksmith",
+                  "required": 1,
+                  "owned": 0,
+                  "missing": 1,
+                  "unitSek": 10
+                }
+              ]
+            },
+            "fullReference": {
+              "knownCostSek": 660,
+              "missingCopies": 66,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "fire below the mountain",
+                "quantity": 1
+              },
+              {
+                "cardId": "ornn blacksmith",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-3c2758bf06c77d75"
+          ],
+          "budget": [
+            "ref-3c2758bf06c77d75"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "fire below the mountain/fun_favourite",
+      "cohort": "unreviewed",
+      "note": "A compatible owned favourite absent from the reference must be included with a meaningful strategic explanation.",
+      "referenceId": "ref-3c2758bf06c77d75",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-3c2758bf06c77d75",
+            "strategy": "Benchmark Ornn, Fire Below the Mountain",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "coreQuantities": [
+              {
+                "cardId": "fire below the mountain",
+                "quantity": 1
+              },
+              {
+                "cardId": "ornn blacksmith",
+                "quantity": 1
+              },
+              {
+                "cardId": "sona harmonious",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [
+              "sona harmonious"
+            ],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-3c2758bf06c77d75"
+          ],
+          "budget": [
+            "ref-3c2758bf06c77d75"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "heart of the tempest/complete",
+      "cohort": "unreviewed",
+      "note": "Exact reference is owned; assess whether generation preserves its coherent strategy.",
+      "referenceId": "ref-876b2e6cad401fdb",
+      "ownedOnly": true,
+      "budget": true,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-876b2e6cad401fdb",
+            "strategy": "Benchmark Kennen, Heart of the Tempest",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "coreQuantities": [
+              {
+                "cardId": "heart of the tempest",
+                "quantity": 1
+              },
+              {
+                "cardId": "kennen storm of shuriken",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "reference_ready",
+            "budget": "reference_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-876b2e6cad401fdb"
+          ],
+          "budget": [
+            "ref-876b2e6cad401fdb"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "heart of the tempest/flex_gap",
+      "cohort": "unreviewed",
+      "note": "One reference copy costs exactly 10 SEK; owned-only requires a real substitution. For unreviewed strategies its flexibility still needs review.",
+      "referenceId": "ref-876b2e6cad401fdb",
+      "ownedOnly": false,
+      "budget": true,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 10,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-876b2e6cad401fdb",
+            "strategy": "Benchmark Kennen, Heart of the Tempest",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 10,
+              "missingCopies": 1,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "heart of the tempest",
+                "quantity": 1
+              },
+              {
+                "cardId": "kennen storm of shuriken",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "reference_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-876b2e6cad401fdb"
+          ],
+          "budget": [
+            "ref-876b2e6cad401fdb"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "heart of the tempest/expensive_core",
+      "cohort": "unreviewed",
+      "note": "This strategy has no reviewed core; the expensive card is a reference card, not an independently established essential card.",
+      "referenceId": "ref-876b2e6cad401fdb",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-876b2e6cad401fdb",
+            "strategy": "Benchmark Kennen, Heart of the Tempest",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 1001,
+              "missingCopies": 1,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "heart of the tempest",
+                "quantity": 1
+              },
+              {
+                "cardId": "kennen storm of shuriken",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-876b2e6cad401fdb"
+          ],
+          "budget": [
+            "ref-876b2e6cad401fdb"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "heart of the tempest/unknown_price",
+      "cohort": "unreviewed",
+      "note": "One missing reference copy has no price; it cannot be treated as free. A coherent priced substitute remains possible.",
+      "referenceId": "ref-876b2e6cad401fdb",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-876b2e6cad401fdb",
+            "strategy": "Benchmark Kennen, Heart of the Tempest",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 1,
+              "unpricedCopies": 1,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "heart of the tempest",
+                "quantity": 1
+              },
+              {
+                "cardId": "kennen storm of shuriken",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-876b2e6cad401fdb"
+          ],
+          "budget": [
+            "ref-876b2e6cad401fdb"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "heart of the tempest/empty_zero_budget",
+      "cohort": "unreviewed",
+      "note": "No cards are confirmed owned and budget is zero. Both versions must be refused.",
+      "referenceId": "ref-876b2e6cad401fdb",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 0,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-876b2e6cad401fdb",
+            "strategy": "Benchmark Kennen, Heart of the Tempest",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 20,
+              "missingCopies": 2,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "referenceCore": {
+              "knownCostSek": 20,
+              "missingCopies": 2,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false,
+              "missing": [
+                {
+                  "cardId": "heart of the tempest",
+                  "required": 1,
+                  "owned": 0,
+                  "missing": 1,
+                  "unitSek": 10
+                },
+                {
+                  "cardId": "kennen storm of shuriken",
+                  "required": 1,
+                  "owned": 0,
+                  "missing": 1,
+                  "unitSek": 10
+                }
+              ]
+            },
+            "fullReference": {
+              "knownCostSek": 660,
+              "missingCopies": 66,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "heart of the tempest",
+                "quantity": 1
+              },
+              {
+                "cardId": "kennen storm of shuriken",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-876b2e6cad401fdb"
+          ],
+          "budget": [
+            "ref-876b2e6cad401fdb"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "heart of the tempest/fun_favourite",
+      "cohort": "unreviewed",
+      "note": "A compatible owned favourite absent from the reference must be included with a meaningful strategic explanation.",
+      "referenceId": "ref-876b2e6cad401fdb",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-876b2e6cad401fdb",
+            "strategy": "Benchmark Kennen, Heart of the Tempest",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "coreQuantities": [
+              {
+                "cardId": "heart of the tempest",
+                "quantity": 1
+              },
+              {
+                "cardId": "kennen storm of shuriken",
+                "quantity": 1
+              },
+              {
+                "cardId": "recruit nx",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [
+              "recruit nx"
+            ],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-876b2e6cad401fdb"
+          ],
+          "budget": [
+            "ref-876b2e6cad401fdb"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "prodigal explorer/complete",
+      "cohort": "unreviewed",
+      "note": "Exact reference is owned; assess whether generation preserves its coherent strategy.",
+      "referenceId": "ref-630454ba2ed6c37f",
+      "ownedOnly": true,
+      "budget": true,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-630454ba2ed6c37f",
+            "strategy": "Benchmark Ezreal, Prodigal Explorer",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "coreQuantities": [
+              {
+                "cardId": "prodigal explorer",
+                "quantity": 1
+              },
+              {
+                "cardId": "ezreal prodigy",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "reference_ready",
+            "budget": "reference_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-630454ba2ed6c37f"
+          ],
+          "budget": [
+            "ref-630454ba2ed6c37f"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "prodigal explorer/flex_gap",
+      "cohort": "unreviewed",
+      "note": "One reference copy costs exactly 10 SEK; owned-only requires a real substitution. For unreviewed strategies its flexibility still needs review.",
+      "referenceId": "ref-630454ba2ed6c37f",
+      "ownedOnly": false,
+      "budget": true,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 10,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-630454ba2ed6c37f",
+            "strategy": "Benchmark Ezreal, Prodigal Explorer",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 10,
+              "missingCopies": 1,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "prodigal explorer",
+                "quantity": 1
+              },
+              {
+                "cardId": "ezreal prodigy",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "reference_ready"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-630454ba2ed6c37f"
+          ],
+          "budget": [
+            "ref-630454ba2ed6c37f"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "prodigal explorer/expensive_core",
+      "cohort": "unreviewed",
+      "note": "This strategy has no reviewed core; the expensive card is a reference card, not an independently established essential card.",
+      "referenceId": "ref-630454ba2ed6c37f",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-630454ba2ed6c37f",
+            "strategy": "Benchmark Ezreal, Prodigal Explorer",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 2002,
+              "missingCopies": 2,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "prodigal explorer",
+                "quantity": 1
+              },
+              {
+                "cardId": "ezreal prodigy",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-630454ba2ed6c37f"
+          ],
+          "budget": [
+            "ref-630454ba2ed6c37f"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "prodigal explorer/unknown_price",
+      "cohort": "unreviewed",
+      "note": "One missing reference copy has no price; it cannot be treated as free. A coherent priced substitute remains possible.",
+      "referenceId": "ref-630454ba2ed6c37f",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-630454ba2ed6c37f",
+            "strategy": "Benchmark Ezreal, Prodigal Explorer",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 1,
+              "unpricedCopies": 1,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "prodigal explorer",
+                "quantity": 1
+              },
+              {
+                "cardId": "ezreal prodigy",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-630454ba2ed6c37f"
+          ],
+          "budget": [
+            "ref-630454ba2ed6c37f"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "prodigal explorer/empty_zero_budget",
+      "cohort": "unreviewed",
+      "note": "No cards are confirmed owned and budget is zero. Both versions must be refused.",
+      "referenceId": "ref-630454ba2ed6c37f",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 0,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-630454ba2ed6c37f",
+            "strategy": "Benchmark Ezreal, Prodigal Explorer",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 20,
+              "missingCopies": 2,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "referenceCore": {
+              "knownCostSek": 20,
+              "missingCopies": 2,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false,
+              "missing": [
+                {
+                  "cardId": "prodigal explorer",
+                  "required": 1,
+                  "owned": 0,
+                  "missing": 1,
+                  "unitSek": 10
+                },
+                {
+                  "cardId": "ezreal prodigy",
+                  "required": 1,
+                  "owned": 0,
+                  "missing": 1,
+                  "unitSek": 10
+                }
+              ]
+            },
+            "fullReference": {
+              "knownCostSek": 660,
+              "missingCopies": 66,
+              "unpricedCopies": 0,
+              "withinBudget": false,
+              "owned": false
+            },
+            "coreQuantities": [
+              {
+                "cardId": "prodigal explorer",
+                "quantity": 1
+              },
+              {
+                "cardId": "ezreal prodigy",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-630454ba2ed6c37f"
+          ],
+          "budget": [
+            "ref-630454ba2ed6c37f"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    },
+    {
+      "caseId": "prodigal explorer/fun_favourite",
+      "cohort": "unreviewed",
+      "note": "A compatible owned favourite absent from the reference must be included with a meaningful strategic explanation.",
+      "referenceId": "ref-630454ba2ed6c37f",
+      "ownedOnly": false,
+      "budget": false,
+      "feasibility": {
+        "version": "strategy-fit-v1",
+        "budgetSek": 1000,
+        "pricesAt": "2026-10-04",
+        "fits": [
+          {
+            "referenceId": "ref-630454ba2ed6c37f",
+            "strategy": "Benchmark Ezreal, Prodigal Explorer",
+            "reviewedCore": false,
+            "minimumPackage": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "referenceCore": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true,
+              "missing": []
+            },
+            "fullReference": {
+              "knownCostSek": 0,
+              "missingCopies": 0,
+              "unpricedCopies": 0,
+              "withinBudget": true,
+              "owned": true
+            },
+            "coreQuantities": [
+              {
+                "cardId": "prodigal explorer",
+                "quantity": 1
+              },
+              {
+                "cardId": "ezreal prodigy",
+                "quantity": 1
+              },
+              {
+                "cardId": "ahri inquisitive",
+                "quantity": 1
+              }
+            ],
+            "favouriteIdsNotInReference": [
+              "ahri inquisitive"
+            ],
+            "ownedOnly": "needs_review",
+            "budget": "needs_review"
+          }
+        ],
+        "recommended": {
+          "ownedOnly": [
+            "ref-630454ba2ed6c37f"
+          ],
+          "budget": [
+            "ref-630454ba2ed6c37f"
+          ]
+        },
+        "assumptions": "Advisory package costs from confirmed holdings and missing copies only; shipping excluded. Each package uses one actual reference, never pooled quantities across strategies. Reference-ready covers the full list including its sideboard. Core-ready covers reviewed engine quantities, Legend, chosen champion and requested favourites, not the remaining deck. Minimum package uses one copy of each annotated engine card and is only an optimistic floor, not a playable engine. Core annotations are incomplete; needs-review strategies remain eligible. Core gaps can sometimes be resolved by reviewed reductions or a different strategy. No affordability status establishes competitive strength."
+      }
+    }
+  ],
+  "samples": [],
+  "metrics": {
+    "capturedSamples": 0,
+    "coveredCases": 0,
+    "proposedVersions": 0,
+    "acceptedVersions": 0,
+    "rejectedVersions": 0,
+    "correctImpossibleRefusals": 0,
+    "failedSamples": 0,
+    "easyCaseFailures": 0,
+    "humanReviewedSamples": 0,
+    "simulatedGames": 0
+  },
+  "byModel": [],
+  "limitations": [
+    "Controlled baselines are copied references, not generated AI decks.",
+    "Passing validation or feasibility tests does not establish strategic quality.",
+    "Unknown core roles remain unreviewed; annotations are judgments, not proofs.",
+    "Human rubric fields require independent review; this command does not certify them.",
+    "The benchmark uses frozen local rule/card data, not a live rules verification.",
+    "Captured provider failures must be included. Declared costs are metadata, not independently verified billing."
+  ]
+}

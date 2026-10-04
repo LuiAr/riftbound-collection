@@ -1,6 +1,6 @@
 export const BUILD_STEPS = [
   { id: "inventory", title: "Your collection", detail: "Counting owned copies and loading purchase estimates." },
-  { id: "references", title: "Reference decks", detail: "Checking current rules and reviewing reference strategies." },
+  { id: "references", title: "Reference decks", detail: "Checking rules and comparing strategy costs with your collection." },
   { id: "build", title: "Building your deck", detail: "Choosing a coherent strategy, key cards and affordable replacements." },
   { id: "validate", title: "Final checks", detail: "Checking rules, purchase costs and access to key cards." },
 ] as const;
