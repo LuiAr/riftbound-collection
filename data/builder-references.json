@@ -9756,5 +9756,554 @@
         "section": "sideboard"
       }
     ]
+  },
+  {
+    "id": "s4-fuzhou-city-challenge-2026-09-27-4th-diana",
+    "name": "Diana · S4 Fuzhou City Challenge · 4th",
+    "url": "https://riftboundfrance.fr/en/decks/s4-fuzhou-city-challenge-2026-09-27-4th-diana",
+    "source": "Riftbound France reported tournament list",
+    "date": "2026-09-27",
+    "dateKind": "Reported event date",
+    "event": "S4 Fuzhou City Challenge",
+    "placement": 4,
+    "accessedAt": "2026-10-07",
+    "legendId": "scorn of the moon",
+    "strategy": "Diana Hwei spell tempo",
+    "evidence": "Publisher-reported placement and list. No independent official result verification; adapted lists untested.",
+    "evidenceKind": "reported",
+    "strategyReviewed": true,
+    "entries": [
+      {
+        "cardId": "abandoned hall",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "rockfall path",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "seat of power",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "diana lunari",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "scorn of the moon",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "baron nashor",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "fizz trickster",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "flash",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "gust monk",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "hwei brooding painter",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "invert timelines",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "lecturing yordle",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "moonfall",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ocean drake",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ravenbloom student",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "retreat",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "stupefy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "temporal breach",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "mind rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "abandon",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "acceptable losses",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of insight",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "kha zix mutating horror",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "moonfall",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ravenbloom prefect",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "turn to dust",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "s4-guangzhou-city-challenge-2026-09-27-7th-paulk-irelia",
+    "name": "Irelia · S4 Guangzhou City Challenge · 7th",
+    "url": "https://riftboundfrance.fr/en/decks/s4-guangzhou-city-challenge-2026-09-27-7th-paulk-irelia",
+    "source": "Riftbound France reported tournament list",
+    "date": "2026-09-27",
+    "dateKind": "Reported event date",
+    "event": "S4 Guangzhou City Challenge",
+    "placement": 7,
+    "accessedAt": "2026-10-07",
+    "legendId": "blade dancer",
+    "strategy": "Irelia mobile tempo",
+    "evidence": "Publisher-reported placement and list. No independent official result verification; adapted lists untested.",
+    "evidenceKind": "reported",
+    "strategyReviewed": true,
+    "entries": [
+      {
+        "cardId": "abandoned hall",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sandswept tomb",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sunken temple",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "blade dancer",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "irelia fervent",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "boots of swiftness",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "charm",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "defiant dance",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "defy",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "discipline",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "en garde",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "guardian angel",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "gust",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "lonely poro",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "rebuke",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "scuttle crab",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "star crossed",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "stellacorn herder",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "switcheroo",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "tideturner",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "twilight shroud",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "zhonya s hourglass",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "calm rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "chaos rune",
+        "quantity": 6,
+        "section": "runes"
+      },
+      {
+        "cardId": "adaptatron",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "crumbling sands",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "not so fast",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ravenbloom prefect",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "rebuke",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "ride the wind",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "vex apathetic",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
+  },
+  {
+    "id": "s4-shanghai-city-challenge-2026-10-03-15th-vi",
+    "name": "Vi · S4 Shanghai City Challenge · 15th",
+    "url": "https://riftboundfrance.fr/en/decks/s4-shanghai-city-challenge-2026-10-03-15th-vi",
+    "source": "Riftbound France reported tournament list",
+    "date": "2026-10-03",
+    "dateKind": "Reported event date",
+    "event": "S4 Shanghai City Challenge",
+    "placement": 15,
+    "accessedAt": "2026-10-07",
+    "legendId": "piltover enforcer",
+    "strategy": "Vi graveyard midrange",
+    "evidence": "Publisher-reported placement and list. No independent official result verification; adapted lists untested.",
+    "evidenceKind": "reported",
+    "strategyReviewed": false,
+    "entries": [
+      {
+        "cardId": "forge of the fluft",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "seat of power",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "sunken temple",
+        "quantity": 1,
+        "section": "battlefields"
+      },
+      {
+        "cardId": "vi peacekeeper",
+        "quantity": 1,
+        "section": "chosen"
+      },
+      {
+        "cardId": "piltover enforcer",
+        "quantity": 1,
+        "section": "legend"
+      },
+      {
+        "cardId": "carrion dredger",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "cleave",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "deathgrip",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "ferrous forerunner",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "gem jammer",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "hextech gauntlets",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "hidden blade",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "honest broker",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "jhin murderous artist",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "kai sa survivor",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "kennen keeper of balance",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "long sword",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "noxus hopeful",
+        "quantity": 3,
+        "section": "main"
+      },
+      {
+        "cardId": "perfect execution",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "rengar unseen",
+        "quantity": 2,
+        "section": "main"
+      },
+      {
+        "cardId": "salvage",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "vi peacekeeper",
+        "quantity": 1,
+        "section": "main"
+      },
+      {
+        "cardId": "fury rune",
+        "quantity": 7,
+        "section": "runes"
+      },
+      {
+        "cardId": "order rune",
+        "quantity": 5,
+        "section": "runes"
+      },
+      {
+        "cardId": "ashe focused",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "cull the weak",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "decree of unity",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "falling star",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "forge of the future",
+        "quantity": 2,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "salvage",
+        "quantity": 1,
+        "section": "sideboard"
+      },
+      {
+        "cardId": "vengeance",
+        "quantity": 1,
+        "section": "sideboard"
+      }
+    ]
   }
 ]

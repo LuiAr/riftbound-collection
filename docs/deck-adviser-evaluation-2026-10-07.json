@@ -1,0 +1,897 @@
+{
+  "date": "2026-10-07",
+  "evaluatedAt": "2026-10-07T13:33:02.912Z",
+  "inputMode": "Captured real sources replayed at their collection date",
+  "inventory": {
+    "source": "inventory_2026-09-30T08-40-53.csv",
+    "version": 2,
+    "rows": 268,
+    "playableIdentities": 935,
+    "copies": 629,
+    "sha256": "79b8228d53a6fd6aa98196505593fa067774104e860727cd5c822fb3186c6e43"
+  },
+  "syntheticCasesAreLabelled": true,
+  "gamesPlayed": 0,
+  "paidAICalls": 0,
+  "sources": {
+    "priceGuideAt": "2026-10-07T02:50:06+0200",
+    "fxAt": "2026-10-06",
+    "rulesCheckedAt": "2026-10-07T13:33:02.919Z",
+    "cardFeedCards": 1332
+  },
+  "realInventoryExamples": [
+    {
+      "0": {
+        "candidates": 0,
+        "elapsedMs": 78,
+        "best": null
+      },
+      "250": {
+        "candidates": 0,
+        "elapsedMs": 291,
+        "best": null
+      },
+      "1000": {
+        "candidates": 5,
+        "elapsedMs": 723,
+        "best": {
+          "name": "Rogue Assassin from your collection",
+          "strategy": "Akali movement and empower",
+          "purchaseSek": 938.24,
+          "missingCopies": 24,
+          "engineDeficit": 0,
+          "referenceIds": [
+            "s4-shanghai-city-challenge-2026-09-27-30th-akali"
+          ],
+          "deckText": "legend\n1 Rogue Assassin\n\nchosen\n1 Akali, Deadly Weapon\n\nmain\n3 Astral Heron\n3 Shuriken Flip\n2 Back Off\n1 Ruthless Strike\n2 Charm\n3 Crumbling Sands\n3 Discipline\n1 Double Trouble\n2 Consuming Curse\n1 Alpha Wildclaw\n1 Esteemed Hierophant\n1 Affectionate Poro\n1 Fresh Beans\n1 Rage Amplifier\n1 Mischievous Marai\n3 Forsaken Baccai\n1 Jhin, Murderous Artist\n1 Wuju Apprentice\n2 Shen, Scourge of Shadows\n2 Spirit's Refuge\n1 Block\n3 Stellacorn Herder\n\nrunes\n6 Calm Rune\n6 Fury Rune\n\nbattlefields\n1 Black Flame Altar\n1 Threshold of the Gray\n1 Dragon Roost\n\nsideboard\n"
+        }
+      },
+      "legendId": "rogue assassin"
+    },
+    {
+      "0": {
+        "candidates": 0,
+        "elapsedMs": 65,
+        "best": null
+      },
+      "250": {
+        "candidates": 5,
+        "elapsedMs": 757,
+        "best": {
+          "name": "Scorn of the Moon from your collection",
+          "strategy": "Diana Hwei spell tempo",
+          "purchaseSek": 231.22,
+          "missingCopies": 20,
+          "engineDeficit": 1,
+          "referenceIds": [
+            "s4-fuzhou-city-challenge-2026-09-27-4th-diana"
+          ],
+          "deckText": "legend\n1 Scorn of the Moon\n\nchosen\n1 Diana, No Longer Human\n\nmain\n3 Hwei, Brooding Painter\n1 Moonfall\n1 Crescent Strike\n3 Ravenbloom Student\n2 Decree of Discord\n1 Stargazer\n1 Downstage Dramatics\n1 Decree of Insight\n3 Mesmerize\n3 Gust Monk\n1 Eclipse\n2 Apprentice Mage\n2 Cloud Drake\n3 Twilight Step\n1 Dredge Up\n2 Temporal Breach\n2 Otterpus\n1 Grumpy Rockbear\n3 Ride the Wind\n3 Gust\n\nrunes\n3 Chaos Rune\n9 Mind Rune\n\nbattlefields\n1 Black Flame Altar\n1 Dragon Roost\n1 Forgotten Library\n\nsideboard\n"
+        }
+      },
+      "1000": {
+        "candidates": 5,
+        "elapsedMs": 681,
+        "best": {
+          "name": "Scorn of the Moon from your collection",
+          "strategy": "Diana Hwei spell tempo",
+          "purchaseSek": 680.38,
+          "missingCopies": 22,
+          "engineDeficit": 0,
+          "referenceIds": [
+            "ref-57f874a5e839600e"
+          ],
+          "deckText": "legend\n1 Scorn of the Moon\n\nchosen\n1 Diana, No Longer Human\n\nmain\n3 Ravenbloom Student\n3 Moonfall\n3 Hwei, Brooding Painter\n2 Decree of Discord\n3 Mesmerize\n2 Eclipse\n1 Downstage Dramatics\n1 Crescent Strike\n3 Gust Monk\n2 Traveling Merchant\n1 Otterpus\n1 Turn to Dust\n2 Twilight Step\n1 Lunar Boon\n1 Stargazer\n2 Star-Crossed\n1 Grumpy Rockbear\n1 Nasus, Guardian of Knowledge\n2 Ride the Wind\n1 Stupefy\n1 Vex, Apathetic\n1 Smoke Screen\n1 Hard Bargain\n\nrunes\n4 Mind Rune\n8 Chaos Rune\n\nbattlefields\n1 Black Flame Altar\n1 Forgotten Library\n1 Threshold of the Gray\n\nsideboard\n"
+        }
+      },
+      "legendId": "scorn of the moon"
+    },
+    {
+      "0": {
+        "candidates": 0,
+        "elapsedMs": 58,
+        "best": null
+      },
+      "250": {
+        "candidates": 5,
+        "elapsedMs": 280,
+        "best": {
+          "name": "Blade Dancer from your collection",
+          "strategy": "Irelia mobile tempo",
+          "purchaseSek": 250,
+          "missingCopies": 17,
+          "engineDeficit": 2,
+          "referenceIds": [
+            "s4-guangzhou-city-challenge-2026-09-27-7th-paulk-irelia"
+          ],
+          "deckText": "legend\n1 Blade Dancer\n\nchosen\n1 Irelia, Graceful\n\nmain\n1 Defiant Dance\n2 Charm\n1 Blast Cone\n1 Combat Experience\n2 Crumbling Sands\n1 Skyward Strike\n2 Discipline\n1 Double Trouble\n2 Decree of Discord\n1 Honeyfruit\n1 Decree of Focus\n2 Traveling Merchant\n1 Wuju Apprentice\n1 Heedless Resurrection\n2 Twilight Step\n3 Gust Monk\n2 Star-Crossed\n1 Back Off\n3 Affectionate Poro\n1 Isolate\n2 Mournful Witness\n1 Twilight Shroud\n1 Frisky Hunter\n2 Spirit's Refuge\n2 En Garde\n\nrunes\n4 Calm Rune\n8 Chaos Rune\n\nbattlefields\n1 Black Flame Altar\n1 Threshold of the Gray\n1 Forgotten Library\n\nsideboard\n"
+        }
+      },
+      "1000": {
+        "candidates": 5,
+        "elapsedMs": 465,
+        "best": {
+          "name": "Blade Dancer from your collection",
+          "strategy": "Irelia mobile tempo",
+          "purchaseSek": 767.87,
+          "missingCopies": 23,
+          "engineDeficit": 0,
+          "referenceIds": [
+            "s4-guangzhou-city-challenge-2026-09-27-7th-paulk-irelia"
+          ],
+          "deckText": "legend\n1 Blade Dancer\n\nchosen\n1 Irelia, Graceful\n\nmain\n3 Defiant Dance\n1 Blast Cone\n2 Charm\n2 Crumbling Sands\n2 Discipline\n1 Double Trouble\n1 Combat Experience\n2 Decree of Discord\n1 Guardian Angel\n2 Traveling Merchant\n1 Wuju Apprentice\n1 Heedless Resurrection\n1 Twilight Step\n1 Gust Monk\n2 Star-Crossed\n1 Back Off\n2 Affectionate Poro\n1 Isolate\n2 Mournful Witness\n1 Twilight Shroud\n1 Frisky Hunter\n2 Spirit's Refuge\n2 Ride the Wind\n1 Lonely Poro\n1 En Garde\n1 Tideturner\n1 Stellacorn Herder\n\nrunes\n4 Calm Rune\n8 Chaos Rune\n\nbattlefields\n1 Black Flame Altar\n1 Threshold of the Gray\n1 Forgotten Library\n\nsideboard\n"
+        }
+      },
+      "legendId": "blade dancer"
+    },
+    {
+      "0": {
+        "candidates": 0,
+        "elapsedMs": 11,
+        "best": null
+      },
+      "250": {
+        "candidates": 3,
+        "elapsedMs": 97,
+        "best": {
+          "name": "Heart of the Tempest from your collection",
+          "strategy": "Benchmark Kennen, Heart of the Tempest",
+          "purchaseSek": 47.41,
+          "missingCopies": 16,
+          "engineDeficit": 0,
+          "referenceIds": [
+            "ref-876b2e6cad401fdb"
+          ],
+          "deckText": "legend\n1 Heart of the Tempest\n\nchosen\n1 Kennen, Keeper of Balance\n\nmain\n3 Disciple of Shen\n1 Ezreal, Prodigy\n1 Evershade Stalker\n1 Decree of Unity\n1 Heedless Resurrection\n2 Decree of Discord\n1 Heroic Charge\n1 Blast Cone\n2 Lightning Rush\n1 Isolate\n3 Keeper of Law\n1 Twilight Step\n2 Treasure Trove\n3 Shadow Order Disciple\n1 Star-Crossed\n1 Ki Barrier\n3 Tail-Cloaked Matriarch\n2 Tornado Warrior\n2 Traveling Merchant\n1 Up from the Deep\n2 Ride the Wind\n2 Gust\n1 Rhasa the Sunderer\n1 Switcheroo\n\nrunes\n7 Chaos Rune\n5 Order Rune\n\nbattlefields\n1 Black Flame Altar\n1 Shadow Temple\n1 Zaun Warrens\n\nsideboard\n"
+        }
+      },
+      "1000": {
+        "candidates": 3,
+        "elapsedMs": 102,
+        "best": {
+          "name": "Heart of the Tempest from your collection",
+          "strategy": "Benchmark Kennen, Heart of the Tempest",
+          "purchaseSek": 912.52,
+          "missingCopies": 15,
+          "engineDeficit": 0,
+          "referenceIds": [
+            "ref-876b2e6cad401fdb"
+          ],
+          "deckText": "legend\n1 Heart of the Tempest\n\nchosen\n1 Kennen, Keeper of Balance\n\nmain\n3 Disciple of Shen\n1 Ezreal, Prodigy\n1 Evershade Stalker\n1 Heedless Resurrection\n2 Decree of Discord\n1 Heroic Charge\n1 Blast Cone\n2 Lightning Rush\n2 Isolate\n3 Keeper of Law\n2 Twilight Step\n1 Treasure Trove\n3 Shadow Order Disciple\n1 Star-Crossed\n1 Ki Barrier\n3 Tail-Cloaked Matriarch\n2 Tornado Warrior\n2 Traveling Merchant\n1 Up from the Deep\n1 Ride the Wind\n1 Gust\n1 Seal of Discord\n1 Rhasa the Sunderer\n2 Last Rites\n\nrunes\n7 Chaos Rune\n5 Order Rune\n\nbattlefields\n1 Black Flame Altar\n1 Shadow Temple\n1 Zaun Warrens\n\nsideboard\n"
+        }
+      },
+      "legendId": "heart of the tempest"
+    },
+    {
+      "0": {
+        "candidates": 0,
+        "elapsedMs": 9,
+        "best": null
+      },
+      "250": {
+        "candidates": 3,
+        "elapsedMs": 78,
+        "best": {
+          "name": "Eye of Twilight from your collection",
+          "strategy": "Benchmark Shen, Eye of Twilight",
+          "purchaseSek": 125.81,
+          "missingCopies": 20,
+          "engineDeficit": 0,
+          "referenceIds": [
+            "ref-83bcbe01a059f329"
+          ],
+          "deckText": "legend\n1 Eye of Twilight\n\nchosen\n1 Shen, Leader of the Kinkou Order\n\nmain\n1 Astral Heron\n2 Sandstone Chimera\n1 Back Off\n3 Crumbling Sands\n3 Discipline\n1 Double Trouble\n2 Divining Shells\n2 Frisky Hunter\n1 Esteemed Hierophant\n2 Kayle, Justified\n1 Serene Ascetic\n2 Ki Barrier\n1 Wuju Apprentice\n2 Disciple of Shen\n1 Shadow Dash\n2 Lacerate\n2 Shepherd's Heirloom\n1 Glowstone\n2 Affectionate Poro\n3 Spirit's Refuge\n3 Stellacorn Herder\n1 Zhonya's Hourglass\n\nrunes\n5 Calm Rune\n7 Order Rune\n\nbattlefields\n1 Black Flame Altar\n1 Kinkou Temple\n1 Dragon Roost\n\nsideboard\n"
+        }
+      },
+      "1000": {
+        "candidates": 3,
+        "elapsedMs": 81,
+        "best": {
+          "name": "Eye of Twilight from your collection",
+          "strategy": "Benchmark Shen, Eye of Twilight",
+          "purchaseSek": 125.81,
+          "missingCopies": 20,
+          "engineDeficit": 0,
+          "referenceIds": [
+            "ref-83bcbe01a059f329"
+          ],
+          "deckText": "legend\n1 Eye of Twilight\n\nchosen\n1 Shen, Leader of the Kinkou Order\n\nmain\n1 Astral Heron\n2 Sandstone Chimera\n1 Back Off\n3 Crumbling Sands\n3 Discipline\n1 Double Trouble\n2 Divining Shells\n2 Frisky Hunter\n1 Esteemed Hierophant\n2 Kayle, Justified\n1 Serene Ascetic\n2 Ki Barrier\n1 Wuju Apprentice\n2 Disciple of Shen\n1 Shadow Dash\n2 Lacerate\n2 Shepherd's Heirloom\n1 Glowstone\n2 Affectionate Poro\n3 Spirit's Refuge\n3 Stellacorn Herder\n1 Zhonya's Hourglass\n\nrunes\n5 Calm Rune\n7 Order Rune\n\nbattlefields\n1 Black Flame Altar\n1 Kinkou Temple\n1 Dragon Roost\n\nsideboard\n"
+        }
+      },
+      "legendId": "eye of twilight"
+    }
+  ],
+  "realUpgrade": {
+    "beforeEngineDeficit": 1,
+    "packages": [
+      {
+        "costSek": 232.24,
+        "afterEngineDeficit": 1,
+        "benefit": "Reviewed engine deficit 1 → 1; role deviation 12 → 11; Energy deviation 6 → 5.",
+        "tradeoffs": [
+          "Recovery: fewer copies (5 → 4).",
+          "Resource support: fewer copies (5 → 4)."
+        ],
+        "changes": [
+          {
+            "cardId": "stargazer",
+            "name": "Stargazer",
+            "quantity": -1
+          },
+          {
+            "cardId": "lecturing yordle",
+            "name": "Lecturing Yordle",
+            "quantity": 1
+          }
+        ],
+        "deckText": "legend\n1 Scorn of the Moon\n\nchosen\n1 Diana, No Longer Human\n\nmain\n3 Hwei, Brooding Painter\n1 Moonfall\n1 Crescent Strike\n3 Ravenbloom Student\n2 Decree of Discord\n1 Downstage Dramatics\n1 Decree of Insight\n3 Mesmerize\n3 Gust Monk\n1 Eclipse\n2 Apprentice Mage\n2 Cloud Drake\n3 Twilight Step\n1 Dredge Up\n2 Temporal Breach\n2 Otterpus\n1 Grumpy Rockbear\n3 Ride the Wind\n3 Gust\n1 Lecturing Yordle\n\nrunes\n3 Chaos Rune\n9 Mind Rune\n\nbattlefields\n1 Black Flame Altar\n1 Dragon Roost\n1 Forgotten Library\n\nsideboard\n"
+      },
+      {
+        "costSek": 630.69,
+        "afterEngineDeficit": 0,
+        "benefit": "Reviewed engine deficit 1 → 0; role deviation 12 → 4; Energy deviation 6 → 2.",
+        "tradeoffs": [
+          "Card access: fewer copies (12 → 9).",
+          "Recovery: fewer copies (5 → 2).",
+          "Resource support: fewer copies (5 → 4)."
+        ],
+        "changes": [
+          {
+            "cardId": "moonfall",
+            "name": "Moonfall",
+            "quantity": 1
+          },
+          {
+            "cardId": "stargazer",
+            "name": "Stargazer",
+            "quantity": -1
+          },
+          {
+            "cardId": "downstage dramatics",
+            "name": "Downstage Dramatics",
+            "quantity": -1
+          },
+          {
+            "cardId": "cloud drake",
+            "name": "Cloud Drake",
+            "quantity": -1
+          },
+          {
+            "cardId": "twilight step",
+            "name": "Twilight Step",
+            "quantity": -2
+          },
+          {
+            "cardId": "otterpus",
+            "name": "Otterpus",
+            "quantity": -1
+          },
+          {
+            "cardId": "ocean drake",
+            "name": "Ocean Drake",
+            "quantity": 2
+          },
+          {
+            "cardId": "tideturner",
+            "name": "Tideturner",
+            "quantity": 2
+          },
+          {
+            "cardId": "baron nashor",
+            "name": "Baron Nashor",
+            "quantity": 1
+          }
+        ],
+        "deckText": "legend\n1 Scorn of the Moon\n\nchosen\n1 Diana, No Longer Human\n\nmain\n3 Hwei, Brooding Painter\n2 Moonfall\n1 Crescent Strike\n3 Ravenbloom Student\n2 Decree of Discord\n1 Decree of Insight\n3 Mesmerize\n3 Gust Monk\n1 Eclipse\n2 Apprentice Mage\n1 Cloud Drake\n1 Twilight Step\n1 Dredge Up\n2 Temporal Breach\n1 Otterpus\n1 Grumpy Rockbear\n3 Ride the Wind\n3 Gust\n2 Ocean Drake\n2 Tideturner\n1 Baron Nashor\n\nrunes\n3 Chaos Rune\n9 Mind Rune\n\nbattlefields\n1 Black Flame Altar\n1 Dragon Roost\n1 Forgotten Library\n\nsideboard\n"
+      }
+    ]
+  },
+  "realImportedDeck": {
+    "name": "Irelia, Blade Dancer / Xeno",
+    "source": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+    "missingCopies": 51,
+    "completionSek": 1788.99,
+    "unpricedCopies": 0,
+    "analysis": {
+      "version": "2026-10-07.1",
+      "reference": {
+        "id": "ref-658f20504e62734c",
+        "name": "Irelia, Blade Dancer / Xeno",
+        "url": "https://playriftbound.com/en-us/news/organizedplay/los-angeles-top-decks/",
+        "strategy": "Irelia mobile tempo",
+        "date": "2026-09-27",
+        "source": "Riot Games",
+        "evidenceKind": "official",
+        "reviewed": true
+      },
+      "areas": [
+        {
+          "role": "interaction",
+          "label": "Interaction",
+          "copies": 5,
+          "referenceCopies": 5,
+          "access": 0.7048911259437576,
+          "observation": "Same count as reference."
+        },
+        {
+          "role": "movement",
+          "label": "Movement",
+          "copies": 5,
+          "referenceCopies": 5,
+          "access": 0.7048911259437576,
+          "observation": "Same count as reference."
+        },
+        {
+          "role": "draw",
+          "label": "Card access",
+          "copies": 10,
+          "referenceCopies": 10,
+          "access": 0.9302359635176972,
+          "observation": "Same count as reference."
+        },
+        {
+          "role": "protection",
+          "label": "Protection",
+          "copies": 3,
+          "referenceCopies": 3,
+          "access": 0.5081518765729292,
+          "observation": "Same count as reference."
+        },
+        {
+          "role": "recovery",
+          "label": "Recovery",
+          "copies": 1,
+          "referenceCopies": 1,
+          "access": 0.20512820512820518,
+          "observation": "Same count as reference."
+        },
+        {
+          "role": "resources",
+          "label": "Resource support",
+          "copies": 1,
+          "referenceCopies": 1,
+          "access": 0.20512820512820518,
+          "observation": "Same count as reference."
+        },
+        {
+          "role": "early",
+          "label": "Early units",
+          "copies": 6,
+          "referenceCopies": 6,
+          "access": 0.774328508074638,
+          "observation": "Same count as reference."
+        },
+        {
+          "role": "threats",
+          "label": "Units",
+          "copies": 12,
+          "referenceCopies": 12,
+          "access": 0.9639151535436365,
+          "observation": "Same count as reference."
+        }
+      ],
+      "engine": [
+        {
+          "cardId": "defiant dance",
+          "name": "Defiant Dance",
+          "copies": 3,
+          "target": 3
+        }
+      ],
+      "engineDeficit": 0,
+      "energyDifference": 0,
+      "roleDifference": 0,
+      "loss": 0,
+      "quality": {
+        "evidence": {
+          "references": 1,
+          "independentMainLists": 1,
+          "resultEvents": 1,
+          "official": 1,
+          "topEight": 1,
+          "reported": 0,
+          "community": 0,
+          "unknownDates": 0,
+          "label": "Recent official finalist reference",
+          "warnings": [
+            "Only 1 distinct main list; fewer than the target of 10–20.",
+            "Result evidence does not cover multiple confirmed events.",
+            "Reference results do not establish this adapted deck's competitive strength."
+          ]
+        },
+        "benchmarkId": "ref-658f20504e62734c",
+        "pool": 39,
+        "seen": 8,
+        "engine": [
+          {
+            "cardId": "defiant dance",
+            "role": "Reviewed engine card",
+            "copies": 3,
+            "chosen": false,
+            "referenceCopies": 3,
+            "access": 0.5081518765729292,
+            "referenceAccess": 0.5081518765729292
+          }
+        ],
+        "earlyUnits": 6,
+        "earlyUnitAccess": 0.774328508074638,
+        "highCost": 0,
+        "energyCurve": {
+          "1": 12,
+          "2": 17,
+          "3": 5,
+          "4": 5
+        },
+        "warnings": [],
+        "assumptions": "Exact raw-draw access, excluding the chosen champion. No mulligans, extra draws, tutors, resource availability, timing or opponent. Early unit means printed Energy at most 2; it is not a guaranteed playable unit. This is not a full-game simulation or a win-rate estimate."
+      },
+      "powerCurve": {
+        "1": 14,
+        "Unspecified": 25
+      },
+      "runeSplit": {
+        "Calm": 6,
+        "Chaos": 6
+      },
+      "synergies": [],
+      "dataGaps": [
+        "Guardian Angel: Attachment stat panel unavailable; equipment effects need image review",
+        "Boots of Swiftness: Attachment stat panel unavailable; equipment effects need image review"
+      ],
+      "warnings": [
+        "Closest list is a comparison baseline, not confirmation of your intended strategy.",
+        "Guardian Angel: Attachment stat panel unavailable; equipment effects need image review",
+        "Boots of Swiftness: Attachment stat panel unavailable; equipment effects need image review"
+      ],
+      "method": "Text signals can miss conditional effects and do not measure effect strength. Counts exclude the chosen champion from raw draws. Deviations show trade-offs against one strategy; lower deviation is not a win-rate prediction. Upgrade search is bounded to six copy swaps and is not exhaustive."
+    }
+  },
+  "realReleaseScan": {
+    "checkedAt": "2026-10-07T13:33:06.829Z",
+    "source": "https://github.com/LouisCourrian/riftbound-cards",
+    "snapshotAt": "2026-10-06T13:04:52.302Z",
+    "candidates": [
+      {
+        "cardId": "ahri confident",
+        "name": "Ahri, Confident",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-sp1-005",
+        "text": "[Disarm]\nWhen you reduce the Might of an enemy unit here by 1 or more, give me +1 [S] this turn.",
+        "energy": 4,
+        "roles": [
+          "threats"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: threats. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:50:50.526Z"
+      },
+      {
+        "cardId": "akali brash",
+        "name": "Akali, Brash",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-sp2-005",
+        "text": "The first time I move each turn, [Add] [1][A].\nThe second time I move each turn, banish the top card of your Main Deck. Until your next Ending Phase, you may play that card.",
+        "energy": 5,
+        "roles": [
+          "resources",
+          "threats"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: resources, threats. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:50:53.188Z"
+      },
+      {
+        "cardId": "banner of conquest",
+        "name": "Banner of Conquest",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-002-167",
+        "text": "[Deploy] (Play this only to a battlefield. When an opponent holds here, kill this.)\nFriendly units here have [Assault]. (+1 [S] while they're attackers.)",
+        "energy": 1,
+        "roles": [],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "No confident role signal; inspect the card text.",
+        "scrapedAt": "2026-10-06T12:50:53.850Z"
+      },
+      {
+        "cardId": "lingering animus",
+        "name": "Lingering Animus",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-005-167",
+        "text": "I enter ready if a friendly unit or gear died this turn.",
+        "energy": 2,
+        "roles": [
+          "threats",
+          "early"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: threats, early. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:51:01.993Z"
+      },
+      {
+        "cardId": "lost to the sands",
+        "name": "Lost to the Sands",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-013-167",
+        "text": "[Action] (Play on your turn or in showdowns.)\nChoose one —\n- Deal 4 to a unit at a battlefield.\n- Kill a gear.",
+        "energy": 3,
+        "roles": [
+          "interaction"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: interaction. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:51:05.791Z"
+      },
+      {
+        "cardId": "shimmering swimmer",
+        "name": "Shimmering Swimmer",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-014-167",
+        "text": "You may kill a friendly unit or gear as an additional cost to play me.\nWhen you play me, if you paid the additional cost, deal 2 to a unit.",
+        "energy": 3,
+        "roles": [
+          "interaction",
+          "threats"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: interaction, threats. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:51:06.448Z"
+      },
+      {
+        "cardId": "ziggs short fused",
+        "name": "Ziggs, Short-Fused",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-023-167",
+        "text": "When you play me, play a Bomb gear token to a battlefield. (It has [Deploy]. When it dies, deal 2 to an enemy there and kill your other Bombs there.)\nAbilities of friendly gear deal 1 Bonus Damage.",
+        "energy": 5,
+        "roles": [
+          "interaction",
+          "threats"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: interaction, threats. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:51:08.928Z"
+      },
+      {
+        "cardId": "consult the heavens",
+        "name": "Consult the Heavens",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-025-167",
+        "text": "[Reaction] (Play any time, even before spells and abilities resolve.)\nGive a unit [Shield 2] this turn. (+2 [S] while it's a defender.)\n[Predict]. (Look at the top card of your Main Deck. You may recycle it.)",
+        "energy": 1,
+        "roles": [
+          "draw"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: draw. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:51:10.846Z"
+      },
+      {
+        "cardId": "iridescent avian",
+        "name": "Iridescent Avian",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-027-167",
+        "text": "[T]: [Buff] a unit. If it's already buffed, give it +2 [S] this turn instead. (To buff a unit, give it a +1 [S] buff if it doesn't have one.)",
+        "energy": 3,
+        "roles": [
+          "threats"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: threats. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:51:12.129Z"
+      },
+      {
+        "cardId": "command attack",
+        "name": "Command: Attack",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-033-167",
+        "text": "Choose one —\n- Move a friendly gear with [Deploy] to a battlefield.\n- Look at the top 5 cards of your Main Deck. You may reveal a gear from among them and draw it. Recycle the rest.",
+        "energy": 1,
+        "roles": [
+          "draw"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: draw. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:51:12.743Z"
+      },
+      {
+        "cardId": "hunker down",
+        "name": "Hunker Down",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-034-167",
+        "text": "[Reaction] (Play any time, even before spells and abilities resolve.)\nReady a friendly unit. It can't move this turn. Draw 1.",
+        "energy": 1,
+        "roles": [
+          "movement",
+          "draw"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: movement, draw. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:51:13.377Z"
+      },
+      {
+        "cardId": "invigorating bloom",
+        "name": "Invigorating Bloom",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-035-167",
+        "text": "When you play this, give a friendly unit +3 [S] this turn.\nExhaust a friendly [Mighty] unit, [T]: Draw 1. (A unit is Mighty while it has 5+ [S].)",
+        "energy": 3,
+        "roles": [
+          "draw"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: draw. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:51:14.014Z"
+      },
+      {
+        "cardId": "storm raptor",
+        "name": "Storm Raptor",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-036-167",
+        "text": "[Deflect] (Opponents must pay [A] to choose me with a spell or ability.)\nWhen a stunned enemy unit dies here, draw 1.",
+        "energy": 6,
+        "roles": [
+          "interaction",
+          "draw",
+          "protection",
+          "threats"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: interaction, draw, protection, threats. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:51:14.639Z"
+      },
+      {
+        "cardId": "watchful curator",
+        "name": "Watchful Curator",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-037-167",
+        "text": "Your gear have [Deflect]. (Opponents must pay [A] to choose each with a spell or ability.)",
+        "energy": 3,
+        "roles": [
+          "protection",
+          "threats"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: protection, threats. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:51:15.256Z"
+      },
+      {
+        "cardId": "k sante dauntless",
+        "name": "K'Sante, Dauntless",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-045-167",
+        "text": "[Shield] (+1 [S] while I'm a defender.)\nWhen I attack or defend, double the [Shield] of a unit you control here this turn.",
+        "energy": 4,
+        "roles": [
+          "threats"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: threats. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:51:16.515Z"
+      },
+      {
+        "cardId": "resplendent rostrum",
+        "name": "Resplendent Rostrum",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-046-167",
+        "text": "[T]: Draw 1 and channel 1 rune exhausted.\nWhen I become exhausted, give a friendly unit +3 [S] this turn.",
+        "energy": 8,
+        "roles": [
+          "draw",
+          "resources"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: draw, resources. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:51:17.760Z"
+      },
+      {
+        "cardId": "clocktower guardian",
+        "name": "Clocktower Guardian",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-067-167",
+        "text": "When you play me or when I hold, [Predict 3].\n[Deathknell][>] Banish the top card of your Main Deck. You may play it, ignoring its Energy cost.",
+        "energy": 8,
+        "roles": [
+          "draw",
+          "threats"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: draw, threats. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:51:25.497Z"
+      },
+      {
+        "cardId": "pillaged armory",
+        "name": "Pillaged Armory",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-073-167",
+        "text": "[Deploy] (Play this only to a battlefield. When an opponent holds here, kill this.)\nWhen you play this or when you conquer here, [Buff] a friendly unit. (Give it a +1 [S] buff if it doesn't have one.)",
+        "energy": 1,
+        "roles": [],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "No confident role signal; inspect the card text.",
+        "scrapedAt": "2026-10-06T12:51:29.941Z"
+      },
+      {
+        "cardId": "elnuk herd",
+        "name": "Elnuk Herd",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-081-167",
+        "text": "[Hidden] (Hide now for [A] to react with later for [0].)\nWhen you play me, give another friendly unit +3 [S] this turn, then recycle me if I was played from face down.",
+        "energy": 6,
+        "roles": [
+          "threats"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: threats. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:51:31.898Z"
+      },
+      {
+        "cardId": "disposal expert",
+        "name": "Disposal Expert",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-093-167",
+        "text": "I enter ready if you control no other units.\n[Disarm 2] (When I attack, give an enemy unit here -2 [S] this turn.)",
+        "energy": 4,
+        "roles": [
+          "threats"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: threats. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:51:39.458Z"
+      },
+      {
+        "cardId": "neeko blending in",
+        "name": "Neeko, Blending In",
+        "set": "Radiance",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-167-167",
+        "text": "(Neutral cards can go in decks of any Domain.)\nIf Neeko is in your deck, choose 3 different legends in addition to your starting legend. (Different means none match names.)\nWhen you play me, choose one of those legends and add it to your Legend Zone while I'm on the board.",
+        "energy": 6,
+        "roles": [
+          "threats"
+        ],
+        "dataGaps": [],
+        "kind": "New compatible card",
+        "status": "Preview only; not activated",
+        "reason": "Text signals: threats. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:52:14.763Z"
+      },
+      {
+        "cardId": "akali deadly weapon",
+        "name": "Akali, Deadly Weapon",
+        "set": "Vendetta",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ven-021-166",
+        "text": "[Empower] [2][C] ([2][C]: Empower me. Use only if not Empowered.)\nWhen I move, you may deal 1 to a unit at a battlefield I moved to or from. If I'm [Empowered], deal 2 instead.\n[Empowered][>] I have +1 [S].",
+        "energy": 3,
+        "roles": [
+          "interaction",
+          "threats"
+        ],
+        "dataGaps": [],
+        "kind": "Changed card in your deck",
+        "status": "Available for review",
+        "reason": "Text signals: interaction, threats. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T12:52:46.104Z"
+      },
+      {
+        "cardId": "decree of focus",
+        "name": "Decree of Focus",
+        "set": "Vendetta",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ven-040-166",
+        "text": "[Reaction] (Play any time, even before spells and abilities resolve.)\nChoose a friendly unit that's in combat with an enemy Fury ([R]) unit or that's being chosen by an enemy Fury spell. Give it +4 [S] this turn.",
+        "energy": 1,
+        "roles": [],
+        "dataGaps": [],
+        "kind": "Changed card in your deck",
+        "status": "Available for review",
+        "reason": "No confident role signal; inspect the card text.",
+        "scrapedAt": "2026-10-06T12:53:00.173Z"
+      },
+      {
+        "cardId": "falling star",
+        "name": "Falling Star",
+        "set": "Origins",
+        "source": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ogn-029-298",
+        "text": "Deal 3 to a unit.",
+        "energy": 2,
+        "roles": [
+          "interaction"
+        ],
+        "dataGaps": [],
+        "kind": "Changed card in your deck",
+        "status": "Available for review",
+        "reason": "Text signals: interaction. Review targeting, timing and the cards it would replace.",
+        "scrapedAt": "2026-10-06T13:01:13.360Z"
+      }
+    ],
+    "totalCandidates": 24,
+    "previewCount": 21,
+    "note": "New cards are experiments until reviewed. Radiance remains outside playable recommendations while its checklist is incomplete or it is unreleased. This check never changes your collection or deck."
+  },
+  "wholeCollection": [
+    {
+      "strategy": "Akali movement and empower",
+      "legendId": "rogue assassin",
+      "purchaseSek": 938.24,
+      "missingCopies": 24
+    },
+    {
+      "strategy": "Benchmark Ivern, Green Father",
+      "legendId": "green father",
+      "purchaseSek": 790.01,
+      "missingCopies": 41
+    },
+    {
+      "strategy": "Benchmark Ambessa, Matriarch of War",
+      "legendId": "matriarch of war",
+      "purchaseSek": 814.69,
+      "missingCopies": 31
+    },
+    {
+      "strategy": "Benchmark Master Yi, Wuju Master",
+      "legendId": "wuju master",
+      "purchaseSek": 568.9,
+      "missingCopies": 44
+    },
+    {
+      "strategy": "Benchmark Shen, Eye of Twilight",
+      "legendId": "eye of twilight",
+      "purchaseSek": 125.81,
+      "missingCopies": 20
+    }
+  ],
+  "persistence": {
+    "migrationApplied": true,
+    "versions": 2,
+    "originalPreserved": true,
+    "crossAccountAccessDenied": true,
+    "historyRemovedWithExplicitDeckDeletion": true
+  },
+  "regressions": {
+    "publishedDeckRoundTrips": 57,
+    "engineRestoration": "Controlled degraded real Akali list with synthetic full holdings; zero-cost package restored engine copies",
+    "candidateRanking": "Controlled stronger engine candidate outranked degraded candidate",
+    "unknownPriceRejected": true,
+    "malformedFeedRejected": true,
+    "crossOriginWriteRejected": true,
+    "unauthenticatedAccessRejected": true
+  }
+}

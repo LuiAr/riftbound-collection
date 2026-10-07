@@ -1,15 +1,17 @@
 import { getChatGPTUser } from "../../chatgpt-auth";
-import { deleteDeck, listSavedDecks, saveDeck } from "../../../lib/server-decks";
+import { deleteDeck, getDeckVersions, listSavedDecks, saveDeck } from "../../../lib/server-decks";
 
 function sameOrigin(request: Request): boolean {
   const origin = request.headers.get("origin");
   return !origin || origin === new URL(request.url).origin;
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   const user = await getChatGPTUser();
   if (!user) return Response.json({ error: "Sign in with ChatGPT to view saved decks." }, { status: 401 });
   try {
+    const deckId = new URL(request.url).searchParams.get("deckId");
+    if (deckId) return Response.json({ versions: await getDeckVersions(user.userId, deckId) }, { headers: { "cache-control": "private, no-store" } });
     return Response.json({ decks: await listSavedDecks(user.userId) }, { headers: { "cache-control": "private, no-store" } });
   } catch (error) {
     console.error("Saved decks could not be loaded", error);

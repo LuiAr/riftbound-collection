@@ -7,7 +7,7 @@ import { evaluateBuild, prepareBuild } from "../lib/server-builder";
 
 const now = Date.parse("2026-10-03T20:33:43Z");
 assert.equal(new Set(references.map((ref) => referenceFingerprint(ref))).size, references.length, "Duplicate printings/uploads must not multiply reference evidence.");
-assert.equal(references.length, 54);
+assert.equal(references.length, 57);
 assert.equal(new Set(references.map((ref) => ref.legendId)).size, 34);
 for (const ref of references) assert.deepEqual(validateDeck(ref.entries), [], ref.name);
 assert.equal(referenceEvidence(selectReferences("blade dancer", now)).topEight, 2);

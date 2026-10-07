@@ -4,7 +4,7 @@ import { exportDeck, ownedInventory, validateDeck, type BuilderInput } from "./d
 import { getCollection } from "./server-collection";
 import { loadPrices } from "./server-prices";
 import { evaluateBuild, loadFx, measuredOre, prepareBuild, responseText, verifyCurrentRules, MONTHLY_CAP_ORE, type BuildContext, type ProviderResponse } from "./server-builder";
-import { listSavedDecks } from "./server-decks";
+import { deckSnapshot, listSavedDecks } from "./server-decks";
 import { activeJob, type BuilderJob, type GeneratedDecks } from "./builder-jobs";
 import type { BuildStage } from "./builder-progress";
 
@@ -209,6 +209,7 @@ export async function keepBuilderJob(userId: string, id: string, version: "owned
   const date = now();
   await db().batch([
     db().prepare("INSERT OR IGNORE INTO saved_decks (user_id, deck_id, name, deck_text, hide_runes, hide_tokens, created_at, updated_at) SELECT ?, ?, ?, ?, 0, 0, ?, ? WHERE (SELECT COUNT(*) FROM saved_decks WHERE user_id = ?) < 30").bind(userId, deckId, name, exportDeck(deck), date, date, userId),
+    db().prepare("INSERT OR IGNORE INTO deck_versions (user_id, deck_id, version_id, name, deck_text, snapshot_json, created_at) SELECT user_id, deck_id, ?, name, deck_text, ?, created_at FROM saved_decks WHERE user_id = ? AND deck_id = ?").bind(deckId, JSON.stringify(deckSnapshot(name, exportDeck(deck))), userId, deckId),
     db().prepare("UPDATE builder_calls SET kept_deck_id = ?, status = 'kept', updated_at = ? WHERE user_id = ? AND call_id = ? AND EXISTS (SELECT 1 FROM saved_decks WHERE user_id = ? AND deck_id = ?)").bind(deckId, date, userId, id, userId, deckId),
   ]);
   const saved = (await listSavedDecks(userId)).find((item) => item.deckId === deckId);

@@ -29,6 +29,13 @@ export const savedDecks = sqliteTable("saved_decks", {
   createdAt: text("created_at").notNull(), updatedAt: text("updated_at").notNull(),
 }, (table) => [primaryKey({ columns: [table.userId, table.deckId] })]);
 
+export const deckVersions = sqliteTable("deck_versions", {
+  userId: text("user_id").notNull(), deckId: text("deck_id").notNull(),
+  versionId: text("version_id").notNull(), name: text("name").notNull(),
+  deckText: text("deck_text").notNull(), snapshotJson: text("snapshot_json").notNull(),
+  createdAt: text("created_at").notNull(),
+}, (table) => [primaryKey({ columns: [table.userId, table.deckId, table.versionId] }), index("idx_deck_versions_user_deck_created").on(table.userId, table.deckId, table.createdAt)]);
+
 export const builderUsage = sqliteTable("builder_usage", {
   userId: text("user_id").notNull(), month: text("month").notNull(),
   reservedOre: integer("reserved_ore").notNull().default(0),

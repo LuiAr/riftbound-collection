@@ -18,7 +18,7 @@ export const builderCards = data.cards as BuilderCard[];
 export const cardsById = new Map(builderCards.map((card) => [card.id, card]));
 export const references = referenceData as ReferenceDeck[];
 export const RULES = {
-  checkedAt: "2026-10-03", effectiveAt: "2026-09-18", format: "Standard 1v1",
+  checkedAt: "2026-10-07", effectiveAt: "2026-09-18", format: "Standard 1v1",
   source: "https://playriftbound.com/en-us/rules-hub/",
   core: "https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/e9ac8e3d33e0f78cef296f5945aba7bc1313b086.pdf",
   tournament: "https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/503da65669ced10598d62925a6f6bc15111af726.pdf",
@@ -73,7 +73,7 @@ export function validateDeck(entries: DeckEntry[]): string[] {
     if (entry.section === "battlefields" && (card.type !== "Battlefield" || entry.quantity !== 1)) errors.push("Use one copy of each unique Battlefield.");
     if (!["legend", "chosen", "main", "sideboard", "runes", "battlefields"].includes(entry.section)) errors.push("Unknown deck section.");
   }
-  for (const [id, quantity] of quantities) if (quantity > 3) errors.push(`${cardsById.get(id)!.name} exceeds three copies across chosen champion, Main Deck and sideboard.`);
+  for (const [id, quantity] of quantities) if (quantity > (/\[Unique\]/i.test(cardsById.get(id)!.text) ? 1 : 3)) errors.push(`${cardsById.get(id)!.name} exceeds its copy limit across chosen champion, Main Deck and sideboard.`);
   if (signatureCount > 3) errors.push("Use at most three Signature cards across Main Deck and sideboard.");
   if ((sectionCounts.get("main") ?? 0) + (sectionCounts.get("chosen") ?? 0) !== 40) errors.push("The Main Deck must contain exactly 40 cards including the chosen champion.");
   if (sectionCounts.get("runes") !== 12) errors.push("The Rune Deck must contain exactly 12 runes.");
@@ -98,11 +98,11 @@ export function cheapestPrice(id: string, prices: PriceSnapshot | null, fx: FxSn
   }
   return result.sort((a, b) => a.unitSek - b.unitSek)[0] ?? null;
 }
-export function assessDeck(entries: DeckEntry[], owned: Record<string, number>, prices: PriceSnapshot | null, fx: FxSnapshot | null, budgetSek: number): DeckAssessment {
+export function assessDeck(entries: DeckEntry[], owned: Record<string, number>, prices: PriceSnapshot | null, fx: FxSnapshot | null, budgetSek: number, priceLookup?: Map<string, PurchasePrice | null>): DeckAssessment {
   const counts = new Map<string, number>();
   for (const entry of entries) counts.set(entry.cardId, (counts.get(entry.cardId) ?? 0) + entry.quantity);
-  const lines = [...counts].map(([cardId, required]) => ({ cardId, required, owned: owned[cardId] ?? 0, missing: Math.max(0, required - (owned[cardId] ?? 0)), price: cheapestPrice(cardId, prices, fx) }));
-  const totalSek = Math.ceil(lines.reduce((sum, line) => sum + line.missing * (line.price?.unitSek ?? 0), 0) * 100) / 100;
+  const lines = [...counts].map(([cardId, required]) => ({ cardId, required, owned: owned[cardId] ?? 0, missing: Math.max(0, required - (owned[cardId] ?? 0)), price: priceLookup?.has(cardId) ? priceLookup.get(cardId)! : cheapestPrice(cardId, prices, fx) }));
+  const totalSek = lines.reduce((sum, line) => sum + line.missing * Math.round((line.price?.unitSek ?? 0) * 100), 0) / 100;
   const unpricedCopies = lines.reduce((sum, line) => sum + (line.price ? 0 : line.missing), 0);
   const missingCopies = lines.reduce((sum, line) => sum + line.missing, 0);
   const errors = validateDeck(entries);

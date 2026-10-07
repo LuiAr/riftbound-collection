@@ -18,7 +18,7 @@ const removeRune = anchor.map((e) => e.section === "runes" ? { ...e, quantity: e
 assert.ok(validateDeck(removeRune).some((e) => e.includes("12 runes")));
 assert.ok(validateDeck(anchor.filter((e) => e.section !== "chosen")).some((e) => e.includes("chosen champion")));
 const main = anchor.find((e) => e.section === "main")!;
-assert.ok(validateDeck([...anchor, { ...main, section: "sideboard", quantity: 3 }]).some((e) => e.includes("three copies")));
+assert.ok(validateDeck([...anchor, { ...main, section: "sideboard", quantity: 3 }]).some((e) => e.includes("copy limit")));
 const battlefield = anchor.find((e) => e.section === "battlefields")!;
 assert.ok(validateDeck([...anchor, battlefield]).some((e) => e.includes("twice")));
 assert.ok(validateDeck(anchor.map((e) => e.section === "legend" ? { ...e, quantity: 2 } : e)).some((e) => e.includes("one Legend")));
