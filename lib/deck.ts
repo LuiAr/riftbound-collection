@@ -44,7 +44,7 @@ export function analyzeDeck(input: string, cards: DisplayCard[], { hideRunes = t
     if (/^(?:runes?|rune deck)$/i.test(heading)) { section = "runes"; continue; }
     if (/^(?:tokens?|token cards?)$/i.test(heading)) { section = "tokens"; continue; }
     if (/^legend$/i.test(heading)) { section = "legend"; continue; }
-    if (/^(?:main\s*deck|mainboard|sideboard|side deck|champion|chosen champion|battlefields?|cards?)$/i.test(heading)) { section = "cards"; continue; }
+    if (/^(?:main|main\s*deck|mainboard|sideboard|side deck|champion|chosen|chosen champion|battlefields?|cards?)$/i.test(heading)) { section = "cards"; continue; }
 
     const prefix = line.match(/^(\d{1,2})\s*[x×]?\s+(.+)$/i) ?? line.match(/^(\d{1,2})[x×]\s*(.+)$/i);
     const suffix = !prefix && line.match(/^(.+?)\s+[x×]\s*(\d{1,2})$/i);

@@ -9,8 +9,8 @@ import { readBuilderDeck } from "../lib/saved-builder-deck";
 import type { SavedDeck } from "../lib/server-decks";
 import type { DisplayCard } from "../lib/collection";
 import type { PriceSnapshot } from "../lib/prices";
-import MissingCardButton from "../components/missing-card-button";
 import DeckAdviser from "../components/deck-adviser";
+import CardArtwork from "../components/card-artwork";
 import type { collectionCandidates } from "../lib/deck-advisor";
 import FavouriteCardPicker, { preferredFavouritePrinting } from "../components/favourite-card-picker";
 import { BUILD_STEPS, type BuildStage } from "../lib/builder-progress";
@@ -23,7 +23,7 @@ const money = (amount: number) => new Intl.NumberFormat("en-SE", { style: "curre
 const legendLabel = (id: string) => { const c = cardsById.get(id)!; return `${c.tags[0] ?? ""}${c.tags[0] ? ", " : ""}${c.name}`; };
 const labels = { legend: "Legend", chosen: "Chosen champion", main: "Main deck", runes: "Runes", battlefields: "Battlefields", sideboard: "Sideboard" };
 
-export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: DisplayCard[]; prices: PriceSnapshot | null; onOpenCard: (card: DisplayCard) => void }) {
+export default function DeckBuilder({ cards, prices, onOpenCard, embedded = false, onSaved }: { cards: DisplayCard[]; prices: PriceSnapshot | null; onOpenCard: (card: DisplayCard) => void; embedded?: boolean; onSaved?: () => void }) {
   const [mode, setMode] = useState<"competitive" | "fun">("competitive");
   const [legendId, setLegendId] = useState("rogue assassin");
   const [allowPurchases, setAllowPurchases] = useState(true);
@@ -54,6 +54,7 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
   const [name, setName] = useState("");
   const [notice, setNotice] = useState("");
   const [reviewTab, setReviewTab] = useState("cards");
+  const [onlyMissing, setOnlyMissing] = useState(false);
   const owned = useMemo(() => ownedInventory(cards, extras), [cards, extras]);
   const deckOwned = useMemo(() => ownedInventory(cards, openDeck?.extraCounts ?? openDeck?.result?.input.extras ?? {}), [cards, openDeck]);
   const legends = useMemo(() => builderCards.filter((c) => c.type === "Legend" && selectReferences(c.id).length && (mode === "competitive" || favourites.every((id) => compatible(cardsById.get(id)!, c)))).sort((a, b) => legendLabel(a.id).localeCompare(legendLabel(b.id))), [mode, favourites]);
@@ -96,6 +97,7 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
   function open(proposal: DeckProposal, result: Generated | null, deckId?: string, jobId?: string, extraCounts?: Record<string, number>) {
     setOpenDeck({ proposal, result, deckId, jobId, extraCounts }); setName(proposal.name.slice(0, 80)); setNotice(""); setError(""); setFailureDetails(null);
     setReviewTab("cards");
+    setOnlyMissing(false);
   }
   function chooseFavourite(card: DisplayCard) {
     const id = cardIdFor(card);
@@ -196,6 +198,7 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
         setCurrentJobId(null);
       }
       setNotice("Deck saved.");
+      onSaved?.();
     } catch (e) { setError(e instanceof Error ? e.message : "The deck could not be saved. Try again."); }
     finally { setSaving(false); }
   }
@@ -206,15 +209,16 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
   }
 
   return <section className="feature-page view builder-page builder-simple">
-    <div className="page-head"><h1>Deck builder</h1></div>
+    <div className="page-head"><div><h1>Find your next deck.</h1><p className="head-note">Choose a champion. Make the most of your collection.</p></div></div>
     <div className="builder-controls panel">
       <div className="builder-simple-form">
         <label><span className="field-label">Champion</span><select value={legendId} disabled={busy || finding} onChange={(e) => { setLegendId(e.target.value); setCandidates([]); }}><option value="any">Any owned champion</option>{legends.map((c) => <option key={c.id} value={c.id}>{legendLabel(c.id)}</option>)}</select></label>
         <div><span className="field-label">Cards to use</span><div className="builder-mode builder-card-source" role="group" aria-label="Cards to use"><button type="button" className={!allowPurchases ? "active" : ""} aria-pressed={!allowPurchases} disabled={busy || finding} onClick={() => setAllowPurchases(false)}>Owned only</button><button type="button" className={allowPurchases ? "active" : ""} aria-pressed={allowPurchases} disabled={busy || finding} onClick={() => setAllowPurchases(true)}>Add purchases</button></div></div>
         {allowPurchases && <label><span className="field-label">Budget (SEK)</span><input type="number" min="0" max="100000" step="50" value={budget} disabled={busy || finding} onChange={(e) => setBudget(Math.max(0, Math.min(100000, Number(e.target.value))))} /></label>}
       </div>
-      <div className="builder-actions"><button className="primary-button builder-main-action" type="button" onClick={generate} disabled={busy || saving || finding || Boolean(unavailable) || !status?.rulesCheckedAt || !status?.fx} aria-busy={busy}><Sparkles aria-hidden="true" />{busy ? "Generating…" : "Generate deck"}</button>
-      <button className="secondary-button builder-main-action" type="button" onClick={findCollectionDecks} disabled={busy || saving || finding} aria-busy={finding}><Search aria-hidden="true" />{finding ? "Searching…" : "Find collection decks"}<span className="action-tag">Free</span></button></div>
+      <div className="builder-actions"><button className="primary-button builder-main-action" type="button" onClick={findCollectionDecks} disabled={busy || saving || finding || Boolean(status?.rulesError)} aria-busy={finding}><Search aria-hidden="true" />{finding ? "Searching…" : "Find collection decks"}<span className="action-tag">Free</span></button>
+      <button className="secondary-button builder-main-action" type="button" onClick={generate} disabled={busy || saving || finding || Boolean(unavailable) || !status?.rulesCheckedAt || !status?.fx} aria-busy={busy}><Sparkles aria-hidden="true" />{busy ? "Generating…" : "Generate with AI"}</button></div>
+      {(status?.rulesError || status?.fxError) && <p className="error-note" role="status">{status.rulesError ?? status.fxError}</p>}
       {candidates.length > 0 && <div className="collection-candidates">{candidates.map((candidate, i) => <div key={i}><button className="secondary-button" type="button" onClick={() => open(candidate.deck, null, undefined, undefined, extras)}><strong>{i + 1}. {legendLabel(candidate.deck.entries.find(e => e.section === "legend")!.cardId)} · {candidate.deck.strategy}</strong><span>{money(candidate.assessment.totalSek)} · {candidate.assessment.missingCopies} to buy</span></button><p className="head-note">{candidate.analysis.engine.length ? candidate.analysis.engineDeficit ? `${candidate.analysis.engineDeficit} reviewed engine copies missing` : "Reviewed engine quantities covered" : "Engine needs strategic review"} · needs playtesting.</p></div>)}</div>}
       {(busy || (buildStage && buildState === "failed")) && <div className="builder-progress" aria-busy={busy}>
         <div className="builder-progress-heading"><strong>{buildState === "complete" ? "Your deck is ready" : buildState === "failed" ? "Generation stopped" : "Making your deck"}</strong><span role="status" aria-live="polite">{buildState === "complete" ? "All checks completed" : buildState === "failed" ? "See the message below" : buildStage ? BUILD_STEPS.find((step) => step.id === buildStage)?.title : "Connecting…"}</span></div>
@@ -234,7 +238,6 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
         {mode === "fun" && <div><FavouriteCardPicker cards={cards} selected={favourites} printingCodes={favouriteCodes} disabled={busy} onSelect={chooseFavourite} /><div className="builder-chips">{favourites.map((id) => <button disabled={busy} key={id} type="button" onClick={() => setFavourites(favourites.filter((x) => x !== id))}>{cardsById.get(id)?.name}<X aria-hidden="true" /></button>)}</div></div>}
         <details><summary>Add cards I haven’t imported yet</summary><p className="head-note">Extra copies for this build only. Your collection may be incomplete.</p><div className="builder-extra-form"><label><span className="field-label">Card</span><select value={extraId} disabled={busy} onChange={(e) => setExtraId(e.target.value)}>{builderCards.filter((c) => c.type !== "Token").sort((a, b) => a.name.localeCompare(b.name)).map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select></label><label><span className="field-label">Extra copies</span><input type="number" disabled={busy} value={extraQuantity} min="1" max="1000" onChange={(e) => setExtraQuantity(Math.max(1, Math.min(1000, Math.floor(Number(e.target.value)) || 1)))} /></label><button type="button" disabled={busy} className="secondary-button" onClick={() => setExtras({ ...extras, [extraId]: Math.min(1000, (extras[extraId] ?? 0) + extraQuantity) })}><Plus aria-hidden="true" />Add</button></div><div className="builder-chips">{Object.entries(extras).map(([id, count]) => <button disabled={busy} type="button" key={id} onClick={() => { const next = { ...extras }; delete next[id]; setExtras(next); }}>{cardsById.get(id)?.name} +{count}<X aria-hidden="true" /></button>)}</div></details>
         {status && <p className="head-note">AI usage: {money(status.spentSek)} of {money(status.capSek)} this month{status.reservedSek ? ` · ${money(status.reservedSek)} reserved` : ""}. Up to 10 SEK reserved per generation, excluding taxes and fees.</p>}
-        {(status?.rulesError || status?.fxError) && <p className="head-note">{status.rulesError ?? status.fxError}</p>}
         <details><summary>Reference coverage for this champion</summary><p className="head-note">{coverage.references} full lists · {coverage.independentMainLists} distinct main lists · {coverage.official} official event lists. {coverage.label}.</p>{coverage.warnings.map((warning) => <p className="head-note" key={warning}>{warning}</p>)}</details>
       </details>
     </div>
@@ -250,14 +253,14 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
       {assessment.unpricedCopies > 0 && <p className="head-note">{assessment.unpricedCopies} missing copies have no price yet.</p>}
       {openDeck.result && assessment.totalSek > openDeck.result.input.budgetSek && <p className="head-note">Current prices exceed this build’s budget. See Details.</p>}
       <Tabs className="deck-review-tabs" value={reviewTab} onValueChange={setReviewTab}>
-      <TabsList aria-label="Deck review"><TabsTrigger value="cards">Cards</TabsTrigger><TabsTrigger value="improve">Review & upgrades</TabsTrigger><TabsTrigger value="details">Details</TabsTrigger></TabsList>
-      <TabsContent value="cards"><div className="builder-card-list">{Object.entries(labels).map(([section, label]) => {
-        const entries = proposal.entries.filter((e) => e.section === section);
+      <TabsList aria-label="Deck review"><TabsTrigger value="cards">Cards</TabsTrigger><TabsTrigger value="improve">Improve</TabsTrigger><TabsTrigger value="details">Details</TabsTrigger></TabsList>
+      <TabsContent value="cards"><div className="builder-card-tools"><h2>Deck cards</h2><button className="secondary-button" type="button" aria-pressed={onlyMissing} onClick={() => setOnlyMissing(!onlyMissing)}>{onlyMissing ? "Show all cards" : "Missing only"}</button></div>{onlyMissing && assessment.missingCopies === 0 && <p className="head-note">You have every card in this deck.</p>}<div className="builder-card-list">{Object.entries(labels).map(([section, label]) => {
+        const entries = proposal.entries.filter((e) => e.section === section && (!onlyMissing || assessment.lines.find(l => l.cardId === e.cardId)?.missing));
         if (!entries.length) return null;
-        return <section className="builder-card-section" key={section}><h3>{label}<span>{entries.reduce((sum, e) => sum + e.quantity, 0)} cards</span></h3><div className="builder-card-grid">{entries.map((entry) => {
+        return <section className="builder-card-section" key={section}><h3>{label}<span>{entries.reduce((sum, e) => sum + e.quantity, 0)} cards</span></h3><div className="saved-card-grid">{entries.map((entry) => {
           const line = assessment.lines.find((l) => l.cardId === entry.cardId)!;
           const card = representativeCard(entry.cardId, cards, preferredPrintings);
-          return card ? <div className="builder-card-row" key={entry.cardId}><MissingCardButton card={card} name={cardsById.get(entry.cardId)!.name} detail={line.missing ? `Own ${Math.min(line.owned, line.required)}/${line.required} · need ${line.missing}` : "All copies owned"} count={entry.quantity} countLabel="deck copies" onOpen={onOpenCard} /></div> : <p key={entry.cardId}>{entry.quantity} {cardsById.get(entry.cardId)?.name ?? entry.cardId}</p>;
+          return card ? <button className="saved-card-tile" type="button" key={entry.cardId} onClick={() => onOpenCard(card)} aria-label={`${cardsById.get(entry.cardId)!.name}, ${entry.quantity} deck copies, ${line.missing} missing`}><span className="saved-card-art"><CardArtwork src={card.image} alt="" lazy /><b>×{entry.quantity}</b></span><strong>{cardsById.get(entry.cardId)!.name}</strong><small className={line.missing ? "needs-copies" : ""}>{line.missing ? `Own ${Math.min(line.owned, line.required)}/${line.required} · need ${line.missing}` : "All copies owned"}</small></button> : <p key={entry.cardId}>{entry.quantity} {cardsById.get(entry.cardId)?.name ?? entry.cardId}</p>;
         })}</div></section>;
       })}</div></TabsContent>
       <TabsContent value="improve" forceMount hidden={reviewTab !== "improve"}><DeckAdviser name={name} deckText={exportDeck(proposal)} deckId={openDeck?.deckId} extras={openDeck?.extraCounts ?? openDeck?.result?.input.extras} onApply={text => { const updated = readBuilderDeck(name, text); if (updated) { open(updated, null, openDeck?.deckId, undefined, openDeck?.extraCounts ?? openDeck?.result?.input.extras); setNotice("Upgrade applied. Save to keep this version."); } }} /></TabsContent>
@@ -294,10 +297,10 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
         <details><summary>Activity log &amp; explanation</summary><p className="head-note">Generation ID: {job.id}</p>{job.result && <><p>{job.result.explanation}</p>{job.result.rejected.map((reason) => <p className="error-note" key={reason}>{reason}</p>)}<p className="head-note">{job.result.model} · estimated AI cost {money(job.result.costSek)}{job.result.costEstimated ? " (conservative reservation estimate; exact usage unavailable)" : ""}</p></>}{job.logs.length ? <ol className="builder-job-log">{job.logs.map((log, index) => <li key={index}><time>{new Date(log.createdAt).toLocaleTimeString()}</time><span>{log.message}</span></li>)}</ol> : <p className="head-note">This older request has no detailed activity log.</p>}{job.rawOutput && <details><summary>Retained AI output (unvalidated)</summary><pre className="builder-raw-output">{job.rawOutput}</pre></details>}</details>
       </article>;
     })}</div>{status.nextCursor && <button className="secondary-button" type="button" onClick={() => refreshStatus(status.nextCursor!).catch((e) => setError(e.message))}>Older generations</button>}</details> : null}
-    <details className="panel builder-history builder-saved deck-library" open={!proposal}><summary>Saved decks <span className="library-count">{saved.length}</span></summary>
+    {!embedded && <details className="panel builder-history builder-saved deck-library" open={!proposal}><summary>Saved decks <span className="library-count">{saved.length}</span></summary>
       {saved.length ? <div className="builder-saved-list">{saved.map(({ deck, proposal }) => <button disabled={busy || saving} type="button" className="builder-saved-item" key={deck.deckId} onClick={() => open(proposal!, null, deck.deckId)}><span>{deck.name}</span><small>{new Date(deck.updatedAt).toLocaleDateString()}</small></button>)}</div> : <p className="head-note">Your decks will appear here after you save them.</p>}
       {savedError && <p className="error-note" role="alert">{savedError} <button type="button" className="secondary-button" onClick={() => refreshSaved().catch((e) => setSavedError(e.message))}>Retry</button></p>}
 
-    </details>
+    </details>}
   </section>;
 }

@@ -3,6 +3,15 @@ import { test } from "node:test";
 import { displayCards } from "../lib/collection";
 import { analyzeDeck, missingList } from "../lib/deck";
 
+test("saved builder section headings do not become unmatched cards", () => {
+  const result = analyzeDeck("legend\n1 Rogue Assassin\nchosen\n1 Akali, Deadly Weapon\nmain\n3 Watchful Sentry\nrunes\n8 Order Rune\nbattlefields\n1 Windswept Hillock\nsideboard\n1 Hidden Blade", displayCards([]), { hideRunes: false });
+  assert.deepEqual(result.unmatched, []);
+  assert.equal(result.matches.length, 6);
+  assert.equal(result.matches.reduce((sum, item) => sum + item.required, 0), 15);
+  assert.equal(result.matches.find(item => item.name === "Order Rune")?.category, "runes");
+  assert.equal(analyzeDeck("main\n1 Unknown card", displayCards([])).unmatched[0], "1 Unknown card");
+});
+
 const example = `Legend:
 1 LeBlanc, Deceiver
 

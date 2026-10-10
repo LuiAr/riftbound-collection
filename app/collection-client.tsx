@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
-import { ArrowRight, ChevronDown, Download, Search, Upload } from "lucide-react";
+import { ArrowRight, ArrowLeft, ChevronDown, Download, Search, Upload, Layers3, Library, History, LogOut } from "lucide-react";
 import { catalog, displayCards, hasFoilTreatment, isAlternatePrinting, isOvernumbered, type DisplayCard, type ImportDifference } from "../lib/collection";
 import { matchesCardType, rarityFor, type RarityKind } from "../lib/rarity";
 import { oneOfEachGoal } from "../lib/goals";
@@ -72,7 +72,11 @@ export default function CollectionClient({ initial, initialHistory, accountName,
   const [currentSnapshot, setCurrentSnapshot] = useState(initial);
   const [viewedSnapshot, setViewedSnapshot] = useState<CollectionSnapshot | null>(null);
   const [history, setHistory] = useState(initialHistory);
-  const [section, setSection] = useState<"collection" | "decks" | "builder" | "history">("collection");
+  const [section, setSection] = useState<"collection" | "decks" | "history">("decks");
+  const [building, setBuilding] = useState(false);
+  const [builderVisited, setBuilderVisited] = useState(false);
+  const [deckRefresh, setDeckRefresh] = useState(0);
+  function startBuilder() { setBuilderVisited(true); setBuilding(true); setSection("decks"); }
   const [historyBusy, setHistoryBusy] = useState(false);
   const [historyError, setHistoryError] = useState("");
   const snapshot = viewedSnapshot ?? currentSnapshot;
@@ -91,6 +95,11 @@ export default function CollectionClient({ initial, initialHistory, accountName,
   const fileInput = useRef<HTMLInputElement>(null);
   const importTrigger = useRef<HTMLButtonElement>(null);
   const cardTrigger = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    document.getElementById("main-content")?.focus({ preventScroll: true });
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [section, building]);
 
   function openCard(card: DisplayCard) {
     cardTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -231,31 +240,31 @@ export default function CollectionClient({ initial, initialHistory, accountName,
 
   return <>
     <a className="skip-link" href="#main-content">Skip to content</a>
-    <header className="site-header">
-      <div className="site-header-inner">
-        <div className="brand"><img className="brand-mark" src="/riftbound-logo-96.png" alt="" width="32" height="32" /><span>Riftbound<span className="brand-slash" aria-hidden="true">/</span><span className="brand-light"><span className="visually-hidden"> </span>Collection</span></span></div>
-        <nav className="section-nav" aria-label="Website sections">
-          <button type="button" className={section === "collection" ? "active" : ""} aria-current={section === "collection" ? "page" : undefined} onClick={() => setSection("collection")}>My collection</button>
-          <button type="button" className={section === "decks" ? "active" : ""} aria-current={section === "decks" ? "page" : undefined} onClick={() => setSection("decks")}>Decks & upgrades</button>
-          <button type="button" className={section === "builder" ? "active" : ""} aria-current={section === "builder" ? "page" : undefined} onClick={() => setSection("builder")}>Deck builder</button>
-          <button type="button" className={section === "history" ? "active" : ""} aria-current={section === "history" ? "page" : undefined} onClick={() => setSection("history")}>History</button>
-        </nav>
-        <div className="account-area"><span className="account-name" title={accountName}>{accountName}</span><a href={signOutPath}>Sign out</a></div>
-      </div>
-    </header>
+    <aside className="app-rail">
+      <div className="rail-brand"><img src="/riftbound-logo-96.png" alt="" width="34" height="34" /><span>Riftbound<small>Collection & decks</small></span></div>
+      <nav className="app-nav" aria-label="Website sections">
+        <button type="button" aria-label="Decks" title="Decks" className={section === "decks" ? "active" : ""} aria-current={section === "decks" ? "page" : undefined} onClick={() => { setSection("decks"); setBuilding(false); }}><Layers3 aria-hidden="true" /><span>Decks</span></button>
+        <button type="button" aria-label="Collection" title="Collection" className={section === "collection" ? "active" : ""} aria-current={section === "collection" ? "page" : undefined} onClick={() => setSection("collection")}><Library aria-hidden="true" /><span>Collection</span></button>
+        <button type="button" aria-label="Activity" title="Activity" className={section === "history" ? "active" : ""} aria-current={section === "history" ? "page" : undefined} onClick={() => setSection("history")}><History aria-hidden="true" /><span>Activity</span></button>
+      </nav>
+      <div className="rail-tip"><Layers3 aria-hidden="true" /><strong>A deck starts with your cards.</strong><p>Find a new direction in the collection you already own.</p><button type="button" onClick={startBuilder}>Find my next deck <ArrowRight aria-hidden="true" /></button></div>
+      <div className="rail-account"><span className="account-avatar" aria-hidden="true">{accountName.slice(0, 1).toUpperCase()}</span><span className="account-identity"><strong title={accountName}>{accountName}</strong><small>ChatGPT account</small></span><a href={signOutPath} aria-label="Sign out" title="Sign out"><LogOut aria-hidden="true" /></a></div>
+    </aside>
+    <div className="app-content">
+    <header className="app-topbar"><span>Workspace <span aria-hidden="true">/</span> <strong>{section === "decks" ? building ? "New deck" : "Your decks" : section === "collection" ? "Collection" : "Activity"}</strong></span><span className="sync-note"><span aria-hidden="true" />Synced to your account</span><a className="mobile-signout" href={signOutPath} aria-label={`Sign out ${accountName}`} title="Sign out"><LogOut aria-hidden="true" /></a></header>
     <main className="collection-shell" id="main-content" tabIndex={-1}>
     {section === "history" && <section className="feature-page view" aria-labelledby="history-title">
-      <h1 id="history-title">Collection history</h1>
+      <h1 id="history-title">Your activity.</h1>
       <p className="feature-intro">Every saved Card Nexus import appears here. Open a version to browse its cards and summaries without changing your latest collection.</p>
       <HistoryCompare key={currentSnapshot.importId ?? "empty"} history={history} latest={currentSnapshot} />
       {historyError && <p className="error-note" role="alert">{historyError}</p>}
       {history.length ? <div className="history-list">{history.map((item) => <button type="button" className={`history-item ${snapshot.importId === item.importId ? "selected" : ""}`} key={item.importId} disabled={historyBusy} onClick={() => viewVersion(item.importId)}><span><strong>{item.sourceName}</strong><small>{new Date(item.importedAt).toLocaleString("en-US", { day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "2-digit" })}</small></span><span className="history-item-side">{item.importId === currentSnapshot.importId ? "Latest" : `Version ${item.version}`}<ArrowRight aria-hidden="true" /></span></button>)}</div> : <div className="empty-state">Import a Card Nexus CSV to create your first collection version.</div>}
     </section>}
-    {section === "builder" && <DeckBuilder cards={latestCards} prices={prices} onOpenCard={openCard} />}
-    {section === "decks" && <DeckMatcher cards={latestCards} onOpenCard={openCard} />}
+    <div hidden={section !== "decks" || building}><DeckMatcher cards={latestCards} onOpenCard={openCard} refreshKey={deckRefresh} onBuild={startBuilder} onCollection={() => setSection("collection")} onActivity={() => setSection("history")} /></div>
+    {builderVisited && <div hidden={section !== "decks" || !building}><button className="back-link" type="button" onClick={() => setBuilding(false)}><ArrowLeft aria-hidden="true" />Your decks</button><DeckBuilder cards={latestCards} prices={prices} onOpenCard={openCard} embedded onSaved={() => setDeckRefresh(t => t + 1)} /></div>}
     {section === "collection" && <div className="view">
     <section className="page-head">
-      <div><h1>My collection</h1><p className="head-note">{snapshot.importedAt ? `${viewedSnapshot ? "Imported" : "Last import"} ${new Date(snapshot.importedAt).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })} · ` : ""}Synced with your ChatGPT account</p></div>
+      <div><h1>Your collection.</h1><p className="head-note">{snapshot.importedAt ? `${viewedSnapshot ? "Imported" : "Last import"} ${new Date(snapshot.importedAt).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })} · ` : ""}Every card, ready for your next deck.</p></div>
       {!viewedSnapshot && !firstRun && <div className="head-actions"><a className="secondary-button" href="/api/export"><Download aria-hidden="true" />Export CSV</a>{importButton}</div>}
       {!viewedSnapshot && <input ref={fileInput} className="visually-hidden" type="file" accept=".csv,text/csv" aria-label="Choose a Card Nexus CSV export" onChange={(event) => chooseFile(event.target.files?.[0])} />}
     </section>
@@ -329,6 +338,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
       </DialogContent>}
     </Dialog>
     </main>
+    </div>
     <footer className="site-footer"><p>Card images and names © Riot Games. Card catalog via <a href="https://github.com/LouisCourrian/riftbound-cards" target="_blank" rel="noreferrer">riftbound-cards</a>.</p></footer>
   </>;
 }
