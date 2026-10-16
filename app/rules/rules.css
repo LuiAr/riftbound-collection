@@ -29,7 +29,6 @@
 .resource-top { display: flex; align-items: center; gap: 15px; margin-bottom: 18px; }
 .resource-top h3 { margin: 0; font-size: 24px; line-height: 1.2; font-weight: 800; }
 .resource-top small { display: block; margin-top: 4px; color: var(--muted); font-size: 13px; }
-.energy-symbol { display: inline-grid; place-items: center; flex: none; width: 48px; height: 48px; border-radius: 50%; border: 3px solid var(--line-strong); background: var(--surface-2); color: var(--ink); font-size: 30px; font-weight: 850; line-height: 1; }
 .game-symbol { flex: none; width: 38px; height: 38px; object-fit: contain; }
 .game-symbol-fury, .game-symbol-calm, .game-symbol-mind, .game-symbol-body, .game-symbol-chaos, .game-symbol-order { border-radius: 50%; }
 .resource-top .game-symbol { width: 48px; height: 48px; }
@@ -68,6 +67,14 @@
 .reference-entry summary:hover { background: var(--surface-2); border-radius: var(--radius-control); }
 .entry-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 .entry-heading strong { font-size: 16px; font-weight: 750; }
+.printed-label { display: block; width: auto; height: 28px; max-width: 100%; object-fit: contain; object-position: left center; flex: 0 1 auto; }
+.entry-heading { min-height: 28px; }
+.entry-variable { color: var(--muted); font-size: 12px; font-weight: 650; }
+.rules-section-title .printed-label-note { font-size: 12px; margin-top: 6px; }
+.printed-label-source { font-size: 12px; }
+.printed-label-source a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
+.printed-label-source svg { display: inline; width: 11px; height: 11px; margin-left: 4px; }
+.recycle-reference .printed-label { height: 27px; margin-bottom: 12px; }
 .entry-summary { color: var(--ink-2); font-size: 14px; line-height: 1.55; }
 .rules-chip { display: inline-flex; align-items: center; padding: 2px 7px; border-radius: var(--radius-pill); color: var(--accent-ink); background: var(--accent-soft); font-size: 10px; font-weight: 700; }
 .entry-detail { margin: 0 18px; padding: 15px 0 18px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.7; color: var(--muted); }

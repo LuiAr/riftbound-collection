@@ -1,0 +1,478 @@
+{
+  "Accelerate": {
+    "src": "/rules/printed/accelerate.png",
+    "width": 138,
+    "height": 34,
+    "card": "Blazing Scorcher",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ogn-001-298",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/15ed971e4029a92b362a81ccadf309fb81e40b81-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      781,
+      216,
+      815
+    ]
+  },
+  "Action": {
+    "src": "/rules/printed/action.png",
+    "width": 92,
+    "height": 35,
+    "card": "Thermo Beam",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ogn-022-298",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/88661e852b864491e6d7f5f087caf4263f61c361-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      720,
+      170,
+      755
+    ]
+  },
+  "Ambush": {
+    "src": "/rules/printed/ambush.png",
+    "width": 104,
+    "height": 34,
+    "card": "Soulspinner",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ven-123-166",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/9a23a1f2c83751c2a715049be32c2482ea10454d-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      746,
+      182,
+      780
+    ]
+  },
+  "Assault X": {
+    "src": "/rules/printed/assault.png",
+    "width": 103,
+    "height": 34,
+    "card": "Daring Poro",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ogn-210-298",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/41dee7ec46124c261352595cfbd8a6d38d32b947-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      764,
+      181,
+      798
+    ]
+  },
+  "Backline": {
+    "src": "/rules/printed/backline.png",
+    "width": 112,
+    "height": 33,
+    "card": "LeBlanc",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--unl-090-219",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/a0389576206b1e750a0852c6ff46efd2646d47da-744x1039.png?accountingTag=RB",
+    "crop": [
+      79,
+      707,
+      191,
+      740
+    ]
+  },
+  "Deathknell": {
+    "src": "/rules/printed/deathknell.png",
+    "width": 140,
+    "height": 35,
+    "card": "Watchful Sentry",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ogn-096-298",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/d84da2c62b1e218a0a74b227c49ce8a953918ebd-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      746,
+      218,
+      781
+    ]
+  },
+  "Deflect X": {
+    "src": "/rules/printed/deflect.png",
+    "width": 104,
+    "height": 34,
+    "card": "Navori Scout",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--sfd-037-221",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/038625518f5b46f5217d300d9dc9fbf507c4ae09-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      727,
+      182,
+      761
+    ]
+  },
+  "Deploy": {
+    "src": "/rules/printed/deploy.png",
+    "width": 94,
+    "height": 35,
+    "card": "Blossoming Dreamroot",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-024-167",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/5b819cc232389f3ef1438350d68c7801e181961c-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      724,
+      172,
+      759
+    ]
+  },
+  "Disarm X": {
+    "src": "/rules/printed/disarm.png",
+    "width": 98,
+    "height": 34,
+    "card": "Trinket Peddler",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-054-167",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/78106b7cea441b13d108e532adc5ce063f448165-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      746,
+      176,
+      780
+    ]
+  },
+  "Empower": {
+    "src": "/rules/printed/empower.png",
+    "width": 152,
+    "height": 34,
+    "card": "Covert Informant",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ven-057-166",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/ff33454bf980a5c884b63e524c6580408e9b94e3-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      707,
+      230,
+      741
+    ]
+  },
+  "Empowered": {
+    "src": "/rules/printed/empowered.png",
+    "width": 147,
+    "height": 34,
+    "card": "Covert Informant",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ven-057-166",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/ff33454bf980a5c884b63e524c6580408e9b94e3-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      787,
+      225,
+      821
+    ]
+  },
+  "Equip": {
+    "src": "/rules/printed/equip.png",
+    "width": 114,
+    "height": 34,
+    "card": "Brutalizer",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--sfd-042-221",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/3a0de7eec3de501f79f33c09b43c7fe42721d10d-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      752,
+      192,
+      786
+    ]
+  },
+  "Flow": {
+    "src": "/rules/printed/flow.png",
+    "width": 110,
+    "height": 34,
+    "card": "Dredge Up",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ven-049-166",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/cf561c8a0f8debde66b66d3e74ce861d0ce388ae-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      768,
+      188,
+      802
+    ]
+  },
+  "Ganking": {
+    "src": "/rules/printed/ganking.png",
+    "width": 106,
+    "height": 33,
+    "card": "Master Yi",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ogs-009-024",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/0e16976cd6d7ee5a874be9351b428671990fbd25-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      743,
+      184,
+      776
+    ]
+  },
+  "Hidden": {
+    "src": "/rules/printed/hidden.png",
+    "width": 95,
+    "height": 34,
+    "card": "Pakaa Cub",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ogn-135-298",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/156a66d7d44165367cc5a470fb35c86f337f9429-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      746,
+      173,
+      780
+    ]
+  },
+  "Hunt X": {
+    "src": "/rules/printed/hunt.png",
+    "width": 93,
+    "height": 34,
+    "card": "Voracious Gromp",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--unl-100-219",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/3c006b8c9aa4581ad90c258cc6cfac9098d3c296-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      764,
+      171,
+      798
+    ]
+  },
+  "Legion": {
+    "src": "/rules/printed/legion.png",
+    "width": 92,
+    "height": 34,
+    "card": "Noxus Hopeful",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ogn-012-298",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/c3bb6f4cb58feeb50e396d12ec9865c5434025af-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      746,
+      170,
+      780
+    ]
+  },
+  "Level N": {
+    "src": "/rules/printed/level.png",
+    "width": 100,
+    "height": 34,
+    "card": "Bandle Soldier",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--unl-151-219",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/e43b54f22e0a038ee1f94ba2e99f80dd89999d8e-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      733,
+      178,
+      767
+    ]
+  },
+  "Quick-Draw": {
+    "src": "/rules/printed/quick-draw.png",
+    "width": 139,
+    "height": 33,
+    "card": "Long Sword",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--sfd-022-221",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/48d798bf93afd1ef139dcafc6cd8705742b93169-744x1039.png?accountingTag=RB",
+    "crop": [
+      85,
+      711,
+      224,
+      744
+    ]
+  },
+  "Reaction": {
+    "src": "/rules/printed/reaction.png",
+    "width": 114,
+    "height": 33,
+    "card": "Premonition",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--sfd-087-221",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/20ad2f42bcf9a0402e2a0d5a21d55eacee9ecf35-744x1039.png?accountingTag=RB",
+    "crop": [
+      79,
+      724,
+      193,
+      757
+    ]
+  },
+  "Repeat": {
+    "src": "/rules/printed/repeat.png",
+    "width": 128,
+    "height": 35,
+    "card": "Upstage Comedy",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--unl-009-219",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/4a636fcd682b32b41a4886c7383e781414139adb-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      724,
+      206,
+      759
+    ]
+  },
+  "Shield X": {
+    "src": "/rules/printed/shield.png",
+    "width": 91,
+    "height": 34,
+    "card": "Stalwart Poro",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ogn-052-298",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/c4a5d7178e783c3975749271b6df333a82a2328a-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      764,
+      169,
+      798
+    ]
+  },
+  "Show Off": {
+    "src": "/rules/printed/show-off.png",
+    "width": 117,
+    "height": 35,
+    "card": "Incorrigible Construct",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-011-167",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/e95470d5c2fbc9f7f8ab0b1c19f32fd704918c83-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      706,
+      195,
+      741
+    ]
+  },
+  "Tank": {
+    "src": "/rules/printed/tank.png",
+    "width": 74,
+    "height": 34,
+    "card": "Horns of the Dragon",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ven-118-166",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/a7b3cb9f4175e71bc8fb60e69c55a0ea3f26fe8f-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      764,
+      152,
+      798
+    ]
+  },
+  "Temporary": {
+    "src": "/rules/printed/temporary.png",
+    "width": 133,
+    "height": 34,
+    "card": "Sprite",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ogn-274-298",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/055892752559d2d3d32e76f491a7a0b540e1a669-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      815,
+      211,
+      849
+    ]
+  },
+  "Unique": {
+    "src": "/rules/printed/unique.png",
+    "width": 93,
+    "height": 33,
+    "card": "Forgefire Cape",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--sfd-190-221",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/9bc49433a6ec5a8f4f1b44351094523d51b6bc11-744x1039.png?accountingTag=RB",
+    "crop": [
+      79,
+      705,
+      172,
+      738
+    ]
+  },
+  "Vision": {
+    "src": "/rules/printed/vision.png",
+    "width": 88,
+    "height": 34,
+    "card": "Mystic Poro",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ogn-171-298",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/11af57d045768e886d05e1c0933b0d57cb1e459d-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      746,
+      166,
+      780
+    ]
+  },
+  "Weaponmaster": {
+    "src": "/rules/printed/weaponmaster.png",
+    "width": 176,
+    "height": 34,
+    "card": "Combat Chef",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--sfd-092-221",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/dffa05408c0b53f62dfbb9452986342ff2d4352d-744x1039.png?accountingTag=RB",
+    "crop": [
+      78,
+      711,
+      254,
+      745
+    ]
+  },
+  "Buff": {
+    "src": "/rules/printed/buff.png",
+    "width": 72,
+    "height": 33,
+    "card": "Demacian Illuminators",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-131-167",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/127c2700ee4e2557dfd463ed84c45f4600ad9723-744x1039.png?accountingTag=RB",
+    "crop": [
+      505,
+      729,
+      577,
+      762
+    ]
+  },
+  "Burn X": {
+    "src": "/rules/printed/burn.png",
+    "width": 93,
+    "height": 33,
+    "card": "Death Mark",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ven-144-166",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/87ccfb8d1c19f402bb37ffa392011ee2f0880aa9-744x1039.png?accountingTag=RB",
+    "crop": [
+      79,
+      678,
+      172,
+      711
+    ]
+  },
+  "Mighty": {
+    "src": "/rules/printed/mighty.png",
+    "width": 96,
+    "height": 33,
+    "card": "Fiora",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ogn-232-298",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/24d4d1997e6a5b145412e402fc69399d590ecda0-744x1039.png?accountingTag=RB",
+    "crop": [
+      202,
+      744,
+      298,
+      777
+    ]
+  },
+  "Predict X": {
+    "src": "/rules/printed/predict.png",
+    "width": 103,
+    "height": 34,
+    "card": "Strigian Oracle",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-053-167",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/5973b5036060f29e24f8778949bf6f01f360c0a4-744x1039.png?accountingTag=RB",
+    "crop": [
+      406,
+      746,
+      509,
+      780
+    ]
+  },
+  "Stun": {
+    "src": "/rules/printed/stun.png",
+    "width": 74,
+    "height": 34,
+    "card": "Pitiless Stalker",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--rad-104-167",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/fc61b244fb3ed01d61617c3c2633a71424604130-744x1039.png?accountingTag=RB",
+    "crop": [
+      122,
+      747,
+      196,
+      781
+    ]
+  },
+  "Recycle": {
+    "src": "/rules/printed/recycle.png",
+    "width": 89,
+    "height": 31,
+    "card": "Garbage Grabber",
+    "sourceUrl": "https://playriftbound.com/en-us/card-gallery/#card-gallery--ogn-099-298",
+    "imageUrl": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/199f21237aeee2582904463a15ec62ce29452c10-744x1039.png?accountingTag=RB",
+    "crop": [
+      86,
+      748,
+      175,
+      779
+    ]
+  }
+}

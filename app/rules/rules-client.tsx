@@ -3,10 +3,19 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowRight, BookOpen, Check, ChevronDown, Clock3, ExternalLink, Flag, Layers3, LayoutGrid, Search, Sparkles, Swords, UserRound, X, ChartNoAxesColumnIncreasing, RotateCw, Recycle } from "lucide-react";
 import { gameTerms, keywords, rulesSources, type ReferenceEntry } from "../../lib/rules-reference";
+import printedLabels from "../../data/rules-printed-labels.json";
 
 type Topic = "symbols" | "keywords" | "play" | "prerift";
 const topics = [{ id: "symbols", label: "Symbols", icon: Sparkles }, { id: "keywords", label: "Keywords", icon: BookOpen }, { id: "play", label: "Playing a turn", icon: Swords }, { id: "prerift", label: "Pre-Rift", icon: Flag }] as const;
 const domains = ["Fury", "Calm", "Mind", "Body", "Chaos", "Order"];
+type PrintedLabelAsset = { src: string; width: number; height: number; card: string; sourceUrl: string };
+const labelAssets: Record<string, PrintedLabelAsset> = printedLabels;
+
+function PrintedLabel({ name, className = "" }: { name: string; className?: string }) {
+  const asset = labelAssets[name];
+  if (!asset) return <strong>{name}</strong>;
+  return <img className={`printed-label ${className}`} src={asset.src} width={asset.width} height={asset.height} alt={name} decoding="async" />;
+}
 
 function GameSymbol({ name }: { name: string }) {
   return <img className={`game-symbol game-symbol-${name}`} src={`/rules/${name}.png`} width="36" height="36" alt={`${name === "any" ? "Any-domain Power" : name} symbol`} />;
@@ -17,7 +26,8 @@ function SourceLink({ href, children }: { href: string; children: React.ReactNod
 }
 
 function Entry({ entry }: { entry: ReferenceEntry }) {
-  return <details className="reference-entry"><summary><span className="entry-heading"><strong>{entry.name}</strong>{entry.group === "Radiance" && <span className="rules-chip">Radiance</span>}</span><span className="entry-summary">{entry.summary}</span><ChevronDown aria-hidden="true" /></summary><div className="entry-detail"><p>{entry.detail}</p><SourceLink href={rulesSources.core}>Core Rules §{entry.rule}</SourceLink></div></details>;
+  const asset = labelAssets[entry.name];
+  return <details className="reference-entry"><summary><span className="entry-heading"><PrintedLabel name={entry.name} />{/ [XN]$/.test(entry.name) && <span className="entry-variable">{entry.name}</span>}{entry.group === "Radiance" && <span className="rules-chip">Radiance</span>}</span><span className="entry-summary">{entry.summary}</span><ChevronDown aria-hidden="true" /></summary><div className="entry-detail"><p>{entry.detail}</p>{asset && <p className="printed-label-source">Printed on <a href={asset.sourceUrl} target="_blank" rel="noreferrer">{asset.card}<ExternalLink aria-hidden="true" /></a>.{/ [XN]$/.test(entry.name) && " The number on the label is a card example; use the value on your card."}</p>}<SourceLink href={rulesSources.core}>Core Rules §{entry.rule}</SourceLink></div></details>;
 }
 
 export default function RulesClient({ accountName, signOutPath }: { accountName: string; signOutPath: string }) {
@@ -81,7 +91,7 @@ export default function RulesClient({ accountName, signOutPath }: { accountName:
         <button type="button" className="rules-text-button" onClick={() => { setQuery(""); setTopic("prerift"); }}>Looking for deck size or event rules? Open Pre-Rift<ArrowRight aria-hidden="true" /></button>
       </section> : <div className="rules-content">
         {topic === "symbols" && <Symbols />}
-        {topic === "keywords" && <section aria-labelledby="keyword-title"><div className="rules-section-title"><div><h2 id="keyword-title">What does that keyword do?</h2><p>A short answer first. Tap any term for the detail.</p></div><span>{keywords.length} keywords</span></div>
+        {topic === "keywords" && <section aria-labelledby="keyword-title"><div className="rules-section-title"><div><h2 id="keyword-title">What does that keyword do?</h2><p>Real labels from the cards. Tap one for the detail.</p><p className="printed-label-note">Numbers shown are examples. Always use the value on your card.</p></div><span>{keywords.length} keywords</span></div>
           <div className="rules-group-filter" role="group" aria-label="Keyword category">{["All", "Combat", "Timing", "Effects", "Radiance"].map((name) => <button type="button" aria-pressed={group === name} key={name} onClick={() => setGroup(name)}>{name}</button>)}</div>
           <div className="reference-list">{visibleKeywords.map((entry) => <Entry key={entry.name} entry={entry} />)}</div>
           <h3 className="rules-subheading">Common card instructions</h3><div className="reference-list">{gameTerms.map((entry) => <Entry key={entry.name} entry={entry} />)}</div>
@@ -89,7 +99,7 @@ export default function RulesClient({ accountName, signOutPath }: { accountName:
         {topic === "play" && <PlayGuide />}
         {topic === "prerift" && <PreRift />}
       </div>}
-      <details className="rules-sources"><summary>Sources &amp; rule versions<ChevronDown aria-hidden="true" /></summary><p>Checked 16 October 2026. Core and Tournament Rules dated 9 October; Radiance changes effective 16 October. These are beginner summaries. Use current official text and your event judge for a specific interaction.</p><div><SourceLink href={rulesSources.hub}>Official Rules Hub</SourceLink><SourceLink href={rulesSources.core}>Core Rules</SourceLink><SourceLink href={rulesSources.tournament}>Tournament Rules</SourceLink><SourceLink href={rulesSources.prerift}>Radiance Pre-Rift guide</SourceLink><SourceLink href={rulesSources.radiance}>Radiance changes</SourceLink><SourceLink href="/rules/radiance-sealed-cheatsheet.jpg">Your French sealed cheat sheet</SourceLink></div><p>Game symbols and card artwork © Riot Games, from the official card gallery. Cost examples supplied by you. The supplied sheet is a community reference, checked against official rules.</p></details>
+      <details className="rules-sources"><summary>Sources &amp; rule versions<ChevronDown aria-hidden="true" /></summary><p>Checked 16 October 2026. Core and Tournament Rules dated 9 October; Radiance changes effective 16 October. These are beginner summaries. Use current official text and your event judge for a specific interaction.</p><div><SourceLink href={rulesSources.hub}>Official Rules Hub</SourceLink><SourceLink href={rulesSources.core}>Core Rules</SourceLink><SourceLink href={rulesSources.tournament}>Tournament Rules</SourceLink><SourceLink href={rulesSources.prerift}>Radiance Pre-Rift guide</SourceLink><SourceLink href={rulesSources.radiance}>Radiance changes</SourceLink><SourceLink href="/rules/radiance-sealed-cheatsheet.jpg">Your French sealed cheat sheet</SourceLink></div><p>Printed keyword labels, card instructions, game symbols and card artwork © Riot Games, cropped from the official card gallery. Each illustrated term links to its source card. Cost examples supplied by you. The supplied sheet is a community reference, checked against official rules.</p></details>
     </main>
   </>;
 }
@@ -98,7 +108,7 @@ function Symbols({ compact = false }: { compact?: boolean }) {
   return <section aria-labelledby={compact ? "search-symbols-title" : "symbols-title"}>
     <div className="rules-section-title"><div><h2 id={compact ? "search-symbols-title" : "symbols-title"}>Numbers are Energy. Symbols are Power.</h2><p>The distinction you will use in every game.</p></div></div>
     <div className="resource-pair">
-      <article className="resource-card"><div className="resource-top"><span className="energy-symbol" aria-label="3 Energy">3</span><span><h3>Energy</h3><small>The number in a cost</small></span></div><p><strong>Exhaust a ready rune → gain 1 Energy.</strong></p><p>Turn it sideways. It stays on the board and normally readies next turn. Any rune domain works.</p><span className="resource-memory"><RotateCw aria-hidden="true" />Use it, keep it.</span></article>
+      <article className="resource-card"><div className="resource-top"><GameSymbol name="energy" /><span><h3>Energy</h3><small>The number in a cost</small></span></div><p><strong>Exhaust a ready rune → gain 1 Energy.</strong></p><p>Turn it sideways. It stays on the board and normally readies next turn. Any rune domain works.</p><span className="resource-memory"><RotateCw aria-hidden="true" />Use it, keep it.</span></article>
       <article className="resource-card power-resource"><div className="resource-top"><GameSymbol name="calm" /><span><h3>Power</h3><small>A domain symbol in a cost</small></span></div><p><strong>Recycle a rune → gain 1 matching Power.</strong></p><p>Put it on the bottom of your Rune Deck. It leaves the board. You can recycle an exhausted rune.</p><span className="resource-memory"><Recycle aria-hidden="true" />Use it, send it back.</span></article>
     </div>
     <div className="rules-callout"><Check aria-hidden="true" /><p><strong>The same rune can do both.</strong> Exhaust it for Energy first, then recycle it for Power. “Pay” means spend the resource shown; it does not always mean recycle.</p></div>
@@ -110,7 +120,7 @@ function Symbols({ compact = false }: { compact?: boolean }) {
         <article className="symbol-reference"><GameSymbol name="exhaust" /><div><h4>Exhaust this</h4><p>The turning-card symbol means turn <strong>this card</strong> sideways to pay that part of its ability’s cost. It must be ready.</p></div></article>
         <article className="symbol-reference"><GameSymbol name="might" /><div><h4>Might</h4><p>The sword and shield is a unit’s combat strength. It normally deals that much damage and dies at that much damage.</p></div></article>
         <article className="symbol-reference"><GameSymbol name="any" /><div><h4>Any-domain Power</h4><p>The rainbow swirl asks for 1 Power of any domain. You can recycle any rune for it. <strong>This is Power, not Energy.</strong></p></div></article>
-        <article className="symbol-reference"><Recycle aria-hidden="true" /><div><h4>Recycle</h4><p>Usually written as a word. Send the card to the bottom of its own deck: runes to Rune Deck, Main Deck cards to Main Deck.</p><small>Helper icon; “Recycle” is the printed instruction.</small></div></article>
+        <article className="symbol-reference recycle-reference"><div><h4><PrintedLabel name="Recycle" /></h4><p>Written as a word on the card. Send it to the bottom of its own deck: runes to Rune Deck, Main Deck cards to Main Deck.</p></div></article>
       </div>
       <h3 className="rules-subheading">Six domains, six Power symbols</h3><p className="rules-muted">In a cost, each symbol asks for 1 Power of that domain.</p>
       <div className="domain-symbols">{domains.map((domain) => <div key={domain} className={`domain-symbol domain-${domain.toLowerCase()}`}><GameSymbol name={domain.toLowerCase()} /><strong>{domain}</strong><span>1 {domain} Power</span></div>)}</div>
