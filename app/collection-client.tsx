@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
-import { ArrowRight, ChevronDown, Download, Search, Upload } from "lucide-react";
+import { ArrowRight, BookOpen, ChartNoAxesColumnIncreasing, ChevronDown, Clock3, Download, LayoutGrid, Layers3, Search, Upload, UserRound } from "lucide-react";
 import { catalog, displayCards, hasFoilTreatment, isAlternatePrinting, isOvernumbered, type DisplayCard, type ImportDifference } from "../lib/collection";
 import { matchesCardType, rarityFor, type RarityKind } from "../lib/rarity";
 import { oneOfEachGoal } from "../lib/goals";
@@ -73,6 +73,10 @@ export default function CollectionClient({ initial, initialHistory, accountName,
   const [viewedSnapshot, setViewedSnapshot] = useState<CollectionSnapshot | null>(null);
   const [history, setHistory] = useState(initialHistory);
   const [section, setSection] = useState<"collection" | "decks" | "builder" | "history">("collection");
+  useEffect(() => {
+    const requested = new URLSearchParams(window.location.search).get("section");
+    if (requested === "decks" || requested === "builder" || requested === "history") setSection(requested);
+  }, []);
   const [historyBusy, setHistoryBusy] = useState(false);
   const [historyError, setHistoryError] = useState("");
   const snapshot = viewedSnapshot ?? currentSnapshot;
@@ -233,14 +237,21 @@ export default function CollectionClient({ initial, initialHistory, accountName,
     <a className="skip-link" href="#main-content">Skip to content</a>
     <header className="site-header">
       <div className="site-header-inner">
-        <div className="brand"><img className="brand-mark" src="/riftbound-logo-96.png" alt="" width="32" height="32" /><span>Riftbound<span className="brand-slash" aria-hidden="true">/</span><span className="brand-light"><span className="visually-hidden"> </span>Collection</span></span></div>
+        <div className="brand"><img className="brand-mark" src="/riftbound-logo-96.png" alt="" width="44" height="44" /><span>Riftbound<span className="brand-light">Collection</span></span></div>
         <nav className="section-nav" aria-label="Website sections">
-          <button type="button" className={section === "collection" ? "active" : ""} aria-current={section === "collection" ? "page" : undefined} onClick={() => setSection("collection")}>My collection</button>
-          <button type="button" className={section === "decks" ? "active" : ""} aria-current={section === "decks" ? "page" : undefined} onClick={() => setSection("decks")}>Decks & upgrades</button>
-          <button type="button" className={section === "builder" ? "active" : ""} aria-current={section === "builder" ? "page" : undefined} onClick={() => setSection("builder")}>Deck builder</button>
-          <button type="button" className={section === "history" ? "active" : ""} aria-current={section === "history" ? "page" : undefined} onClick={() => setSection("history")}>History</button>
+          <button type="button" className={section === "collection" ? "active" : ""} aria-current={section === "collection" ? "page" : undefined} onClick={() => setSection("collection")}><Layers3 aria-hidden="true" />My collection</button>
+          <button type="button" className={section === "decks" ? "active" : ""} aria-current={section === "decks" ? "page" : undefined} onClick={() => setSection("decks")}><ChartNoAxesColumnIncreasing aria-hidden="true" />Decks & upgrades</button>
+          <button type="button" className={section === "builder" ? "active" : ""} aria-current={section === "builder" ? "page" : undefined} onClick={() => setSection("builder")}><LayoutGrid aria-hidden="true" />Deck builder</button>
+          <button type="button" className={section === "history" ? "active" : ""} aria-current={section === "history" ? "page" : undefined} onClick={() => setSection("history")}><Clock3 aria-hidden="true" />History</button>
+          <a href="/rules"><BookOpen aria-hidden="true" />Rules &amp; reference</a>
         </nav>
-        <div className="account-area"><span className="account-name" title={accountName}>{accountName}</span><a href={signOutPath}>Sign out</a></div>
+        <nav className="set-navigation" aria-labelledby="set-navigation-title">
+          <div className="set-navigation-heading"><h2 id="set-navigation-title">By set</h2><button type="button" className={section === "collection" && selectedSet === "All sets" ? "all-sets-button active" : "all-sets-button"} aria-pressed={section === "collection" && selectedSet === "All sets"} onClick={() => { setSelectedSet("All sets"); setSection("collection"); }}>All sets</button></div>
+          {viewedSnapshot && <p className="sidebar-version">Viewing version {viewedSnapshot.version}</p>}
+          {setSummary.map(({ set, owned, total }) => <button type="button" className={`stat-row ${section === "collection" && selectedSet === set ? "selected" : ""}`} aria-pressed={section === "collection" && selectedSet === set} key={set} onClick={() => { setSelectedSet(set); setSection("collection"); }}><span className="stat-title">{set}</span><span className="stat-value">{formatNumber(owned)}/{formatNumber(total)}</span><span className="stat-track"><span style={{ "--progress": ratio(owned, total) } as CSSProperties} /></span></button>)}
+          <button className="sidebar-insights" type="button" aria-expanded={section === "collection" && overviewOpen} aria-controls={section === "collection" ? "overview-content" : undefined} onClick={() => { setSection("collection"); setOverviewOpen(section === "collection" ? !overviewOpen : true); }}><ChartNoAxesColumnIncreasing aria-hidden="true" />Collection insights<ChevronDown aria-hidden="true" /></button>
+        </nav>
+        <div className="account-area"><UserRound aria-hidden="true" /><div><span className="account-name" title={accountName}>{accountName}</span><a href={signOutPath}>Sign out</a></div></div>
       </div>
     </header>
     <main className="collection-shell" id="main-content" tabIndex={-1}>
@@ -263,35 +274,37 @@ export default function CollectionClient({ initial, initialHistory, accountName,
     {notice && <p className="notice" role="status">{notice}</p>}
     {error && !preview && <p className="error-note" role="alert">{error}</p>}
     <div className="workspace-grid">
+      <div className={`collection-summary${firstRun ? " first-run" : ""}`}>
       {firstRun ? <section className="welcome-panel panel" aria-labelledby="welcome-title">
         <img src="/riftbound-logo-96.png" alt="" width="52" height="52" />
         <div><h2 id="welcome-title">Start with your Card Nexus export</h2><p>Export your collection from the Card Nexus app as a CSV file, then import it here to see every card you own and every card you are still missing.</p></div>
         {importButton}
-      </section> : <section className="set-progress panel" aria-labelledby="progress-title">
+      </section> : <section className="set-progress" aria-labelledby="progress-title">
         <h2 id="progress-title">{selectedSet}</h2>
-        <div className="set-progress-top"><p className="set-progress-count"><strong>{formatNumber(owned)}</strong><span>of {formatNumber(setCards.length)} printings owned</span></p><span className="set-progress-percent">{Math.floor(100 * ratio(owned, setCards.length))}%</span></div>
+        <div className="set-progress-top"><p className="set-progress-count"><strong>{formatNumber(owned)}<span className="printing-total"> / {formatNumber(setCards.length)}</span></strong><span>printings owned</span></p><span className="set-progress-percent">{Math.floor(100 * ratio(owned, setCards.length))}%</span></div>
         <div className="progress-bar" role="progressbar" aria-label={`${selectedSet} printings owned`} aria-valuemin={0} aria-valuemax={setCards.length} aria-valuenow={owned}><span style={{ "--progress": ratio(owned, setCards.length) } as CSSProperties} /></div>
         <ul className="set-progress-meta"><li><strong>{formatNumber(copies)}</strong> {copies === 1 ? "copy" : "copies"} in {setLabel}</li><li><strong>{formatNumber(foils)}</strong> foil {foils === 1 ? "copy" : "copies"}</li></ul>
       </section>}
+      {!firstRun && goal.total > 0 && <CollectionGoal goal={goal} onOpen={openCard} id="goal-title" />}
+      </div>
       <div className="card-toolbar">
         <h2 className="visually-hidden">Cards</h2>
         <div className="toolbar-top">
           <div className="ownership-toggle" role="group" aria-label="Ownership" style={{ "--index": ownershipIndex } as CSSProperties}>{ownershipOptions.map((option) => <button type="button" key={option.value} aria-pressed={status === option.value} onClick={() => setStatus(option.value)}>{option.label}<span>{formatNumber(ownershipCounts[option.value])}</span></button>)}</div>
-          <span className="result-count">{plural(visibleCards.length, "card", "cards")} shown</span>
+          <span className="result-count visually-hidden" role="status">{plural(visibleCards.length, "card", "cards")} shown</span>
         </div>
         <div className="filter-fields" role="group" aria-label="Card filters">
           <label className="filter-field search-field"><span>Search</span><span className="search-box"><Search aria-hidden="true" /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search cards or number" /></span></label>
-          <SingleFilter label="Set" value={selectedSet} options={setOptions} onChange={setSelectedSet} />
+          <div className="mobile-set-filter"><SingleFilter label="Set" value={selectedSet} options={setOptions} onChange={setSelectedSet} /></div>
           <div className="filter-field rarity-filter-field"><span id="rarity-filter-label">Rarity &amp; printing</span><DropdownMenu><DropdownMenuTrigger aria-labelledby="rarity-filter-label rarity-filter-value" className="filter-trigger"><span id="rarity-filter-value">{selectedRarities.length === 0 ? "All rarities" : selectedRarities.length === 1 ? rarityOptions.find((option) => option.kind === selectedRarities[0])?.label : `${selectedRarities.length} rarities selected`}</span><ChevronDown aria-hidden="true" /></DropdownMenuTrigger><DropdownMenuContent align="start" className="filter-menu"><DropdownMenuItem onSelect={() => setSelectedRarities([])}>All rarities</DropdownMenuItem><DropdownMenuSeparator />{rarityOptions.map(({ kind, label }) => <DropdownMenuCheckboxItem key={kind} checked={selectedRarities.includes(kind)} onCheckedChange={(checked) => setSelectedRarities((current) => checked ? [...current, kind] : current.filter((item) => item !== kind))} onSelect={(event) => event.preventDefault()}>{label}</DropdownMenuCheckboxItem>)}</DropdownMenuContent></DropdownMenu></div>
         </div>
         {status === "needs" && <p className="filter-note">Need copies to reach the deck limit: 3 per main-deck card, 1 per Legend or Battlefield. All printings count together; runes and tokens are excluded.</p>}
       </div>
       <aside className={`insights-panel panel${overviewOpen ? " open" : ""}`} aria-labelledby="overview-title">
-        <button type="button" className="overview-toggle" aria-expanded={overviewOpen} aria-controls="overview-content" onClick={() => setOverviewOpen((open) => !open)}>Overview<ChevronDown aria-hidden="true" /></button>
-        <h2 className="overview-title" id="overview-title">Overview</h2>
+        <button type="button" className="overview-toggle" aria-expanded={overviewOpen} aria-controls="overview-content" onClick={() => setOverviewOpen((open) => !open)}>Collection insights<ChevronDown aria-hidden="true" /></button>
+        <h2 className="overview-title" id="overview-title">Collection insights</h2>
         <div className="overview-content" id="overview-content">
-        {goal.total > 0 && <div className="insight-section goal-insight"><h3>One of each</h3><p>Regular Common, Uncommon, and Rare cards · no Epic, alternate art, or over-numbered printings</p><div className="goal-body"><div className="goal-ring" style={{ "--progress": `${100 * goal.owned / goal.total}%` } as CSSProperties} aria-hidden="true"><span>{Math.floor(100 * goal.owned / goal.total)}%</span></div><div className="goal-total"><strong>{goal.owned} / {goal.total}</strong><span>{goal.total - goal.owned} missing</span></div></div>{goal.missing.length > 0 && <details className="goal-missing"><summary>See missing cards<ChevronDown aria-hidden="true" /></summary><ul>{goal.missing.map((card) => <li key={card.code}><MissingCardButton card={card} detail={`${card.set} · ${card.number.toUpperCase()}`} onOpen={openCard} /></li>)}</ul></details>}</div>}
-        <div className="insight-section"><h3>By set</h3><p>Unique printings owned</p>{setSummary.map(({ set, owned, total }) => <button type="button" className={`stat-row ${selectedSet === set ? "selected" : ""}`} aria-pressed={selectedSet === set} key={set} onClick={() => setSelectedSet(set)}><span className="stat-title">{set}</span><span className="stat-value">{owned}/{total}</span><span className="stat-track"><span style={{ "--progress": ratio(owned, total) } as CSSProperties} /></span></button>)}</div>
+        {!firstRun && goal.total > 0 && <CollectionGoal goal={goal} onOpen={openCard} id="mobile-goal-title" className="goal-insight mobile-goal-insight" />}
         <div className="insight-section"><h3>By domain</h3><p>Unique printings in {setLabel}</p>{colorSummary.map(({ color, owned, total }) => <div className={`stat-row passive domain-${color.toLowerCase()}`} key={color}><span className="stat-title">{color}</span><span className="stat-value">{owned}/{total}</span><span className="stat-track"><span style={{ "--progress": ratio(owned, total) } as CSSProperties} /></span></div>)}</div>
         <div className="insight-section price-insight"><h3>Card values</h3>{prices ? <><p>Cardmarket 7-day sale averages in EUR, updated {new Date(prices.createdAt).toLocaleDateString("en-US", { day: "numeric", month: "short" })}</p><h4>Most valuable priced card</h4>{priceHighlights.mostValuable ? <button type="button" className="price-card-row" onClick={() => openCard(priceHighlights.mostValuable!.card)}><span>{priceHighlights.mostValuable.card.name}<small>{priceHighlights.mostValuable.card.set} · {priceHighlights.mostValuable.finish}</small></span><strong>{formatPrice(priceHighlights.mostValuable.amount)}</strong></button> : <p>No owned cards have a 7-day average yet.</p>}<p className="price-coverage">{priceHighlights.pricedOwned} of {ownedTotal} owned printings priced</p><h4>Unowned cards to watch</h4>{priceHighlights.watch.length ? priceHighlights.watch.map((item) => <button type="button" className="price-card-row" key={`${item.card.code}-${item.finish}`} onClick={() => openCard(item.card)}><span>{item.card.name}<small>{item.card.number.toUpperCase()} · {item.finish}</small></span><strong>{formatPrice(item.amount)}</strong></button>) : <p>No matched 7-day prices in this set.</p>}</> : priceError ? <p>{priceError}</p> : <div role="status" aria-label="Loading recent prices"><span className="skeleton skeleton-line" /><span className="skeleton skeleton-row" /><span className="skeleton skeleton-line short" /><span className="skeleton skeleton-row" /></div>}<p className="price-source"><a href="https://www.cardmarket.com/en/Riftbound/Data/Price-Guide" target="_blank" rel="noreferrer">Cardmarket price guide</a> · Estimates vary by condition and language.</p></div>
         </div>
@@ -331,6 +344,10 @@ export default function CollectionClient({ initial, initialHistory, accountName,
     </main>
     <footer className="site-footer"><p>Card images and names © Riot Games. Card catalog via <a href="https://github.com/LouisCourrian/riftbound-cards" target="_blank" rel="noreferrer">riftbound-cards</a>.</p></footer>
   </>;
+}
+
+function CollectionGoal({ goal, onOpen, id, className = "goal-insight" }: { goal: ReturnType<typeof oneOfEachGoal>; onOpen: (card: DisplayCard) => void; id: string; className?: string }) {
+  return <section className={className} aria-labelledby={id}><h2 id={id}>One of each</h2><p>Regular Common, Uncommon, and Rare cards · no Epic, alternate art, or over-numbered printings</p><div className="goal-body"><div className="goal-ring" style={{ "--progress": `${100 * goal.owned / goal.total}%` } as CSSProperties} aria-hidden="true"><span>{Math.floor(100 * goal.owned / goal.total)}%</span></div><div className="goal-total"><strong>{goal.owned} / {goal.total}</strong><span>{goal.total - goal.owned} missing</span></div></div>{goal.missing.length > 0 && <details className="goal-missing"><summary>See missing cards<ChevronDown aria-hidden="true" /></summary><ul>{goal.missing.map((card) => <li key={card.code}><MissingCardButton card={card} detail={`${card.set} · ${card.number.toUpperCase()}`} onOpen={onOpen} /></li>)}</ul></details>}</section>;
 }
 
 function CardTile({ card, deckGoal, showNeed, onOpen }: { card: DisplayCard; deckGoal?: DeckCopyGoal; showNeed: boolean; onOpen: (card: DisplayCard) => void }) {
