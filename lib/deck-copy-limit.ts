@@ -17,6 +17,7 @@ export function deckCardKey(card: DisplayCard): string {
 }
 
 export function deckCopyLimit(card: DisplayCard): number | null {
+  if (card.set === "Radiance" || card.set === "Radiance Promos") return null;
   if (/-t\d+/i.test(card.code) || /^t\d+/i.test(card.number)) return null;
 
   const type = cardMetadata(card)?.type;
@@ -35,6 +36,7 @@ export function deckCopyGoals(cards: readonly DisplayCard[]): Map<string, DeckCo
     if (!goals.has(key)) goals.set(key, { name: deckCardName(card), limit, owned: 0, missing: limit });
   }
   for (const card of cards) {
+    if (card.set === "Radiance" || card.set === "Radiance Promos") continue;
     const goal = goals.get(deckCardKey(card));
     if (goal) goal.owned += card.quantity;
   }

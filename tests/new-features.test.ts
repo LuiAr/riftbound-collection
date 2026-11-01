@@ -29,10 +29,12 @@ test("one-of-each goal excludes Epic and special printings", () => {
   assert.equal(oneOfEachGoal(cards, "Origins").total, 0);
 });
 
-test("Radiance remains hidden until all 180 regular numbers exist", () => {
-  const partial = Array.from({ length: 179 }, (_, index) => ({ set: "Radiance", number: String(index + 1).padStart(3, "0") }));
+test("Radiance checklist is complete at printed numbers 1 through 167", () => {
+  const partial = Array.from({ length: 166 }, (_, index) => ({ set: "Radiance", number: String(index + 1).padStart(3, "0") }));
   assert.equal(isRadianceCatalogComplete(partial), false);
-  assert.equal(isRadianceCatalogComplete([...partial, { set: "Radiance", number: "179" }]), false);
-  assert.equal(isRadianceCatalogComplete([...partial, { set: "Radiance", number: "180" }]), true);
+  assert.equal(isRadianceCatalogComplete([...partial, { set: "Radiance", number: "166" }]), false);
+  assert.equal(isRadianceCatalogComplete([...partial, { set: "Radiance", number: "167" }]), true);
   assert.equal(setForExpansion("Radiance - Main Set"), "Radiance");
+  assert.equal(setForExpansion("Radiance"), "Radiance");
+  assert.equal(setForExpansion("Radiance - Promo Cards"), "Radiance Promos");
 });

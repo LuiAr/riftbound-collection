@@ -2,8 +2,28 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { parseCardNexusCsv } from "../lib/collection";
 import type { CollectionSnapshot, GeneratedCollection } from "../lib/collection-snapshot";
 import { loadFx, verifyCurrentRules } from "../lib/live-market";
+import { RADIANCE_BASE_COUNT, isRadianceCatalogComplete } from "../lib/radiance";
+import { RADIANCE_FEED_URL, radianceCatalogFromFeed, type RadianceCatalogFile } from "../lib/radiance-feed";
 import { loadPrices } from "../lib/server-prices";
 import type { GeneratedMarket } from "../lib/site-market";
+
+const radiancePath = "data/generated/radiance-catalog.json";
+const previousRadiance: RadianceCatalogFile | null = existsSync(radiancePath) ? JSON.parse(readFileSync(radiancePath, "utf8")) as RadianceCatalogFile : null;
+let radianceCatalog: RadianceCatalogFile = previousRadiance ?? { source: RADIANCE_FEED_URL, scrapedAt: null, printedSetSize: RADIANCE_BASE_COUNT, cards: [] };
+try {
+  const response = await fetch(RADIANCE_FEED_URL, { signal: AbortSignal.timeout(60000), headers: { accept: "application/json" } });
+  if (!response.ok) throw new Error(`Radiance card feed responded ${response.status}.`);
+  const text = await response.text();
+  if (text.length > 4_000_000) throw new Error("The Radiance card feed is larger than expected.");
+  const parsed = radianceCatalogFromFeed(JSON.parse(text));
+  if (!isRadianceCatalogComplete(parsed.cards)) throw new Error(`The Radiance feed has ${parsed.cards.filter((card) => /^\d+$/.test(card.number) && Number(card.number) <= RADIANCE_BASE_COUNT).length} of ${RADIANCE_BASE_COUNT} regular numbers. The previous snapshot was kept.`);
+  radianceCatalog = { source: RADIANCE_FEED_URL, scrapedAt: parsed.scrapedAt, printedSetSize: RADIANCE_BASE_COUNT, cards: parsed.cards };
+  mkdirSync("data/generated", { recursive: true });
+  writeFileSync(radiancePath, JSON.stringify(radianceCatalog));
+} catch (error) {
+  if (!previousRadiance?.cards.length) throw error;
+  console.warn(error instanceof Error ? error.message : error);
+}
 
 const exportNames = readdirSync("data/exports").filter((name) => /^\d{4}-\d{2}-\d{2}\.csv$/.test(name)).sort();
 if (!exportNames.length) throw new Error("Add at least one data/exports/YYYY-MM-DD.csv snapshot.");
@@ -60,4 +80,4 @@ try {
 }
 
 writeFileSync(marketPath, JSON.stringify(market));
-console.log(JSON.stringify({ currentId, snapshots: snapshots.map((snapshot) => ({ id: snapshot.importId, rows: snapshot.rows.length })), priceQuotes: market.prices ? Object.keys(market.prices.quotes).length : 0, priceError: market.priceError, fx: market.fx?.date ?? null, fxError: market.fxError, rulesCheckedAt: market.rulesCheckedAt, rulesError: market.rulesError }));
+console.log(JSON.stringify({ currentId, snapshots: snapshots.map((snapshot) => ({ id: snapshot.importId, rows: snapshot.rows.length })), radianceCards: radianceCatalog.cards.length, radianceScrapedAt: radianceCatalog.scrapedAt, priceQuotes: market.prices ? Object.keys(market.prices.quotes).length : 0, priceError: market.priceError, fx: market.fx?.date ?? null, fxError: market.fxError, rulesCheckedAt: market.rulesCheckedAt, rulesError: market.rulesError }));

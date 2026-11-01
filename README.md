@@ -25,6 +25,8 @@ The collection view can compare a CSV in the browser before you commit it. That 
 
 `npm run build` downloads the Cardmarket price guide and a euro exchange rate, then embeds them. The card view shows the guide date. Rebuild to refresh prices. The build also checks Riot's rules hub. If the pinned Standard documents or ban list no longer match, deck search says so and does not treat the rules as current.
 
+The same build refreshes Radiance from the latest [riftbound-cards](https://github.com/LouisCourrian/riftbound-cards) `cards.json` into `data/generated/radiance-catalog.json`. Owned Radiance printings use that list for art and rarity. The one-of-each goal counts Radiance numbers 1–167 at Common, Uncommon, and Rare when that checklist is complete. The Pre-Rift promo has no separate gallery card, so it keeps the CSV name, number, foil quantity, and Card Nexus price on a Radiance Promos tile with an image placeholder and unknown rarity. Cardmarket's mapped expansions do not include Radiance, so those cards show the export price instead of a 7-day sale average. Deck search still uses the reviewed pre-Radiance card list.
+
 Paid AI deck generation needed a server and an API key, so that action is unavailable. Find collection decks, deck matching, review, and upgrades run in the browser from the embedded collection, prices, and rules check.
 
 ## Development
