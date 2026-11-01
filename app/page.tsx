@@ -1,19 +1,16 @@
-import { requireChatGPTUser, chatGPTSignOutPath } from "./chatgpt-auth";
-import { getCollection, getCollectionHistory, type CollectionSnapshot, type CollectionVersion } from "../lib/server-collection";
 import CollectionClient from "./collection-client";
+import { StaticProvider } from "./static-context";
+import collectionData from "../data/generated/collection.json";
+import marketData from "../data/generated/market.json";
+import type { CollectionSnapshot, GeneratedCollection } from "../lib/collection-snapshot";
+import type { GeneratedMarket } from "../lib/site-market";
 
-export const dynamic = "force-dynamic";
-
-export default async function Home() {
-  const user = await requireChatGPTUser("/");
-  let data: { snapshot: CollectionSnapshot; history: CollectionVersion[] } | null = null;
-  try {
-    const snapshot = await getCollection(user.userId);
-    const history = await getCollectionHistory(user.userId);
-    data = { snapshot, history };
-  } catch (error) {
-    console.error("Collection load failed", error);
-  }
-  if (!data) return <main className="unavailable"><h1>Collection unavailable</h1><p>Your saved cards could not be loaded right now. Try refreshing this page.</p></main>;
-  return <CollectionClient initial={data.snapshot} initialHistory={data.history} accountName={user.displayName} signOutPath={chatGPTSignOutPath("/")} />;
+export default function Home() {
+  const generated = collectionData as GeneratedCollection;
+  const market = marketData as GeneratedMarket;
+  const snapshots = Object.fromEntries(generated.snapshots.map((snapshot) => [snapshot.importId, snapshot as CollectionSnapshot]));
+  const current = snapshots[generated.currentId];
+  if (!current) throw new Error("The current collection snapshot is missing. Run npm run build again.");
+  const history = [...generated.snapshots].sort((a, b) => b.version - a.version).flatMap((snapshot) => snapshot.importId && snapshot.sourceName ? [{ importId: snapshot.importId, version: snapshot.version, importedAt: snapshot.importedAt, sourceName: snapshot.sourceName }] : []);
+  return <StaticProvider current={current} market={market}><CollectionClient initial={current} initialHistory={history} snapshots={snapshots} /></StaticProvider>;
 }

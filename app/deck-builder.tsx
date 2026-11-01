@@ -3,10 +3,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, LoaderCircle, Plus, Save, Search, Sparkles, Trash2, X } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
-import { assessDeck, builderCards, cardsById, cardIdFor, compatible, exportDeck, ownedInventory, references, representativeCard, RULES, type BuilderInput, type DeckProposal, type FxSnapshot } from "../lib/deck-builder";
+import { assessDeck, builderCards, cardsById, cardIdFor, compatible, exportDeck, ownedInventory, references, representativeCard, RULES, type DeckProposal, type FxSnapshot } from "../lib/deck-builder";
 import { activeJob, type BuilderJob } from "../lib/builder-jobs";
 import { readBuilderDeck } from "../lib/saved-builder-deck";
-import type { SavedDeck } from "../lib/server-decks";
+import type { SavedDeck } from "../lib/deck-records";
+import { listDecks, saveLocalDeck } from "../lib/local-decks";
+import { runAdvisor } from "../lib/advisor-actions";
+import { useStaticSite } from "./static-context";
 import type { DisplayCard } from "../lib/collection";
 import type { PriceSnapshot } from "../lib/prices";
 import MissingCardButton from "../components/missing-card-button";
@@ -24,6 +27,7 @@ const legendLabel = (id: string) => { const c = cardsById.get(id)!; return `${c.
 const labels = { legend: "Legend", chosen: "Chosen champion", main: "Main deck", runes: "Runes", battlefields: "Battlefields", sideboard: "Sideboard" };
 
 export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: DisplayCard[]; prices: PriceSnapshot | null; onOpenCard: (card: DisplayCard) => void }) {
+  const site = useStaticSite();
   const [mode, setMode] = useState<"competitive" | "fun">("competitive");
   const [legendId, setLegendId] = useState("rogue assassin");
   const [allowPurchases, setAllowPurchases] = useState(true);
@@ -59,7 +63,6 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
   const legends = useMemo(() => builderCards.filter((c) => c.type === "Legend" && selectReferences(c.id).length && (mode === "competitive" || favourites.every((id) => compatible(cardsById.get(id)!, c)))).sort((a, b) => legendLabel(a.id).localeCompare(legendLabel(b.id))), [mode, favourites]);
   const preferredPrintings = favourites.map((id) => favouriteCodes[id] ?? preferredFavouritePrinting(cards, id)).filter((code): code is string => Boolean(code));
   const saved = savedDecks.map((deck) => ({ deck, proposal: readBuilderDeck(deck.name, deck.deckText) })).filter((item) => item.proposal !== null);
-  const input: BuilderInput = { mode, legendId, favouriteIds: mode === "fun" ? favourites : [], budgetSek: allowPurchases ? budget : 0, extras };
   const proposal = openDeck?.proposal;
   const selectedReferences = selectReferences(legendId);
   const coverage = referenceEvidence(selectedReferences);
@@ -67,29 +70,27 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
   const strategyFits = openDeck?.result?.feasibility?.fits.filter((fit) => proposal?.referenceIds.includes(fit.referenceId)) ?? [];
   const percentage = (value: number | null) => value === null ? "Unavailable" : `${(value * 100).toFixed(1)}%`;
   const assessment = proposal ? assessDeck(proposal.entries, deckOwned, prices, status?.fx ?? null, openDeck?.result?.input.budgetSek ?? budget) : null;
-  const unavailable = legendId === "any" ? "AI needs a champion. Free search can compare all owned champions." : !status ? "Getting ready…" : !status.enabled ? "AI setup is needed before generating a deck." : status.rulesError ? "Generation is paused until current rules can be verified." : status.fxError ? "Generation is paused until prices can be converted to SEK." : !legends.length ? "No reference decks match these favourites yet." : mode === "fun" && !favourites.length ? "Choose a favourite card in More options." : "";
+  const unavailable = legendId === "any" ? "AI needs a champion. Free search can compare all owned champions." : !status ? "Getting ready…" : !status.enabled ? "Paid AI generation is not part of this static site. Find collection decks still runs in the browser." : status.rulesError ? "Generation is paused until current rules can be verified." : status.fxError ? "Generation is paused until prices can be converted to SEK." : !legends.length ? "No reference decks match these favourites yet." : mode === "fun" && !favourites.length ? "Choose a favourite card in More options." : "";
 
-  async function refreshStatus(before?: string) {
-    const response = await fetch(before ? `/api/builder?before=${encodeURIComponent(before)}` : "/api/builder", { cache: "no-store" });
-    const data = await response.json() as Status & { error?: string };
-    if (!response.ok) throw new Error(data.error || "Deck builder could not be loaded.");
-    setStatus((current) => {
-      const previous = current?.jobs ?? [];
-      const boundary = data.jobs.at(-1);
-      const jobs = before ? [...previous, ...data.jobs.filter((job) => !previous.some((item) => item.id === job.id))] : [...data.jobs, ...previous.filter((job) => data.nextCursor && boundary && `${job.createdAt}|${job.id}` < `${boundary.createdAt}|${boundary.id}` && !data.jobs.some((item) => item.id === job.id))];
-      return { ...data, jobs, nextCursor: before || !current || previous.length <= data.jobs.length ? data.nextCursor : current.nextCursor };
-    });
-  }
-  async function refreshSaved() {
-    const response = await fetch("/api/decks", { cache: "no-store" });
-    const data = await response.json() as { decks: SavedDeck[]; error?: string };
-    if (!response.ok) throw new Error(data.error || "Saved decks could not be loaded.");
-    setSavedDecks(data.decks); setSavedError("");
-  }
   useEffect(() => {
-    refreshStatus().catch((e) => setError(e.message));
-    refreshSaved().catch((e) => setSavedError(e.message));
-  }, []);
+    setStatus({
+      enabled: false,
+      model: "unavailable",
+      capSek: 0,
+      spentSek: 0,
+      reservedSek: 0,
+      month: new Date().toISOString().slice(0, 7),
+      jobs: [],
+      nextCursor: null,
+      fx: site.market.fx,
+      rulesCheckedAt: site.market.rulesCheckedAt,
+      rulesError: site.market.rulesError,
+      fxError: site.market.fxError,
+      history: [],
+    });
+    try { setSavedDecks(listDecks()); setSavedError(""); }
+    catch (e) { setSavedError(e instanceof Error ? e.message : "Saved decks could not be loaded."); }
+  }, [site]);
   useEffect(() => {
     if (legendId !== "any" && !legends.some((c) => c.id === legendId) && legends.length) setLegendId(legends[0].id);
   }, [legends, legendId]);
@@ -109,18 +110,6 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
     }
   }
   const hasActiveJobs = status?.jobs.some(activeJob) ?? false;
-  useEffect(() => {
-    if (!busy && !hasActiveJobs) return;
-    let stopped = false;
-    let timer: ReturnType<typeof setTimeout>;
-    async function poll() {
-      try { await refreshStatus(); }
-      catch { setError("Could not refresh generation status. Your request remains saved; try refreshing the page."); }
-      if (!stopped) timer = setTimeout(poll, 4000);
-    }
-    timer = setTimeout(poll, 2000);
-    return () => { stopped = true; clearTimeout(timer); };
-  }, [busy, hasActiveJobs]);
   useEffect(() => {
     if (!status) return;
     const job = currentJobId ? status.jobs.find((item) => item.id === currentJobId) : status.jobs.find(activeJob) ?? status.jobs.find((item) => item.status === "completed");
@@ -142,9 +131,10 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
   async function findCollectionDecks() {
     setFinding(true); setError(""); setCandidates([]);
     try {
-      const response = await fetch("/api/advisor", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ action: "build", legendId, extras, budget: allowPurchases ? budget : 0, favouriteIds: mode === "fun" ? favourites : [] }) });
-      const result = await response.json() as { candidates?: ReturnType<typeof collectionCandidates>; error?: string; warnings?: string[]; runeCoverage?: { legendId: string; copies: number }[] };
-      if (!response.ok || !result.candidates) throw new Error(result.error || "Collection search could not be completed.");
+      const response = await runAdvisor({ action: "build", legendId, extras, budget: allowPurchases ? budget : 0, favouriteIds: mode === "fun" ? favourites : [] }, site.advisorContext());
+      if (!response.ok) throw new Error(response.error);
+      const result = response.data as { candidates?: ReturnType<typeof collectionCandidates>; warnings?: string[]; runeCoverage?: { legendId: string; copies: number }[] };
+      if (!result.candidates) throw new Error("Collection search could not be completed.");
       setCandidates(result.candidates);
       setNotice(result.candidates.length ? `${result.candidates.length} decks found. Adapted lists need playtesting.` : result.runeCoverage?.every(c => c.copies < 12) ? "Not enough recorded runes. Add copies in More options or allow purchases." : "No matching deck found. Try another champion or budget.");
       if (result.warnings?.length) setError(result.warnings.join(" "));
@@ -152,27 +142,12 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
     finally { setFinding(false); }
   }
   async function generate() {
-    setBusy(true); setError(""); setNotice(""); setFailureDetails(null);
-    setBuildStage(null); setBuildState("running");
-    const id = crypto.randomUUID();
-    setCurrentJobId(id); autoOpened.current = null;
-    try {
-      const response = await fetch("/api/builder", { method: "POST", headers: { "content-type": "application/json", "idempotency-key": id }, body: JSON.stringify(input) });
-      const data = await response.json() as { job?: BuilderJob; error?: string };
-      if (!response.ok || !data.job) throw new Error(data.error || "This generation could not be started.");
-      await refreshStatus();
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Could not confirm submission. Check the generation inbox before trying again.");
-      setBusy(false); setBuildState("failed");
-      refreshStatus().catch(() => {});
-    }
+    setError("Paid AI generation needs a server and an API key, so it is not available on this static site. Use Find collection decks.");
+    setBuildState("failed");
   }
   async function removeGeneration(id: string) {
     setDeleting(id); setError("");
     try {
-      const response = await fetch(`/api/builder?id=${encodeURIComponent(id)}`, { method: "DELETE" });
-      const data = await response.json() as { error?: string };
-      if (!response.ok) throw new Error(data.error || "Generation could not be deleted.");
       setStatus((current) => current ? { ...current, jobs: current.jobs.filter((job) => job.id !== id) } : current);
       if (currentJobId === id) { setCurrentJobId(null); setBuildStage(null); setFailureDetails(null); }
       if (openDeck?.jobId === id) setOpenDeck(null);
@@ -184,12 +159,9 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
     if (!proposal || !name.trim() || assessment?.errors.length) return;
     setSaving(true); setError(""); setNotice("");
     try {
-      const keeping = Boolean(openDeck?.jobId);
-      const response = await fetch(keeping ? "/api/builder" : "/api/decks", { method: keeping ? "PATCH" : "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(keeping ? { id: openDeck!.jobId, version: proposal.entries === openDeck!.result?.ownedOnly?.entries ? "ownedOnly" : "budget", name: name.trim() } : { deckId: openDeck?.deckId, name: name.trim(), deckText: exportDeck(proposal), hideRunes: false, hideTokens: false }) });
-      const data = await response.json() as { deck: SavedDeck; error?: string };
-      if (!response.ok) throw new Error(data.error || "The deck could not be saved.");
-      setOpenDeck((current) => current ? { ...current, deckId: data.deck.deckId, jobId: undefined, proposal: { ...current.proposal, name: data.deck.name } } : current);
-      setSavedDecks((current) => [data.deck, ...current.filter((d) => d.deckId !== data.deck.deckId)]);
+      const deck = saveLocalDeck({ deckId: openDeck?.deckId, name: name.trim(), deckText: exportDeck(proposal), hideRunes: false, hideTokens: false });
+      setOpenDeck((current) => current ? { ...current, deckId: deck.deckId, jobId: undefined, proposal: { ...current.proposal, name: deck.name } } : current);
+      setSavedDecks(listDecks());
       if (openDeck?.jobId) {
         const keptId = openDeck.jobId;
         setStatus((current) => current ? { ...current, jobs: current.jobs.filter((job) => job.id !== keptId) } : current);
@@ -233,7 +205,7 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
         <label><span className="field-label">Deck style</span><select value={mode} disabled={busy} onChange={(e) => { const next = e.target.value as "competitive" | "fun"; setMode(next); if (next === "fun" && !favourites.length && owned["diana no longer human"] > 0) setFavourites(["diana no longer human"]); }}><option value="competitive">Competitive</option><option value="fun">Fun with favourites</option></select></label>
         {mode === "fun" && <div><FavouriteCardPicker cards={cards} selected={favourites} printingCodes={favouriteCodes} disabled={busy} onSelect={chooseFavourite} /><div className="builder-chips">{favourites.map((id) => <button disabled={busy} key={id} type="button" onClick={() => setFavourites(favourites.filter((x) => x !== id))}>{cardsById.get(id)?.name}<X aria-hidden="true" /></button>)}</div></div>}
         <details><summary>Add cards I haven’t imported yet</summary><p className="head-note">Extra copies for this build only. Your collection may be incomplete.</p><div className="builder-extra-form"><label><span className="field-label">Card</span><select value={extraId} disabled={busy} onChange={(e) => setExtraId(e.target.value)}>{builderCards.filter((c) => c.type !== "Token").sort((a, b) => a.name.localeCompare(b.name)).map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select></label><label><span className="field-label">Extra copies</span><input type="number" disabled={busy} value={extraQuantity} min="1" max="1000" onChange={(e) => setExtraQuantity(Math.max(1, Math.min(1000, Math.floor(Number(e.target.value)) || 1)))} /></label><button type="button" disabled={busy} className="secondary-button" onClick={() => setExtras({ ...extras, [extraId]: Math.min(1000, (extras[extraId] ?? 0) + extraQuantity) })}><Plus aria-hidden="true" />Add</button></div><div className="builder-chips">{Object.entries(extras).map(([id, count]) => <button disabled={busy} type="button" key={id} onClick={() => { const next = { ...extras }; delete next[id]; setExtras(next); }}>{cardsById.get(id)?.name} +{count}<X aria-hidden="true" /></button>)}</div></details>
-        {status && <p className="head-note">AI usage: {money(status.spentSek)} of {money(status.capSek)} this month{status.reservedSek ? ` · ${money(status.reservedSek)} reserved` : ""}. Up to 10 SEK reserved per generation, excluding taxes and fees.</p>}
+        {status?.enabled && <p className="head-note">AI usage: {money(status.spentSek)} of {money(status.capSek)} this month{status.reservedSek ? ` · ${money(status.reservedSek)} reserved` : ""}. Up to 10 SEK reserved per generation, excluding taxes and fees.</p>}
         {(status?.rulesError || status?.fxError) && <p className="head-note">{status.rulesError ?? status.fxError}</p>}
         <details><summary>Reference coverage for this champion</summary><p className="head-note">{coverage.references} full lists · {coverage.independentMainLists} distinct main lists · {coverage.official} official event lists. {coverage.label}.</p>{coverage.warnings.map((warning) => <p className="head-note" key={warning}>{warning}</p>)}</details>
       </details>
@@ -293,10 +265,10 @@ export default function DeckBuilder({ cards, prices, onOpenCard }: { cards: Disp
         {job.error && <p className="head-note">{job.error.slice(0, 350)}{job.error.length > 350 ? "…" : ""}</p>}
         <details><summary>Activity log &amp; explanation</summary><p className="head-note">Generation ID: {job.id}</p>{job.result && <><p>{job.result.explanation}</p>{job.result.rejected.map((reason) => <p className="error-note" key={reason}>{reason}</p>)}<p className="head-note">{job.result.model} · estimated AI cost {money(job.result.costSek)}{job.result.costEstimated ? " (conservative reservation estimate; exact usage unavailable)" : ""}</p></>}{job.logs.length ? <ol className="builder-job-log">{job.logs.map((log, index) => <li key={index}><time>{new Date(log.createdAt).toLocaleTimeString()}</time><span>{log.message}</span></li>)}</ol> : <p className="head-note">This older request has no detailed activity log.</p>}{job.rawOutput && <details><summary>Retained AI output (unvalidated)</summary><pre className="builder-raw-output">{job.rawOutput}</pre></details>}</details>
       </article>;
-    })}</div>{status.nextCursor && <button className="secondary-button" type="button" onClick={() => refreshStatus(status.nextCursor!).catch((e) => setError(e.message))}>Older generations</button>}</details> : null}
+    })}</div></details> : null}
     <details className="panel builder-history builder-saved deck-library" open={!proposal}><summary>Saved decks <span className="library-count">{saved.length}</span></summary>
       {saved.length ? <div className="builder-saved-list">{saved.map(({ deck, proposal }) => <button disabled={busy || saving} type="button" className="builder-saved-item" key={deck.deckId} onClick={() => open(proposal!, null, deck.deckId)}><span>{deck.name}</span><small>{new Date(deck.updatedAt).toLocaleDateString()}</small></button>)}</div> : <p className="head-note">Your decks will appear here after you save them.</p>}
-      {savedError && <p className="error-note" role="alert">{savedError} <button type="button" className="secondary-button" onClick={() => refreshSaved().catch((e) => setSavedError(e.message))}>Retry</button></p>}
+      {savedError && <p className="error-note" role="alert">{savedError} <button type="button" className="secondary-button" onClick={() => { try { setSavedDecks(listDecks()); setSavedError(""); } catch (e) { setSavedError(e instanceof Error ? e.message : "Saved decks could not be loaded."); } }}>Retry</button></p>}
 
     </details>
   </section>;

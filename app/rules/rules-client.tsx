@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowRight, BookOpen, Check, ChevronDown, Clock3, ExternalLink, Flag, Layers3, LayoutGrid, Search, Sparkles, Swords, UserRound, X, ChartNoAxesColumnIncreasing, RotateCw, Recycle } from "lucide-react";
+import { ArrowRight, BookOpen, Check, ChevronDown, Clock3, ExternalLink, Flag, Layers3, LayoutGrid, Search, Sparkles, Swords, X, ChartNoAxesColumnIncreasing, RotateCw, Recycle } from "lucide-react";
 import { gameTerms, keywords, rulesSources, type ReferenceEntry } from "../../lib/rules-reference";
 import printedLabels from "../../data/rules-printed-labels.json";
+import { sitePath } from "../../lib/site-path";
 
 type Topic = "symbols" | "keywords" | "play" | "prerift";
 const topics = [{ id: "symbols", label: "Symbols", icon: Sparkles }, { id: "keywords", label: "Keywords", icon: BookOpen }, { id: "play", label: "Playing a turn", icon: Swords }, { id: "prerift", label: "Pre-Rift", icon: Flag }] as const;
@@ -14,11 +15,11 @@ const labelAssets: Record<string, PrintedLabelAsset> = printedLabels;
 function PrintedLabel({ name, className = "" }: { name: string; className?: string }) {
   const asset = labelAssets[name];
   if (!asset) return <strong>{name}</strong>;
-  return <img className={`printed-label ${className}`} src={asset.src} width={asset.width} height={asset.height} alt={name} decoding="async" />;
+  return <img className={`printed-label ${className}`} src={sitePath(asset.src)} width={asset.width} height={asset.height} alt={name} decoding="async" />;
 }
 
 function GameSymbol({ name }: { name: string }) {
-  return <img className={`game-symbol game-symbol-${name}`} src={`/rules/${name}.png`} width="36" height="36" alt={`${name === "any" ? "Any-domain Power" : name} symbol`} />;
+  return <img className={`game-symbol game-symbol-${name}`} src={sitePath(`/rules/${name}.png`)} width="36" height="36" alt={`${name === "any" ? "Any-domain Power" : name} symbol`} />;
 }
 
 function SourceLink({ href, children }: { href: string; children: React.ReactNode }) {
@@ -30,7 +31,7 @@ function Entry({ entry }: { entry: ReferenceEntry }) {
   return <details className="reference-entry"><summary><span className="entry-heading"><PrintedLabel name={entry.name} />{/ [XN]$/.test(entry.name) && <span className="entry-variable">{entry.name}</span>}{entry.group === "Radiance" && <span className="rules-chip">Radiance</span>}</span><span className="entry-summary">{entry.summary}</span><ChevronDown aria-hidden="true" /></summary><div className="entry-detail"><p>{entry.detail}</p>{asset && <p className="printed-label-source">Printed on <a href={asset.sourceUrl} target="_blank" rel="noreferrer">{asset.card}<ExternalLink aria-hidden="true" /></a>.{/ [XN]$/.test(entry.name) && " The number on the label is a card example; use the value on your card."}</p>}<SourceLink href={rulesSources.core}>Core Rules §{entry.rule}</SourceLink></div></details>;
 }
 
-export default function RulesClient({ accountName, signOutPath }: { accountName: string; signOutPath: string }) {
+export default function RulesClient() {
   const [topic, setTopic] = useState<Topic>("symbols");
   const [query, setQuery] = useState("");
   const [group, setGroup] = useState("All");
@@ -63,16 +64,15 @@ export default function RulesClient({ accountName, signOutPath }: { accountName:
   return <>
     <a className="skip-link" href="#main-content">Skip to reference</a>
     <header className="site-header rules-site-header"><div className="site-header-inner">
-      <a className="brand" href="/"><img className="brand-mark" src="/riftbound-logo-96.png" alt="" width="44" height="44" /><span>Riftbound<span className="brand-light">Collection</span></span></a>
+      <a className="brand" href={sitePath("/")}><img className="brand-mark" src={sitePath("/riftbound-logo-96.png")} alt="" width="44" height="44" /><span>Riftbound<span className="brand-light">Collection</span></span></a>
       <nav className="section-nav" aria-label="Website sections">
-        <a href="/"><Layers3 aria-hidden="true" />My collection</a>
-        <a href="/?section=decks"><ChartNoAxesColumnIncreasing aria-hidden="true" />Decks &amp; upgrades</a>
-        <a href="/?section=builder"><LayoutGrid aria-hidden="true" />Deck builder</a>
-        <a href="/?section=history"><Clock3 aria-hidden="true" />History</a>
-        <a href="/rules" className="active" aria-current="page"><BookOpen aria-hidden="true" />Rules &amp; reference</a>
+        <a href={sitePath("/")}><Layers3 aria-hidden="true" />My collection</a>
+        <a href={sitePath("/?section=decks")}><ChartNoAxesColumnIncreasing aria-hidden="true" />Decks &amp; upgrades</a>
+        <a href={sitePath("/?section=builder")}><LayoutGrid aria-hidden="true" />Deck builder</a>
+        <a href={sitePath("/?section=history")}><Clock3 aria-hidden="true" />History</a>
+        <a href={sitePath("/rules/")} className="active" aria-current="page"><BookOpen aria-hidden="true" />Rules &amp; reference</a>
       </nav>
       <div className="rules-sidebar-note"><BookOpen aria-hidden="true" /><p>A little less remembering.<br />A little more playing.</p><span>Checked 16 October 2026</span></div>
-      <div className="account-area"><UserRound aria-hidden="true" /><div><span className="account-name" title={accountName}>{accountName}</span><a href={signOutPath}>Sign out</a></div></div>
     </div></header>
     <main className="collection-shell rules-page" id="main-content" tabIndex={-1}>
       <div className="rules-heading"><div><h1>Rules &amp; reference</h1><p>Your quick lookup at the table.</p></div><span className="rules-edition"><Flag aria-hidden="true" />Radiance ready</span></div>
@@ -99,7 +99,7 @@ export default function RulesClient({ accountName, signOutPath }: { accountName:
         {topic === "play" && <PlayGuide />}
         {topic === "prerift" && <PreRift />}
       </div>}
-      <details className="rules-sources"><summary>Sources &amp; rule versions<ChevronDown aria-hidden="true" /></summary><p>Checked 16 October 2026. Core and Tournament Rules dated 9 October; Radiance changes effective 16 October. These are beginner summaries. Use current official text and your event judge for a specific interaction.</p><div><SourceLink href={rulesSources.hub}>Official Rules Hub</SourceLink><SourceLink href={rulesSources.core}>Core Rules</SourceLink><SourceLink href={rulesSources.tournament}>Tournament Rules</SourceLink><SourceLink href={rulesSources.prerift}>Radiance Pre-Rift guide</SourceLink><SourceLink href={rulesSources.radiance}>Radiance changes</SourceLink><SourceLink href="/rules/radiance-sealed-cheatsheet.jpg">Your French sealed cheat sheet</SourceLink></div><p>Printed keyword labels, card instructions, game symbols and card artwork © Riot Games, cropped from the official card gallery. Each illustrated term links to its source card. Cost examples supplied by you. The supplied sheet is a community reference, checked against official rules.</p></details>
+      <details className="rules-sources"><summary>Sources &amp; rule versions<ChevronDown aria-hidden="true" /></summary><p>Checked 16 October 2026. Core and Tournament Rules dated 9 October; Radiance changes effective 16 October. These are beginner summaries. Use current official text and your event judge for a specific interaction.</p><div><SourceLink href={rulesSources.hub}>Official Rules Hub</SourceLink><SourceLink href={rulesSources.core}>Core Rules</SourceLink><SourceLink href={rulesSources.tournament}>Tournament Rules</SourceLink><SourceLink href={rulesSources.prerift}>Radiance Pre-Rift guide</SourceLink><SourceLink href={rulesSources.radiance}>Radiance changes</SourceLink><SourceLink href={sitePath("/rules/radiance-sealed-cheatsheet.jpg")}>Your French sealed cheat sheet</SourceLink></div><p>Printed keyword labels, card instructions, game symbols and card artwork © Riot Games, cropped from the official card gallery. Each illustrated term links to its source card. Cost examples supplied by you. The supplied sheet is a community reference, checked against official rules.</p></details>
     </main>
   </>;
 }
@@ -114,7 +114,7 @@ function Symbols({ compact = false }: { compact?: boolean }) {
     <div className="rules-callout"><Check aria-hidden="true" /><p><strong>The same rune can do both.</strong> Exhaust it for Energy first, then recycle it for Power. “Pay” means spend the resource shown; it does not always mean recycle.</p></div>
     {!compact && <>
       <h3 className="rules-subheading">Read these two costs</h3>
-      <div className="cost-examples"><article><div className="cost-image"><img src="/rules/energy-example.png" alt="A 3 inside a circle, meaning 3 Energy" width="83" height="38" /></div><h4>Pay 3 Energy</h4><p>Exhaust 3 ready runes of any domains. <strong>No Power cost is shown.</strong></p><div className="rune-outcome"><span>3 runes stay</span><span>All 3 exhausted</span></div></article><article><div className="cost-image"><img src="/rules/mixed-cost-example.png" alt="A 6 and a red Fury symbol, meaning 6 Energy plus 1 Fury Power" width="134" height="52" /></div><h4>Pay 6 Energy + 1 Fury Power</h4><p>Exhaust 6 runes, then recycle 1 Fury rune. <strong>It can be one of those same 6.</strong></p><div className="rune-outcome"><span>5 exhausted runes stay</span><span>1 Fury rune goes back</span></div></article></div>
+      <div className="cost-examples"><article><div className="cost-image"><img src={sitePath("/rules/energy-example.png")} alt="A 3 inside a circle, meaning 3 Energy" width="83" height="38" /></div><h4>Pay 3 Energy</h4><p>Exhaust 3 ready runes of any domains. <strong>No Power cost is shown.</strong></p><div className="rune-outcome"><span>3 runes stay</span><span>All 3 exhausted</span></div></article><article><div className="cost-image"><img src={sitePath("/rules/mixed-cost-example.png")} alt="A 6 and a red Fury symbol, meaning 6 Energy plus 1 Fury Power" width="134" height="52" /></div><h4>Pay 6 Energy + 1 Fury Power</h4><p>Exhaust 6 runes, then recycle 1 Fury rune. <strong>It can be one of those same 6.</strong></p><div className="rune-outcome"><span>5 exhausted runes stay</span><span>1 Fury rune goes back</span></div></article></div>
       <h3 className="rules-subheading">The symbols on your cards</h3>
       <div className="symbol-reference-grid">
         <article className="symbol-reference"><GameSymbol name="exhaust" /><div><h4>Exhaust this</h4><p>The turning-card symbol means turn <strong>this card</strong> sideways to pay that part of its ability’s cost. It must be ready.</p></div></article>

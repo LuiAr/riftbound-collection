@@ -1,16 +1,16 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { Copy, Plus, Trash2 } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Copy, Download, Plus, Trash2, Upload } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { AlertDialog as AlertDialogPrimitive } from "radix-ui";
 import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogTitle } from "../components/ui/alert-dialog";
 import type { DisplayCard } from "../lib/collection";
 import { analyzeDeck, missingList } from "../lib/deck";
-import type { SavedDeck } from "../lib/server-decks";
+import type { DeckVersion, SavedDeck } from "../lib/deck-records";
+import { deleteLocalDeck, exportDeckStore, importDeckStore, listDecks, saveLocalDeck, versionsFor } from "../lib/local-decks";
 import DeckAdviser from "../components/deck-adviser";
 import { parseAdvisorDeck, deckChanges } from "../lib/deck-advisor";
-import type { DeckVersion } from "../lib/server-decks";
 import MissingCardButton from "../components/missing-card-button";
 
 export default function DeckMatcher({ cards, onOpenCard }: { cards: DisplayCard[]; onOpenCard: (card: DisplayCard) => void }) {
@@ -31,16 +31,16 @@ export default function DeckMatcher({ cards, onOpenCard }: { cards: DisplayCard[
   const [versionId, setVersionId] = useState("");
   const versionError = versionHistory.deckId === activeDeckId ? versionHistory.error : "";
   const [versionTick, setVersionTick] = useState(0);
+  const deckFile = useRef<HTMLInputElement>(null);
   const historical = versions.find(v => v.versionId === versionId);
   const revisionChanges = historical ? deckChanges(parseAdvisorDeck(historical.name, historical.deckText).deck.entries, parseAdvisorDeck(deckName, deckText).deck.entries) : [];
   useEffect(() => {
-    let active = true;
     if (!activeDeckId) return;
-    fetch(`/api/decks?deckId=${encodeURIComponent(activeDeckId)}`, { cache: "no-store" }).then(async response => {
-      const result = await response.json() as { versions: DeckVersion[]; error?: string }; if (!response.ok) throw new Error(result.error || "Versions could not be loaded.");
-      if (active) { setVersionHistory({ deckId: activeDeckId, versions: result.versions, error: "" }); setVersionId(result.versions[0]?.versionId ?? ""); }
-    }).catch(e => { if (active) setVersionHistory({ deckId: activeDeckId, versions: [], error: e.message }); });
-    return () => { active = false; };
+    try {
+      const items = versionsFor(activeDeckId);
+      setVersionHistory({ deckId: activeDeckId, versions: items, error: "" });
+      setVersionId(items[0]?.versionId ?? "");
+    } catch (e) { setVersionHistory({ deckId: activeDeckId, versions: [], error: e instanceof Error ? e.message : "Versions could not be loaded." }); }
   }, [activeDeckId, versionTick]);
   const analysis = useMemo(() => analyzeDeck(deckText, cards, { hideRunes, hideTokens }), [deckText, cards, hideRunes, hideTokens]);
   const savedSummaries = useMemo(() => decks.map((deck) => {
@@ -53,15 +53,9 @@ export default function DeckMatcher({ cards, onOpenCard }: { cards: DisplayCard[
   const ownedCopies = analysis.matches.reduce((sum, item) => sum + item.owned, 0);
 
   useEffect(() => {
-    let active = true;
-    fetch("/api/decks", { cache: "no-store" }).then(async (response) => {
-      const result = await response.json() as { decks?: SavedDeck[]; error?: string };
-      if (!response.ok || !result.decks) throw new Error(result.error || "Saved decks could not be loaded.");
-      return result.decks;
-    }).then((items) => { if (active) setDecks(items); }).catch((cause) => {
-      if (active) setDeckStatus(cause instanceof Error ? cause.message : "Saved decks could not be loaded.");
-    }).finally(() => { if (active) setDecksLoaded(true); });
-    return () => { active = false; };
+    try { setDecks(listDecks()); }
+    catch (cause) { setDeckStatus(cause instanceof Error ? cause.message : "Saved decks could not be loaded."); }
+    finally { setDecksLoaded(true); }
   }, []);
 
   function openDeck(deck: SavedDeck) {
@@ -91,17 +85,11 @@ export default function DeckMatcher({ cards, onOpenCard }: { cards: DisplayCard[
     if (!deckName.trim() || !deckText.trim()) { setDeckStatus("Enter a name and paste a deck list before saving."); return; }
     setDeckBusy(true);
     try {
-      const response = await fetch("/api/decks", {
-        method: "POST", headers: { "content-type": "application/json" },
-        body: JSON.stringify({ deckId: activeDeckId ?? undefined, name: deckName, deckText, hideRunes, hideTokens }),
-      });
-      const result = await response.json() as { deck?: SavedDeck; error?: string };
-      if (!response.ok || !result.deck) throw new Error(result.error || "The deck could not be saved.");
-      const saved = result.deck;
+      const saved = saveLocalDeck({ deckId: activeDeckId ?? undefined, name: deckName, deckText, hideRunes, hideTokens });
       setActiveDeckId(saved.deckId);
-      setDecks((current) => [saved, ...current.filter((item) => item.deckId !== saved.deckId)]);
+      setDecks(listDecks());
       setVersionTick(t => t + 1);
-      setDeckStatus("Deck version saved. Missing counts use your latest collection.");
+      setDeckStatus("Deck saved in this browser. Missing counts use the latest collection file.");
     } catch (cause) { setDeckStatus(cause instanceof Error ? cause.message : "The deck could not be saved."); }
     finally { setDeckBusy(false); }
   }
@@ -112,12 +100,10 @@ export default function DeckMatcher({ cards, onOpenCard }: { cards: DisplayCard[
     setDeckBusy(true);
     setDeckStatus("");
     try {
-      const response = await fetch(`/api/decks?deckId=${encodeURIComponent(activeDeckId)}`, { method: "DELETE" });
-      const result = await response.json() as { error?: string };
-      if (!response.ok) throw new Error(result.error || "The deck could not be deleted.");
-      setDecks((current) => current.filter((item) => item.deckId !== activeDeckId));
+      if (!deleteLocalDeck(activeDeckId)) throw new Error("Saved deck not found.");
+      setDecks(listDecks());
       newDeck();
-      setDeckStatus("Saved deck deleted.");
+      setDeckStatus("Saved deck deleted from this browser.");
     } catch (cause) { setDeckStatus(cause instanceof Error ? cause.message : "The deck could not be deleted."); }
     finally { setDeckBusy(false); }
   }
@@ -133,7 +119,9 @@ export default function DeckMatcher({ cards, onOpenCard }: { cards: DisplayCard[
     <h1 id="deck-title">Decks & upgrades</h1>
     <p className="feature-intro">Open a saved deck or paste a list.</p>
     <div className="saved-decks-panel panel">
-      <div className="panel-heading"><div><h2>Saved decks</h2><p>{!decksLoaded ? "Loading saved decks…" : decks.length ? "Latest collection counts" : "No saved decks yet."}</p></div><button type="button" className="secondary-button" onClick={newDeck} disabled={deckBusy}><Plus aria-hidden="true" />New deck</button></div>
+      <div className="panel-heading"><div><h2>Saved decks</h2><p>{!decksLoaded ? "Loading saved decks…" : decks.length ? "Stored in this browser" : "No saved decks yet."}</p></div><div className="head-actions"><button type="button" className="secondary-button" onClick={() => { const url = URL.createObjectURL(new Blob([exportDeckStore()], { type: "application/json" })); const link = document.createElement("a"); link.href = url; link.download = "saved-decks.json"; link.click(); URL.revokeObjectURL(url); }}><Download aria-hidden="true" />Download JSON</button><button type="button" className="secondary-button" onClick={() => deckFile.current?.click()}><Upload aria-hidden="true" />Import JSON</button><button type="button" className="secondary-button" onClick={newDeck} disabled={deckBusy}><Plus aria-hidden="true" />New deck</button></div></div>
+      <input ref={deckFile} className="visually-hidden" type="file" accept="application/json,.json" aria-label="Import a saved-decks JSON file" onChange={async (event) => { const file = event.target.files?.[0]; if (!file) return; try { importDeckStore(await file.text()); setDecks(listDecks()); setDeckStatus("Imported decks into this browser. Commit the same file as data/saved-decks.json to publish it."); } catch (cause) { setDeckStatus(cause instanceof Error ? cause.message : "The deck file could not be imported."); } finally { if (deckFile.current) deckFile.current.value = ""; } }} />
+      <p className="head-note">Decks stay in this browser. Download the JSON and commit it as data/saved-decks.json so a browser with no saved decks loads that file.</p>
       {!decksLoaded && <div className="saved-deck-list" aria-hidden="true"><span className="saved-deck-item skeleton" /><span className="saved-deck-item skeleton" /><span className="saved-deck-item skeleton" /></div>}
       {savedSummaries.length > 0 && <div className="saved-deck-list">{savedSummaries.map(({ deck, missing: count, unmatched }) => <button type="button" key={deck.deckId} className={`saved-deck-item ${activeDeckId === deck.deckId ? "selected" : ""}`} aria-pressed={activeDeckId === deck.deckId} onClick={() => openDeck(deck)} disabled={deckBusy}><strong>{deck.name}</strong><span>{count} missing{unmatched ? ` · ${unmatched} unmatched` : ""}</span></button>)}</div>}
     </div>

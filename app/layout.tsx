@@ -1,15 +1,17 @@
+import type { CSSProperties } from "react";
 import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/figtree";
 import "./globals.css";
 import "./atlas.css";
 import "./rules/rules.css";
+import { sitePath } from "../lib/site-path";
 
 export const metadata: Metadata = {
   title: "Riftbound Collection",
-  description: "Your Riftbound card collection, synced across devices.",
+  description: "A Riftbound card collection with prices, goals, deck lists and history.",
   icons: {
-    icon: "/icon-64.png",
-    apple: "/apple-touch-icon.png",
+    icon: sitePath("/icon-64.png"),
+    apple: sitePath("/apple-touch-icon.png"),
   },
 };
 
@@ -24,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased" style={{ "--missing-art": `url(${sitePath("/riftbound-logo-96.png")})` } as CSSProperties}>{children}</body>
     </html>
   );
 }

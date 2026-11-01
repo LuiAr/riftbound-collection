@@ -178,7 +178,7 @@ h1 { margin: 0; font-size: clamp(32px, 3.4vw, 44px); font-weight: 800; line-heig
 .card-open:active .card-frame { transform: translateY(-1px) scale(.99); }
 .card-open:hover .card-frame:not(.shiny) { background: var(--ink); }
 .card-image-wrap { position: relative; overflow: hidden; aspect-ratio: 744 / 1039; border-radius: var(--card-radius); background: var(--surface-2); }
-.card-image-wrap::before { content: ""; position: absolute; inset: 0; background: url("/riftbound-logo-96.png") center 45% / 34% no-repeat; opacity: .14; filter: grayscale(1); }
+.card-image-wrap::before { content: ""; position: absolute; inset: 0; background: var(--missing-art) center 45% / 34% no-repeat; opacity: .14; filter: grayscale(1); }
 .card-image-wrap.missing { background: var(--track); }
 .card-image-wrap.missing::before { opacity: .08; }
 .card-image-wrap img { position: relative; z-index: 1; display: block; width: 100%; height: 100%; object-fit: cover; }

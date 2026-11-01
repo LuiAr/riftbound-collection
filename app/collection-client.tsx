@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
-import { ArrowRight, BookOpen, ChartNoAxesColumnIncreasing, ChevronDown, Clock3, Download, LayoutGrid, Layers3, Search, Upload, UserRound } from "lucide-react";
-import { catalog, displayCards, hasFoilTreatment, isAlternatePrinting, isOvernumbered, type DisplayCard, type ImportDifference } from "../lib/collection";
+import { ArrowRight, BookOpen, ChartNoAxesColumnIncreasing, ChevronDown, Clock3, Download, LayoutGrid, Layers3, Search, Upload } from "lucide-react";
+import { catalog, compareInventories, displayCards, exportCsv, hasFoilTreatment, isAlternatePrinting, isOvernumbered, parseCardNexusCsv, type DisplayCard, type ImportDifference } from "../lib/collection";
 import { matchesCardType, rarityFor, type RarityKind } from "../lib/rarity";
 import { oneOfEachGoal } from "../lib/goals";
 import { isRadianceCatalogComplete } from "../lib/radiance";
 import { priceKey, type PriceQuote, type PriceSnapshot } from "../lib/prices";
 import { deckCardKey, deckCardName, deckCopyGoals, deckCopyLimit, type DeckCopyGoal } from "../lib/deck-copy-limit";
-import type { CollectionSnapshot, CollectionVersion } from "../lib/server-collection";
+import type { CollectionSnapshot, CollectionVersion } from "../lib/collection-snapshot";
+import { sitePath } from "../lib/site-path";
+import { useStaticSite } from "./static-context";
 import SingleFilter from "../components/single-filter";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../components/ui/dialog";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../components/ui/dropdown-menu";
@@ -18,7 +20,7 @@ import HistoryCompare from "./history-compare";
 import CardArtwork from "../components/card-artwork";
 import MissingCardButton from "../components/missing-card-button";
 
-type Props = { initial: CollectionSnapshot; initialHistory: CollectionVersion[]; accountName: string; signOutPath: string };
+type Props = { initial: CollectionSnapshot; initialHistory: CollectionVersion[]; snapshots: Record<string, CollectionSnapshot> };
 type Preview = { difference: ImportDifference; version: number; filename: string; csv: string };
 const radianceReady = isRadianceCatalogComplete(catalog);
 const sets = ["Vendetta", "Unleashed", "Origins", "Spiritforged", "Proving Grounds", ...(radianceReady ? ["Radiance"] : [])];
@@ -45,15 +47,6 @@ function preferredPrinting(card: DisplayCard): number {
 const ratio = (part: number, whole: number) => whole > 0 ? part / whole : 0;
 const plural = (count: number, one: string, many: string) => `${formatNumber(count)} ${count === 1 ? one : many}`;
 
-function importSummary(difference: ImportDifference): string {
-  const parts = [
-    difference.newCards.length ? plural(difference.newCards.length, "new card", "new cards") : "",
-    difference.newFoils.length ? plural(difference.newFoils.length, "new foil", "new foils") : "",
-    difference.moreCopies.length ? `${plural(difference.moreCopies.length, "card", "cards")} with more copies` : "",
-  ].filter(Boolean);
-  return parts.length ? parts.join(", ") : "no quantity changes";
-}
-
 function quoteFor(card: DisplayCard, prices: PriceSnapshot | null): PriceQuote | null {
   if (card.extra || isAlternatePrinting(card) || isOvernumbered(card) || card.rarity === "Showcase") return null;
   return prices?.quotes[priceKey(card.set, card.name)] ?? null;
@@ -68,16 +61,25 @@ function estimateFor(quote: PriceQuote | null): string | null {
   return low === high ? formatPrice(low) : `${formatPrice(low)} to ${formatPrice(high)}`;
 }
 
-export default function CollectionClient({ initial, initialHistory, accountName, signOutPath }: Props) {
-  const [currentSnapshot, setCurrentSnapshot] = useState(initial);
+function downloadText(contents: string, filename: string) {
+  const url = URL.createObjectURL(new Blob([contents], { type: "text/csv;charset=utf-8" }));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+export default function CollectionClient({ initial, initialHistory, snapshots }: Props) {
+  const { market } = useStaticSite();
+  const [currentSnapshot] = useState(initial);
   const [viewedSnapshot, setViewedSnapshot] = useState<CollectionSnapshot | null>(null);
-  const [history, setHistory] = useState(initialHistory);
+  const [history] = useState(initialHistory);
   const [section, setSection] = useState<"collection" | "decks" | "builder" | "history">("collection");
   useEffect(() => {
     const requested = new URLSearchParams(window.location.search).get("section");
     if (requested === "decks" || requested === "builder" || requested === "history") setSection(requested);
   }, []);
-  const [historyBusy, setHistoryBusy] = useState(false);
   const [historyError, setHistoryError] = useState("");
   const snapshot = viewedSnapshot ?? currentSnapshot;
   const [selectedSet, setSelectedSet] = useState("Vendetta");
@@ -88,10 +90,9 @@ export default function CollectionClient({ initial, initialHistory, accountName,
   const [preview, setPreview] = useState<Preview | null>(null);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
-  const [notice, setNotice] = useState("");
   const [selectedCard, setSelectedCard] = useState<DisplayCard | null>(null);
-  const [prices, setPrices] = useState<PriceSnapshot | null>(null);
-  const [priceError, setPriceError] = useState("");
+  const prices = market.prices;
+  const priceError = market.priceError ?? "";
   const fileInput = useRef<HTMLInputElement>(null);
   const importTrigger = useRef<HTMLButtonElement>(null);
   const cardTrigger = useRef<HTMLElement | null>(null);
@@ -100,16 +101,6 @@ export default function CollectionClient({ initial, initialHistory, accountName,
     cardTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     setSelectedCard(card);
   }
-
-  useEffect(() => {
-    let active = true;
-    fetch("/api/prices").then(async (response) => {
-      const result = await response.json() as PriceSnapshot & { error?: string };
-      if (!response.ok) throw new Error(result.error || "Recent prices are unavailable.");
-      return result;
-    }).then((result) => { if (active) setPrices(result); }).catch((cause) => { if (active) setPriceError(cause instanceof Error ? cause.message : "Recent prices are unavailable."); });
-    return () => { active = false; };
-  }, []);
 
   const allCards = useMemo(() => displayCards(snapshot.rows).filter((card) => radianceReady || card.set !== "Radiance"), [snapshot.rows]);
   const latestCards = useMemo(() => displayCards(currentSnapshot.rows).filter((card) => radianceReady || card.set !== "Radiance"), [currentSnapshot.rows]);
@@ -181,69 +172,46 @@ export default function CollectionClient({ initial, initialHistory, accountName,
 
   async function chooseFile(file?: File) {
     if (!file) return;
-    setBusy(true); setError(""); setNotice("");
+    setBusy(true); setError("");
     try {
       if (file.size > 2_000_000) throw new Error("This CSV is too large (2 MB maximum).");
       const csv = await file.text();
-      const response = await fetch("/api/import", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ mode: "preview", csv }) });
-      const result = await response.json() as { error?: string; difference: ImportDifference; version: number };
-      if (!response.ok) throw new Error(result.error || "The file could not be reviewed.");
-      setPreview({ difference: result.difference, version: result.version, filename: file.name, csv });
+      const parsed = parseCardNexusCsv(csv);
+      setPreview({ difference: compareInventories(currentSnapshot.rows, parsed.rows), version: currentSnapshot.version, filename: file.name, csv });
     } catch (cause) { setError(cause instanceof Error ? cause.message : "The file could not be reviewed."); }
     finally { setBusy(false); if (fileInput.current) fileInput.current.value = ""; }
   }
 
-  async function applyImport() {
-    if (!preview) return;
-    setBusy(true); setError("");
-    try {
-      const response = await fetch("/api/import", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ mode: "apply", csv: preview.csv, filename: preview.filename, version: preview.version }) });
-      const result = await response.json() as { error?: string; snapshot: CollectionSnapshot };
-      if (!response.ok) throw new Error(result.error || "The collection could not be updated.");
-      setCurrentSnapshot(result.snapshot);
-      setViewedSnapshot(null);
-      if (result.snapshot.importId && result.snapshot.importedAt) setHistory((old) => [{ importId: result.snapshot.importId!, version: result.snapshot.version, importedAt: result.snapshot.importedAt!, sourceName: result.snapshot.sourceName ?? preview.filename }, ...old]);
-      setNotice(`Saved ${preview.filename}: ${importSummary(preview.difference)}.`);
-      setPreview(null);
-    } catch (cause) { setError(cause instanceof Error ? cause.message : "The collection could not be updated."); }
-    finally { setBusy(false); }
-  }
-
-  async function viewVersion(importId: string) {
+  function viewVersion(importId: string) {
     setHistoryError("");
     if (importId === currentSnapshot.importId) {
       setViewedSnapshot(null);
       setSection("collection");
       return;
     }
-    setHistoryBusy(true);
-    try {
-      const response = await fetch(`/api/history?importId=${encodeURIComponent(importId)}`, { cache: "no-store" });
-      const result = await response.json() as { error?: string; snapshot?: CollectionSnapshot };
-      if (!response.ok || !result.snapshot) throw new Error(result.error || "This version could not be loaded.");
-      setViewedSnapshot(result.snapshot);
-      setSection("collection");
-    } catch (cause) { setHistoryError(cause instanceof Error ? cause.message : "This version could not be loaded."); }
-    finally { setHistoryBusy(false); }
+    const next = snapshots[importId];
+    if (!next) { setHistoryError("This version could not be loaded."); return; }
+    setViewedSnapshot(next);
+    setSection("collection");
   }
 
   const firstRun = !snapshot.importedAt && !viewedSnapshot;
   const setLabel = selectedSet === "All sets" ? "all sets" : selectedSet;
   const ownershipIndex = ownershipOptions.findIndex((option) => option.value === status);
   const openFilePicker = () => fileInput.current?.click();
-  const importButton = <button ref={importTrigger} className="primary-button" type="button" onClick={openFilePicker} disabled={busy} aria-busy={busy}><Upload aria-hidden="true" />{busy ? "Working…" : "Import Card Nexus CSV"}</button>;
+  const importButton = <button ref={importTrigger} className="primary-button" type="button" onClick={openFilePicker} disabled={busy} aria-busy={busy}><Upload aria-hidden="true" />{busy ? "Working…" : "Compare a CSV"}</button>;
 
   return <>
     <a className="skip-link" href="#main-content">Skip to content</a>
     <header className="site-header">
       <div className="site-header-inner">
-        <div className="brand"><img className="brand-mark" src="/riftbound-logo-96.png" alt="" width="44" height="44" /><span>Riftbound<span className="brand-light">Collection</span></span></div>
+        <div className="brand"><img className="brand-mark" src={sitePath("/riftbound-logo-96.png")} alt="" width="44" height="44" /><span>Riftbound<span className="brand-light">Collection</span></span></div>
         <nav className="section-nav" aria-label="Website sections">
           <button type="button" className={section === "collection" ? "active" : ""} aria-current={section === "collection" ? "page" : undefined} onClick={() => setSection("collection")}><Layers3 aria-hidden="true" />My collection</button>
           <button type="button" className={section === "decks" ? "active" : ""} aria-current={section === "decks" ? "page" : undefined} onClick={() => setSection("decks")}><ChartNoAxesColumnIncreasing aria-hidden="true" />Decks & upgrades</button>
           <button type="button" className={section === "builder" ? "active" : ""} aria-current={section === "builder" ? "page" : undefined} onClick={() => setSection("builder")}><LayoutGrid aria-hidden="true" />Deck builder</button>
           <button type="button" className={section === "history" ? "active" : ""} aria-current={section === "history" ? "page" : undefined} onClick={() => setSection("history")}><Clock3 aria-hidden="true" />History</button>
-          <a href="/rules"><BookOpen aria-hidden="true" />Rules &amp; reference</a>
+          <a href={sitePath("/rules/")}><BookOpen aria-hidden="true" />Rules &amp; reference</a>
         </nav>
         <nav className="set-navigation" aria-labelledby="set-navigation-title">
           <div className="set-navigation-heading"><h2 id="set-navigation-title">By set</h2><button type="button" className={section === "collection" && selectedSet === "All sets" ? "all-sets-button active" : "all-sets-button"} aria-pressed={section === "collection" && selectedSet === "All sets"} onClick={() => { setSelectedSet("All sets"); setSection("collection"); }}>All sets</button></div>
@@ -251,32 +219,30 @@ export default function CollectionClient({ initial, initialHistory, accountName,
           {setSummary.map(({ set, owned, total }) => <button type="button" className={`stat-row ${section === "collection" && selectedSet === set ? "selected" : ""}`} aria-pressed={section === "collection" && selectedSet === set} key={set} onClick={() => { setSelectedSet(set); setSection("collection"); }}><span className="stat-title">{set}</span><span className="stat-value">{formatNumber(owned)}/{formatNumber(total)}</span><span className="stat-track"><span style={{ "--progress": ratio(owned, total) } as CSSProperties} /></span></button>)}
           <button className="sidebar-insights" type="button" aria-expanded={section === "collection" && overviewOpen} aria-controls={section === "collection" ? "overview-content" : undefined} onClick={() => { setSection("collection"); setOverviewOpen(section === "collection" ? !overviewOpen : true); }}><ChartNoAxesColumnIncreasing aria-hidden="true" />Collection insights<ChevronDown aria-hidden="true" /></button>
         </nav>
-        <div className="account-area"><UserRound aria-hidden="true" /><div><span className="account-name" title={accountName}>{accountName}</span><a href={signOutPath}>Sign out</a></div></div>
       </div>
     </header>
     <main className="collection-shell" id="main-content" tabIndex={-1}>
     {section === "history" && <section className="feature-page view" aria-labelledby="history-title">
       <h1 id="history-title">Collection history</h1>
-      <p className="feature-intro">Every saved Card Nexus import appears here. Open a version to browse its cards and summaries without changing your latest collection.</p>
-      <HistoryCompare key={currentSnapshot.importId ?? "empty"} history={history} latest={currentSnapshot} />
+      <p className="feature-intro">Each dated Card Nexus export in the repository appears here. Open a version to browse its cards without changing the latest collection.</p>
+      <HistoryCompare key={currentSnapshot.importId ?? "empty"} history={history} latest={currentSnapshot} snapshots={snapshots} />
       {historyError && <p className="error-note" role="alert">{historyError}</p>}
-      {history.length ? <div className="history-list">{history.map((item) => <button type="button" className={`history-item ${snapshot.importId === item.importId ? "selected" : ""}`} key={item.importId} disabled={historyBusy} onClick={() => viewVersion(item.importId)}><span><strong>{item.sourceName}</strong><small>{new Date(item.importedAt).toLocaleString("en-US", { day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "2-digit" })}</small></span><span className="history-item-side">{item.importId === currentSnapshot.importId ? "Latest" : `Version ${item.version}`}<ArrowRight aria-hidden="true" /></span></button>)}</div> : <div className="empty-state">Import a Card Nexus CSV to create your first collection version.</div>}
+      {history.length ? <div className="history-list">{history.map((item) => <button type="button" className={`history-item ${snapshot.importId === item.importId ? "selected" : ""}`} key={item.importId} onClick={() => viewVersion(item.importId)}><span><strong>{item.sourceName}</strong><small>{item.importedAt ? new Date(item.importedAt).toLocaleString("en-US", { day: "numeric", month: "long", year: "numeric" }) : "Undated file"}</small></span><span className="history-item-side">{item.importId === currentSnapshot.importId ? "Latest" : `Version ${item.version}`}<ArrowRight aria-hidden="true" /></span></button>)}</div> : <div className="empty-state">Add a dated CSV under data/exports to build collection history.</div>}
     </section>}
     {section === "builder" && <DeckBuilder cards={latestCards} prices={prices} onOpenCard={openCard} />}
     {section === "decks" && <DeckMatcher cards={latestCards} onOpenCard={openCard} />}
     {section === "collection" && <div className="view">
     <section className="page-head">
-      <div><h1>My collection</h1><p className="head-note">{snapshot.importedAt ? `${viewedSnapshot ? "Imported" : "Last import"} ${new Date(snapshot.importedAt).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })} · ` : ""}Synced with your ChatGPT account</p></div>
-      {!viewedSnapshot && !firstRun && <div className="head-actions"><a className="secondary-button" href="/api/export"><Download aria-hidden="true" />Export CSV</a>{importButton}</div>}
+      <div><h1>My collection</h1><p className="head-note">{snapshot.importedAt ? `${viewedSnapshot ? "Viewing" : "Current export"} ${new Date(snapshot.importedAt).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })} · ` : ""}{snapshot.sourceName ?? "data/collection.csv"}</p></div>
+      {!viewedSnapshot && !firstRun && <div className="head-actions"><button className="secondary-button" type="button" onClick={() => downloadText(exportCsv(snapshot.headers, snapshot.rows), `riftbound-collection-${snapshot.importId ?? "current"}.csv`)}><Download aria-hidden="true" />Export CSV</button>{importButton}</div>}
       {!viewedSnapshot && <input ref={fileInput} className="visually-hidden" type="file" accept=".csv,text/csv" aria-label="Choose a Card Nexus CSV export" onChange={(event) => chooseFile(event.target.files?.[0])} />}
     </section>
     {viewedSnapshot && <div className="history-banner"><span>Viewing version {viewedSnapshot.version} from {new Date(viewedSnapshot.importedAt!).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}. Your latest collection is unchanged.</span><button type="button" onClick={() => setViewedSnapshot(null)}>Return to latest</button></div>}
-    {notice && <p className="notice" role="status">{notice}</p>}
     {error && !preview && <p className="error-note" role="alert">{error}</p>}
     <div className="workspace-grid">
       <div className={`collection-summary${firstRun ? " first-run" : ""}`}>
       {firstRun ? <section className="welcome-panel panel" aria-labelledby="welcome-title">
-        <img src="/riftbound-logo-96.png" alt="" width="52" height="52" />
+        <img src={sitePath("/riftbound-logo-96.png")} alt="" width="52" height="52" />
         <div><h2 id="welcome-title">Start with your Card Nexus export</h2><p>Export your collection from the Card Nexus app as a CSV file, then import it here to see every card you own and every card you are still missing.</p></div>
         {importButton}
       </section> : <section className="set-progress" aria-labelledby="progress-title">
@@ -306,7 +272,7 @@ export default function CollectionClient({ initial, initialHistory, accountName,
         <div className="overview-content" id="overview-content">
         {!firstRun && goal.total > 0 && <CollectionGoal goal={goal} onOpen={openCard} id="mobile-goal-title" className="goal-insight mobile-goal-insight" />}
         <div className="insight-section"><h3>By domain</h3><p>Unique printings in {setLabel}</p>{colorSummary.map(({ color, owned, total }) => <div className={`stat-row passive domain-${color.toLowerCase()}`} key={color}><span className="stat-title">{color}</span><span className="stat-value">{owned}/{total}</span><span className="stat-track"><span style={{ "--progress": ratio(owned, total) } as CSSProperties} /></span></div>)}</div>
-        <div className="insight-section price-insight"><h3>Card values</h3>{prices ? <><p>Cardmarket 7-day sale averages in EUR, updated {new Date(prices.createdAt).toLocaleDateString("en-US", { day: "numeric", month: "short" })}</p><h4>Most valuable priced card</h4>{priceHighlights.mostValuable ? <button type="button" className="price-card-row" onClick={() => openCard(priceHighlights.mostValuable!.card)}><span>{priceHighlights.mostValuable.card.name}<small>{priceHighlights.mostValuable.card.set} · {priceHighlights.mostValuable.finish}</small></span><strong>{formatPrice(priceHighlights.mostValuable.amount)}</strong></button> : <p>No owned cards have a 7-day average yet.</p>}<p className="price-coverage">{priceHighlights.pricedOwned} of {ownedTotal} owned printings priced</p><h4>Unowned cards to watch</h4>{priceHighlights.watch.length ? priceHighlights.watch.map((item) => <button type="button" className="price-card-row" key={`${item.card.code}-${item.finish}`} onClick={() => openCard(item.card)}><span>{item.card.name}<small>{item.card.number.toUpperCase()} · {item.finish}</small></span><strong>{formatPrice(item.amount)}</strong></button>) : <p>No matched 7-day prices in this set.</p>}</> : priceError ? <p>{priceError}</p> : <div role="status" aria-label="Loading recent prices"><span className="skeleton skeleton-line" /><span className="skeleton skeleton-row" /><span className="skeleton skeleton-line short" /><span className="skeleton skeleton-row" /></div>}<p className="price-source"><a href="https://www.cardmarket.com/en/Riftbound/Data/Price-Guide" target="_blank" rel="noreferrer">Cardmarket price guide</a> · Estimates vary by condition and language.</p></div>
+        <div className="insight-section price-insight"><h3>Card values</h3>{prices ? <><p>Cardmarket 7-day sale averages in EUR, updated {new Date(prices.createdAt).toLocaleDateString("en-US", { day: "numeric", month: "short" })}</p>{priceError && <p>{priceError}</p>}<h4>Most valuable priced card</h4>{priceHighlights.mostValuable ? <button type="button" className="price-card-row" onClick={() => openCard(priceHighlights.mostValuable!.card)}><span>{priceHighlights.mostValuable.card.name}<small>{priceHighlights.mostValuable.card.set} · {priceHighlights.mostValuable.finish}</small></span><strong>{formatPrice(priceHighlights.mostValuable.amount)}</strong></button> : <p>No owned cards have a 7-day average yet.</p>}<p className="price-coverage">{priceHighlights.pricedOwned} of {ownedTotal} owned printings priced</p><h4>Unowned cards to watch</h4>{priceHighlights.watch.length ? priceHighlights.watch.map((item) => <button type="button" className="price-card-row" key={`${item.card.code}-${item.finish}`} onClick={() => openCard(item.card)}><span>{item.card.name}<small>{item.card.number.toUpperCase()} · {item.finish}</small></span><strong>{formatPrice(item.amount)}</strong></button>) : <p>No matched 7-day prices in this set.</p>}</> : priceError ? <p>{priceError}</p> : <div role="status" aria-label="Loading recent prices"><span className="skeleton skeleton-line" /><span className="skeleton skeleton-row" /><span className="skeleton skeleton-line short" /><span className="skeleton skeleton-row" /></div>}<p className="price-source"><a href="https://www.cardmarket.com/en/Riftbound/Data/Price-Guide" target="_blank" rel="noreferrer">Cardmarket price guide</a> · Estimates vary by condition and language.</p></div>
         </div>
       </aside>
       {visibleCards.length ? <div className="card-grid" aria-label="Cards">{visibleCards.map((card) => <CardTile key={card.code} card={card} deckGoal={deckGoals.get(deckCardKey(card))} showNeed={status === "needs"} onOpen={openCard} />)}</div> : <div className="empty-state"><p>{status === "needs" ? "No cards need more copies for these filters." : "No cards match these filters."}</p><button type="button" className="secondary-button" onClick={() => { setSearch(""); setStatus("all"); setSelectedRarities([]); }}>Clear filters</button></div>}
@@ -337,8 +303,8 @@ export default function CollectionClient({ initial, initialHistory, accountName,
         <div className="stat-tiles"><div><strong>{preview.difference.incomingRows}</strong><span>rows in file</span></div><div className="accent"><strong>{preview.difference.newCards.length}</strong><span>new cards</span></div><div><strong>{preview.difference.newFoils.length}</strong><span>foil additions</span></div></div>
         <div className="dialog-scroll"><DifferenceList title="Cards you did not own" items={preview.difference.newCards} /><DifferenceList title="New foil copies" items={preview.difference.newFoils} /><DifferenceList title="More standard copies" items={preview.difference.moreCopies} />{preview.difference.removedCopies > 0 && <p className="removal-note">This export removes or changes the finish of {preview.difference.removedCopies} previously recorded copies.</p>}{preview.difference.newCards.length + preview.difference.newFoils.length + preview.difference.moreCopies.length === 0 && preview.difference.removedCopies === 0 && <p className="no-changes">No quantity changes found. You can still save this export as your latest snapshot.</p>}</div>
         {error && <p className="error-note" role="alert">{error}</p>}
-        <div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setPreview(null)} disabled={busy}>Cancel</button><button className="primary-button" type="button" onClick={applyImport} disabled={busy} aria-busy={busy}>{busy ? "Saving…" : "Save this collection"}</button></div>
-        <p className="dialog-help">Saving makes this the latest collection. Earlier imports remain in History. Importing the same file again will not add copies twice.</p>
+        <div className="dialog-actions"><button className="primary-button" type="button" onClick={() => setPreview(null)}>Close</button></div>
+        <p className="dialog-help">This comparison stays in the browser. To publish the file, save it as data/exports/YYYY-MM-DD.csv, replace data/collection.csv with the same export, and push.</p>
       </DialogContent>}
     </Dialog>
     </main>
