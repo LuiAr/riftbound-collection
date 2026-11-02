@@ -4,11 +4,14 @@ import { ShieldCheck, TriangleAlert } from "lucide-react";
 import type { StrategyAnalysis, UpgradeResult } from "../lib/deck-advisor";
 import type { DeckAssessment } from "../lib/deck-builder";
 import type { compareRelease } from "../lib/card-releases";
+import { runAdvisor } from "../lib/advisor-actions";
+import { useStaticSite } from "../app/static-context";
 
 type Result = { analysis: StrategyAnalysis; assessment: DeckAssessment; upgrades: UpgradeResult; unmatched: string[]; notices: string[]; warnings: string[]; references: { id: string; name: string; strategy: string; source: string }[]; collectionVersion: number; pricesAt: string | null; fxAt: string | null; rulesCheckedAt: string | null };
 const money = (n: number) => new Intl.NumberFormat("en-SE", { style: "currency", currency: "SEK" }).format(n);
 const percent = (n: number | null) => n === null ? "Unavailable" : `${(n * 100).toFixed(1)}%`;
 export default function DeckAdviser({ deckText, name, deckId, extras, onApply }: { deckText: string; name: string; deckId?: string | null; extras?: Record<string, number>; onApply: (text: string) => void }) {
+  const site = useStaticSite();
   const countKey = JSON.stringify(extras ?? {});
   const inputKey = `${deckId ?? ""}|${deckText}|${countKey}`;
   const [budget, setBudget] = useState(0);
@@ -32,8 +35,10 @@ export default function DeckAdviser({ deckText, name, deckId, extras, onApply }:
     controller.current?.abort(); const abort = new AbortController(); controller.current = abort;
     setBusy(true); setError("");
     try {
-      const response = await fetch("/api/advisor", { method: "POST", signal: abort.signal, headers: { "content-type": "application/json" }, body: JSON.stringify({ action, name, deckText, deckId: deckId ?? undefined, budget, extras, referenceId: referenceId || undefined }) });
-      const body = await response.json() as Result & { releases?: ReturnType<typeof compareRelease>; error?: string }; if (!response.ok) throw new Error(body.error || "The adviser could not complete this check.");
+      const response = await runAdvisor({ action, name, deckText, deckId: deckId ?? undefined, budget, extras, referenceId: referenceId || undefined }, site.advisorContext());
+      if (abort.signal.aborted) return;
+      if (!response.ok) throw new Error(response.error);
+      const body = response.data as Result & { releases?: ReturnType<typeof compareRelease> };
       if (abort.signal.aborted) return;
       if (action === "analyze") setResult(body); else setReleases(body.releases ?? null);
     } catch (e) { if (!abort.signal.aborted) setError(e instanceof Error ? e.message : "Try again later."); }

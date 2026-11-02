@@ -18,10 +18,10 @@ export const builderCards = data.cards as BuilderCard[];
 export const cardsById = new Map(builderCards.map((card) => [card.id, card]));
 export const references = referenceData as ReferenceDeck[];
 export const RULES = {
-  checkedAt: "2026-10-07", effectiveAt: "2026-09-18", format: "Standard 1v1",
+  checkedAt: "2026-11-01", effectiveAt: "2026-09-18", format: "Standard 1v1",
   source: "https://playriftbound.com/en-us/rules-hub/",
-  core: "https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/e9ac8e3d33e0f78cef296f5945aba7bc1313b086.pdf",
-  tournament: "https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/503da65669ced10598d62925a6f6bc15111af726.pdf",
+  core: "https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/5c7946f7c3b8c6e0faff85ab6dadc6d2e721ea94.pdf",
+  tournament: "https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/861752822d217edf37d9febaeaf77a7d924c1bb6.pdf",
   bans: ["Called Shot", "Ekko, Recurrent", "Draven, Vanquisher", "Fight or Flight", "Scrapheap", "Stealthy Pursuer", "Stacked Deck", "The Arena's Greatest", "Aspirant's Climb", "Dreaming Tree", "Obelisk of Power", "Reaver's Row"],
 };
 export const normalizeCard = (name: string) => name.normalize("NFKD").toLowerCase().replace(/[’‘]/g, "'").replace(/[^a-z0-9]+/g, " ").trim();

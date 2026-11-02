@@ -1,12 +1,8 @@
 import { env } from "cloudflare:workers";
-import { builderCards } from "./deck-builder";
-import { ADVISOR_VERSION, analyzeStrategy, parseAdvisorDeck } from "./deck-advisor";
+import { deckSnapshot, type DeckVersion, type SavedDeck } from "./deck-records";
 
-export type DeckVersion = { versionId: string; name: string; deckText: string; createdAt: string; snapshot: { advisorVersion: string; cardIds: string[]; analysis: ReturnType<typeof analyzeStrategy> | null; legacy?: boolean } };
-export function deckSnapshot(name: string, text: string, legacy = false): DeckVersion["snapshot"] {
-  const parsed = parseAdvisorDeck(name, text);
-  return { advisorVersion: ADVISOR_VERSION, cardIds: builderCards.map(c => c.id), analysis: parsed.unmatched.length ? null : analyzeStrategy(parsed.deck), ...(legacy ? { legacy: true } : {}) };
-}
+export type { DeckVersion, SavedDeck };
+export { deckSnapshot };
 export async function getDeckVersions(userId: string, deckId: string): Promise<DeckVersion[]> {
   const result = await database().prepare("SELECT version_id, name, deck_text, snapshot_json, created_at FROM deck_versions WHERE user_id = ? AND deck_id = ? ORDER BY created_at DESC, version_id DESC").bind(userId, deckId).all<{ version_id: string; name: string; deck_text: string; snapshot_json: string; created_at: string }>();
   return result.results.map(r => ({ versionId: r.version_id, name: r.name, deckText: r.deck_text, createdAt: r.created_at, snapshot: JSON.parse(r.snapshot_json) }));
@@ -15,11 +11,6 @@ export async function getDeckVersions(userId: string, deckId: string): Promise<D
 type SavedDeckRow = {
   deck_id: string; name: string; deck_text: string; hide_runes: number; hide_tokens: number;
   created_at: string; updated_at: string;
-};
-
-export type SavedDeck = {
-  deckId: string; name: string; deckText: string; hideRunes: boolean; hideTokens: boolean;
-  createdAt: string; updatedAt: string;
 };
 
 function database(): D1Database {

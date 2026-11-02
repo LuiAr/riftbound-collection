@@ -1,10 +1,15 @@
 import catalogData from "../data/catalog.json";
-import { RADIANCE_BASE_COUNT } from "./radiance";
+import radianceCatalogFile from "../data/generated/radiance-catalog.json";
+import { isRadianceCatalogComplete, RADIANCE_BASE_COUNT } from "./radiance";
 
 export type InventoryRow = Record<string, string>;
 export type CatalogCard = { code: string; name: string; set: string; number: string; rarity: string; domains: string[]; image: string | null };
-export type DisplayCard = CatalogCard & { quantity: number; foilQuantity: number; extra?: boolean };
-export const catalog = catalogData as CatalogCard[];
+export type NexusPrice = { standard: number | null; foil: number | null };
+export type DisplayCard = CatalogCard & { quantity: number; foilQuantity: number; extra?: boolean; nexusPrice?: NexusPrice };
+const baseCatalog = catalogData as CatalogCard[];
+const radianceCatalog = radianceCatalogFile as { cards: CatalogCard[] };
+export const catalog = [...baseCatalog, ...radianceCatalog.cards];
+export const radianceChecklistComplete = isRadianceCatalogComplete(catalog);
 const regularSetTotals: Record<string, number> = { Vendetta: 166, Unleashed: 219, Spiritforged: 221, Origins: 298, "Proving Grounds": 24, Radiance: RADIANCE_BASE_COUNT };
 
 export function isAlternatePrinting(card: DisplayCard): boolean {
@@ -68,46 +73,112 @@ export function setForExpansion(expansion: string): string {
   if (expansion === "Origins - Main Set") return "Origins";
   if (expansion === "Origins - Proving Grounds") return "Proving Grounds";
   if (expansion === "Vendetta - Promo Cards") return "Vendetta Promos";
-  if (expansion === "Radiance - Main Set") return "Radiance";
+  if (expansion === "Radiance" || expansion === "Radiance - Main Set") return "Radiance";
+  if (expansion === "Radiance - Promo Cards") return "Radiance Promos";
   return expansion;
 }
 
-const numberKey = (value: string) => value.trim().toLowerCase().replace(/^0+(?=\d)/, "");
-const catalogBySetNumber = new Map<string, CatalogCard>();
-for (const card of catalog) {
-  const key = `${card.set}|${numberKey(card.number)}`;
-  if (!catalogBySetNumber.has(key) || (catalogBySetNumber.get(key)!.code.includes("-star-") && !card.code.includes("-star-"))) catalogBySetNumber.set(key, card);
-}
-export function findCatalogCard(row: InventoryRow): CatalogCard | undefined {
-  const set = setForExpansion(row.expansion) === "Vendetta Promos" ? "Vendetta" : setForExpansion(row.expansion);
-  const number = numberKey(row.printNumber);
-  return catalogBySetNumber.get(`${set}|${number}`) ?? (number.endsWith("a") ? catalogBySetNumber.get(`${set}|${number.slice(0, -1)}`) : undefined);
+type Holding = { quantity: number; foilQuantity: number; standardPrice: number | null; foilPrice: number | null };
+const emptyHolding = (): Holding => ({ quantity: 0, foilQuantity: 0, standardPrice: null, foilPrice: null });
+
+function rowPrice(row: InventoryRow): number | null {
+  const raw = row.price?.trim();
+  if (!raw) return null;
+  const value = Number(raw);
+  return Number.isFinite(value) && value >= 0 ? Math.round(value * 100) / 100 : null;
 }
 
-export function displayCards(rows: InventoryRow[]): DisplayCard[] {
-  const owned = new Map<string, { quantity: number; foilQuantity: number }>();
+function rememberPrice(current: number | null, next: number | null): number | null {
+  return current ?? next;
+}
+
+function nexusPrice(holding: Holding): NexusPrice | undefined {
+  if (holding.standardPrice == null && holding.foilPrice == null) return undefined;
+  return { standard: holding.standardPrice, foil: holding.foilPrice };
+}
+
+function indexCatalog(cards: readonly CatalogCard[]): Map<string, CatalogCard> {
+  const map = new Map<string, CatalogCard>();
+  for (const card of cards) {
+    const key = `${card.set}|${numberKey(card.number)}`;
+    if (!map.has(key) || (map.get(key)!.code.includes("-star-") && !card.code.includes("-star-"))) map.set(key, card);
+  }
+  return map;
+}
+
+const numberKey = (value: string) => value.trim().toLowerCase().replace(/^0+(?=\d)/, "");
+const catalogBySetNumber = indexCatalog(catalog);
+
+function lookupCatalogCard(map: Map<string, CatalogCard>, row: InventoryRow): CatalogCard | undefined {
+  const sourceSet = setForExpansion(row.expansion);
+  const set = sourceSet === "Vendetta Promos" ? "Vendetta" : sourceSet;
+  const number = numberKey(row.printNumber);
+  return map.get(`${set}|${number}`) ?? (number.endsWith("a") ? map.get(`${set}|${number.slice(0, -1)}`) : undefined);
+}
+
+export function findCatalogCard(row: InventoryRow): CatalogCard | undefined {
+  return lookupCatalogCard(catalogBySetNumber, row);
+}
+
+export function displayCards(rows: InventoryRow[], source: readonly CatalogCard[] = catalog): DisplayCard[] {
+  const bySetNumber = source === catalog ? catalogBySetNumber : indexCatalog(source);
+  const owned = new Map<string, Holding>();
   const extras = new Map<string, DisplayCard>();
+  const extraHoldings = new Map<string, Holding>();
   for (const row of rows) {
     const quantity = Number(row.totalQtyOwned) || 0;
     const foil = row.finish.trim().toLowerCase().includes("foil") ? quantity : 0;
+    const price = rowPrice(row);
     const sourceSet = setForExpansion(row.expansion);
     const set = sourceSet === "Vendetta Promos" ? "Vendetta" : sourceSet;
-    const candidate = catalogBySetNumber.get(`${set}|${numberKey(row.printNumber)}`);
-    const exact = sourceSet !== "Vendetta Promos" || (candidate && candidate.name.trim().toLowerCase() === row.name.trim().toLowerCase()) ? candidate : undefined;
+    const candidate = bySetNumber.get(`${set}|${numberKey(row.printNumber)}`);
+    const exact = sourceSet === "Radiance Promos" ? undefined : sourceSet !== "Vendetta Promos" || (candidate && candidate.name.trim().toLowerCase() === row.name.trim().toLowerCase()) ? candidate : undefined;
     if (exact) {
-      const previous = owned.get(exact.code) ?? { quantity: 0, foilQuantity: 0 };
-      owned.set(exact.code, { quantity: previous.quantity + quantity, foilQuantity: previous.foilQuantity + foil });
+      const previous = owned.get(exact.code) ?? emptyHolding();
+      previous.quantity += quantity;
+      previous.foilQuantity += foil;
+      if (foil > 0) previous.foilPrice = rememberPrice(previous.foilPrice, price);
+      else previous.standardPrice = rememberPrice(previous.standardPrice, price);
+      owned.set(exact.code, previous);
     } else {
-      const key = `${set}|${numberKey(row.printNumber)}|${row.productId || row.name}`;
+      const key = set === "Radiance" || sourceSet === "Radiance Promos"
+        ? `${sourceSet}|${numberKey(row.printNumber)}|${row.name.trim().toLowerCase()}`
+        : `${set}|${numberKey(row.printNumber)}|${row.productId || row.name}`;
       const previous = extras.get(key);
-      if (previous) { previous.quantity += quantity; previous.foilQuantity += foil; }
-      else {
-        const fallback = findCatalogCard(row);
-        extras.set(key, { code: `extra:${key}`, name: row.name, set, number: row.printNumber, rarity: fallback?.rarity ?? "Unknown", domains: fallback?.domains ?? [], image: fallback?.image ?? null, quantity, foilQuantity: foil, extra: true });
+      const previousHolding = extraHoldings.get(key);
+      if (previous && previousHolding) {
+        previous.quantity += quantity;
+        previous.foilQuantity += foil;
+        if (foil > 0) previousHolding.foilPrice = rememberPrice(previousHolding.foilPrice, price);
+        else previousHolding.standardPrice = rememberPrice(previousHolding.standardPrice, price);
+        previous.nexusPrice = nexusPrice(previousHolding);
+      } else {
+        const fallback = sourceSet === "Radiance Promos" || set === "Radiance" ? undefined : lookupCatalogCard(bySetNumber, row);
+        const holding = emptyHolding();
+        holding.quantity = quantity;
+        holding.foilQuantity = foil;
+        if (foil > 0) holding.foilPrice = price;
+        else holding.standardPrice = price;
+        extraHoldings.set(key, holding);
+        extras.set(key, { code: `extra:${key}`, name: row.name, set, number: row.printNumber, rarity: fallback?.rarity ?? "Unknown", domains: fallback?.domains ?? [], image: fallback?.image ?? null, quantity, foilQuantity: foil, extra: true, nexusPrice: nexusPrice(holding) });
       }
     }
   }
-  return [...catalog.map((card) => ({ ...card, ...(owned.get(card.code) ?? { quantity: 0, foilQuantity: 0 }) })), ...extras.values()];
+  return [
+    ...source.map((card) => {
+      const holding = owned.get(card.code) ?? emptyHolding();
+      const price = nexusPrice(holding);
+      return { ...card, quantity: holding.quantity, foilQuantity: holding.foilQuantity, ...(price ? { nexusPrice: price } : {}) };
+    }),
+    ...extras.values(),
+  ];
+}
+
+/** Owned Radiance rows stay visible. A partial checklist does not fill the gallery with unowned numbers. */
+export function cardsForCollectionView(rows: InventoryRow[], source: readonly CatalogCard[] = catalog): DisplayCard[] {
+  const cards = displayCards(rows, source);
+  if (isRadianceCatalogComplete(source)) return cards;
+  return cards.filter((card) => card.set !== "Radiance" || card.quantity > 0);
 }
 
 type Difference = { name: string; expansion: string; printNumber: string; quantity: number; foilQuantity: number };

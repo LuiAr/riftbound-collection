@@ -19,17 +19,17 @@ let cached: { until: number; snapshot: PriceSnapshot } | null = null;
 
 const saleAverage = (value: unknown): number | null => typeof value === "number" && Number.isFinite(value) && value > 0 ? value : null;
 
-export async function loadPrices(): Promise<PriceSnapshot> {
+export async function loadPrices(options?: { allowStale?: boolean }): Promise<PriceSnapshot> {
   if (cached && cached.until > Date.now()) return cached.snapshot;
   const [productsResponse, guidesResponse] = await Promise.all([
-    fetch(PRODUCTS_URL, { signal: AbortSignal.timeout(12000) }),
-    fetch(PRICES_URL, { signal: AbortSignal.timeout(12000) }),
+    fetch(PRODUCTS_URL, { signal: AbortSignal.timeout(60000) }),
+    fetch(PRICES_URL, { signal: AbortSignal.timeout(60000) }),
   ]);
   if (!productsResponse.ok || !guidesResponse.ok) throw new Error("Cardmarket downloads are unavailable.");
   const productsData = await productsResponse.json() as { products?: Product[] };
   const guidesData = await guidesResponse.json() as { createdAt?: string; priceGuides?: Guide[] };
   if (!Array.isArray(productsData.products) || !Array.isArray(guidesData.priceGuides) || !guidesData.createdAt || !Number.isFinite(Date.parse(guidesData.createdAt))) throw new Error("Cardmarket downloads have an unexpected format.");
-  if (Date.now() - Date.parse(guidesData.createdAt) > 3 * 24 * 60 * 60 * 1000) throw new Error("Cardmarket prices are older than three days.");
+  if (!options?.allowStale && Date.now() - Date.parse(guidesData.createdAt) > 3 * 24 * 60 * 60 * 1000) throw new Error("Cardmarket prices are older than three days.");
 
   const catalogCounts = new Map<string, number>();
   for (const card of catalog) {

@@ -1,11 +1,11 @@
 import { env } from "cloudflare:workers";
 import initialInventory from "../data/initial-inventory.json";
 import { CARD_NEXUS_COLUMNS, type InventoryRow } from "./collection";
+import type { CollectionSnapshot, CollectionVersion } from "./collection-snapshot";
 
 type Meta = { active_import_id: string; headers_json: string; version: number; imported_at: string; source_name: string };
 type ImportMeta = { import_id: string; headers_json: string; version: number; imported_at: string; source_name: string };
-export type CollectionVersion = { importId: string; version: number; importedAt: string; sourceName: string };
-export type CollectionSnapshot = { rows: InventoryRow[]; headers: string[]; version: number; importedAt: string | null; importId: string | null; sourceName: string | null };
+export type { CollectionSnapshot, CollectionVersion };
 
 function database(): D1Database {
   if (!env.DB) throw new Error("Collection storage is unavailable.");
