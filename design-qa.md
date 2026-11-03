@@ -4,7 +4,7 @@ final result: passed
 
 ## Evidence and comparison state
 
-- Selected visual truth: `/Users/louisar/.codex/generated_images/01a13421-66c7-7990-8ad1-85b0c0e2f15b/exec-a6e44001-cbbd-49f4-9e02-017079cf2317.png` (displayed option 2).
+- Selected visual truth: the generated Product Design option 2 image, kept outside the repository.
 - Implementation: `http://localhost:5173/`, using the existing Vinext/Sites development runtime and an isolated local D1 database. Production authentication and data were not altered.
 - Implementation screenshots: `outputs/design-qa/desktop-final.jpg`, `phone-top.jpg`, `phone-final.jpg`, `tablet.jpg`, `card-dialog.jpg`, `decks-desktop.jpg`, `builder-desktop.jpg`, `builder-phone.jpg`, and `history-desktop.jpg`. Evidence stays in ignored local outputs, outside public assets.
 - Desktop CSS viewport: 1487 × 1058, devicePixelRatio 1. Source pixels: 1487 × 1058. Browser capture pixels: 1472 × 1047; the browser capture includes a small viewport/capture size difference. The comparison copy is scaled to the source dimensions (about 1.01×); originals are retained.
