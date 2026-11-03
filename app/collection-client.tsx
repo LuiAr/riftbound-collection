@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
-import { ArrowRight, BookOpen, ChartNoAxesColumnIncreasing, ChevronDown, Clock3, Download, ImageOff, LayoutGrid, Layers3, Search, Upload } from "lucide-react";
+import { ArrowRight, BookOpen, ChartNoAxesColumnIncreasing, ChevronDown, Clock3, Download, GalleryVertical, Grid2x2, Grid3x3, ImageOff, LayoutGrid, Layers3, NotebookTabs, Search, Upload } from "lucide-react";
 import { cardsForCollectionView, compareInventories, exportCsv, hasFoilTreatment, isAlternatePrinting, isOvernumbered, parseCardNexusCsv, radianceChecklistComplete, type DisplayCard, type ImportDifference, type NexusPrice } from "../lib/collection";
 import { matchesCardType, rarityFor, type RarityKind } from "../lib/rarity";
 import { oneOfEachGoal } from "../lib/goals";
@@ -18,6 +18,7 @@ import DeckBuilder from "./deck-builder";
 import HistoryCompare from "./history-compare";
 import CardArtwork from "../components/card-artwork";
 import MissingCardButton from "../components/missing-card-button";
+import CardBinder, { type BinderLayout } from "../components/card-binder";
 
 type Props = { initial: CollectionSnapshot; initialHistory: CollectionVersion[]; snapshots: Record<string, CollectionSnapshot> };
 type Preview = { difference: ImportDifference; version: number; filename: string; csv: string };
@@ -35,6 +36,20 @@ const formatNumber = (value: number) => new Intl.NumberFormat("en-US").format(va
 const formatPrice = (value: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "EUR" }).format(value);
 type PricedCard = { card: DisplayCard; amount: number; finish: "Standard" | "Foil" };
 type Ownership = "all" | "owned" | "missing" | "needs";
+type CardView = "gallery" | "binder";
+const VIEW_STORAGE_KEY = "riftbound-collection:card-view";
+
+function readViewPreference(): { view: CardView; layout: BinderLayout } | null {
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(VIEW_STORAGE_KEY) ?? "null");
+    if (!saved) return null;
+    return { view: saved.view === "binder" ? "binder" : "gallery", layout: saved.layout === 2 ? 2 : 3 };
+  } catch { return null; }
+}
+
+function saveViewPreference(view: CardView, layout: BinderLayout) {
+  try { window.localStorage.setItem(VIEW_STORAGE_KEY, JSON.stringify({ view, layout })); } catch {}
+}
 
 function preferredPrinting(card: DisplayCard): number {
   if (card.extra) return 2;
@@ -97,6 +112,17 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [selectedCard, setSelectedCard] = useState<DisplayCard | null>(null);
+  const [cardView, setCardView] = useState<CardView>("gallery");
+  const [binderLayout, setBinderLayout] = useState<BinderLayout>(3);
+  useEffect(() => {
+    const saved = readViewPreference();
+    if (saved) { setCardView(saved.view); setBinderLayout(saved.layout); }
+  }, []);
+  function chooseView(view: CardView, layout: BinderLayout = binderLayout) {
+    setCardView(view);
+    setBinderLayout(layout);
+    saveViewPreference(view, layout);
+  }
   const prices = market.prices;
   const priceError = market.priceError ?? "";
   const fileInput = useRef<HTMLInputElement>(null);
@@ -276,6 +302,13 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
           <div className="mobile-set-filter"><SingleFilter label="Set" value={selectedSet} options={setOptions} onChange={setSelectedSet} /></div>
           <div className="filter-field rarity-filter-field"><span id="rarity-filter-label">Rarity &amp; printing</span><DropdownMenu><DropdownMenuTrigger aria-labelledby="rarity-filter-label rarity-filter-value" className="filter-trigger"><span id="rarity-filter-value">{selectedRarities.length === 0 ? "All rarities" : selectedRarities.length === 1 ? rarityOptions.find((option) => option.kind === selectedRarities[0])?.label : `${selectedRarities.length} rarities selected`}</span><ChevronDown aria-hidden="true" /></DropdownMenuTrigger><DropdownMenuContent align="start" className="filter-menu"><DropdownMenuItem onSelect={() => setSelectedRarities([])}>All rarities</DropdownMenuItem><DropdownMenuSeparator />{rarityOptions.map(({ kind, label }) => <DropdownMenuCheckboxItem key={kind} checked={selectedRarities.includes(kind)} onCheckedChange={(checked) => setSelectedRarities((current) => checked ? [...current, kind] : current.filter((item) => item !== kind))} onSelect={(event) => event.preventDefault()}>{label}</DropdownMenuCheckboxItem>)}</DropdownMenuContent></DropdownMenu></div>
         </div>
+        <div className="view-bar">
+          <span className="view-bar-count" aria-hidden="true">{plural(visibleCards.length, "card", "cards")}</span>
+          <div className="view-bar-controls">
+            {cardView === "binder" && <div className="segmented-toggle" role="group" aria-label="Cards per binder page"><button type="button" aria-pressed={binderLayout === 2} onClick={() => chooseView("binder", 2)} title="4 cards per page"><Grid2x2 aria-hidden="true" />2×2</button><button type="button" aria-pressed={binderLayout === 3} onClick={() => chooseView("binder", 3)} title="9 cards per page"><Grid3x3 aria-hidden="true" />3×3</button></div>}
+            <div className="segmented-toggle" role="group" aria-label="Card view"><button type="button" aria-pressed={cardView === "gallery"} onClick={() => chooseView("gallery")}><GalleryVertical aria-hidden="true" />Gallery</button><button type="button" aria-pressed={cardView === "binder"} onClick={() => chooseView("binder")}><NotebookTabs aria-hidden="true" />Binder</button></div>
+          </div>
+        </div>
         {status === "needs" && <p className="filter-note">Need copies to reach the deck limit: 3 per main-deck card, 1 per Legend or Battlefield. All printings count together; runes and tokens are excluded. Radiance printings stay out of this count until their deck types are reviewed.</p>}
       </div>
       <aside className={`insights-panel panel${overviewOpen ? " open" : ""}`} aria-labelledby="overview-title">
@@ -287,7 +320,7 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
         <div className="insight-section price-insight"><h3>Card values</h3>{prices ? <><p>Cardmarket 7-day sale averages in EUR, updated {new Date(prices.createdAt).toLocaleDateString("en-US", { day: "numeric", month: "short" })}</p>{priceError && <p>{priceError}</p>}<h4>Most valuable priced card</h4>{priceHighlights.mostValuable ? <button type="button" className="price-card-row" onClick={() => openCard(priceHighlights.mostValuable!.card)}><span>{priceHighlights.mostValuable.card.name}<small>{priceHighlights.mostValuable.card.set} · {priceHighlights.mostValuable.finish}</small></span><strong>{formatPrice(priceHighlights.mostValuable.amount)}</strong></button> : <p>No owned cards have a 7-day average yet.</p>}<p className="price-coverage">{priceHighlights.pricedOwned} of {ownedTotal} owned printings priced</p><h4>Unowned cards to watch</h4>{priceHighlights.watch.length ? priceHighlights.watch.map((item) => <button type="button" className="price-card-row" key={`${item.card.code}-${item.finish}`} onClick={() => openCard(item.card)}><span>{item.card.name}<small>{item.card.number.toUpperCase()} · {item.finish}</small></span><strong>{formatPrice(item.amount)}</strong></button>) : <p>No matched 7-day prices in this set.</p>}</> : priceError ? <p>{priceError}</p> : <div role="status" aria-label="Loading recent prices"><span className="skeleton skeleton-line" /><span className="skeleton skeleton-row" /><span className="skeleton skeleton-line short" /><span className="skeleton skeleton-row" /></div>}<p className="price-source"><a href="https://www.cardmarket.com/en/Riftbound/Data/Price-Guide" target="_blank" rel="noreferrer">Cardmarket price guide</a> · Estimates vary by condition and language.</p></div>
         </div>
       </aside>
-      {visibleCards.length ? <div className="card-grid" aria-label="Cards">{visibleCards.map((card) => <CardTile key={card.code} card={card} deckGoal={deckGoals.get(deckCardKey(card))} showNeed={status === "needs"} onOpen={openCard} />)}</div> : <div className="empty-state"><p>{status === "needs" ? "No cards need more copies for these filters." : "No cards match these filters."}</p><button type="button" className="secondary-button" onClick={() => { setSearch(""); setStatus("all"); setSelectedRarities([]); }}>Clear filters</button></div>}
+      {visibleCards.length && cardView === "binder" ? <CardBinder key={`${snapshot.importId}|${selectedSet}|${status}|${search.trim().toLowerCase()}|${selectedRarities.join(",")}`} cards={visibleCards} layout={binderLayout} onOpen={openCard} /> : visibleCards.length ? <div className="card-grid" aria-label="Cards">{visibleCards.map((card) => <CardTile key={card.code} card={card} deckGoal={deckGoals.get(deckCardKey(card))} showNeed={status === "needs"} onOpen={openCard} />)}</div> : <div className="empty-state"><p>{status === "needs" ? "No cards need more copies for these filters." : "No cards match these filters."}</p><button type="button" className="secondary-button" onClick={() => { setSearch(""); setStatus("all"); setSelectedRarities([]); }}>Clear filters</button></div>}
     </div>
     </div>}
     <Dialog open={selectedCard !== null} onOpenChange={(open) => { if (!open) setSelectedCard(null); }}>

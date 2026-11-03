@@ -45,6 +45,7 @@
   --card-radius: 5% / 3.58%;
   --card-frame-radius: calc(5% + 1.9px) / calc(3.58% + 1.9px);
   --ease: cubic-bezier(.16, 1, .3, 1);
+  --foil-gradient: conic-gradient(from 210deg, #f07f00, #ffd36b, #4fd8c8, #9c7bff, #f07f00);
   font-family: var(--font);
   background: var(--bg);
   color: var(--ink);
@@ -173,7 +174,7 @@ h1 { margin: 0; font-size: clamp(32px, 3.4vw, 44px); font-weight: 800; line-heig
 .card-open:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; border-radius: 12px; }
 .card-frame { padding: 2px; border-radius: var(--card-frame-radius); background: var(--line-strong); transition: transform .25s var(--ease), background .2s var(--ease), box-shadow .25s var(--ease); }
 .card-frame.missing { background: var(--line); }
-.card-frame.shiny { background: conic-gradient(from 210deg, #f07f00, #ffd36b, #4fd8c8, #9c7bff, #f07f00); }
+.card-frame.shiny { background: var(--foil-gradient); }
 .card-open:hover .card-frame { transform: translateY(-4px); box-shadow: 0 12px 24px rgb(var(--shadow-tint) / .16); }
 .card-open:active .card-frame { transform: translateY(-1px) scale(.99); }
 .card-open:hover .card-frame:not(.shiny) { background: var(--ink); }
