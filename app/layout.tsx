@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/figtree";
 import "./globals.css";
 import "./atlas.css";
+import "./binder.css";
 import "./rules/rules.css";
 import { sitePath } from "../lib/site-path";
 
