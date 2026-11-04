@@ -1,10 +1,12 @@
 import type { CSSProperties } from "react";
 import type { Metadata, Viewport } from "next";
-import "@fontsource-variable/figtree";
+import "@fontsource-variable/archivo/wdth.css";
+import "@fontsource-variable/jetbrains-mono";
 import "./globals.css";
 import "./atlas.css";
 import "./binder.css";
 import "./rules/rules.css";
+import "./ledger.css";
 import { sitePath } from "../lib/site-path";
 
 export const metadata: Metadata = {

@@ -28,8 +28,8 @@
 .binder-slider::-moz-range-thumb { width: 16px; height: 16px; border: 3px solid var(--surface); border-radius: 50%; background: var(--accent); box-shadow: 0 1px 4px rgb(var(--shadow-tint) / .35); }
 .binder-slider:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: var(--radius-pill); }
 
-.binder-cover { --sleeve: color-mix(in srgb, var(--on-ink) 6%, transparent); --sleeve-line: color-mix(in srgb, var(--on-ink) 12%, transparent); display: grid; grid-template-columns: repeat(var(--binder-pages, 1), minmax(0, 1fr)); width: var(--binder-width); padding: 12px; border-radius: var(--radius-panel); background: var(--ink); box-shadow: 0 18px 40px rgb(var(--shadow-tint) / .28), inset 0 0 0 1px color-mix(in srgb, var(--on-ink) 8%, transparent); touch-action: pan-y; user-select: none; -webkit-user-select: none; }
-.binder-page { position: relative; min-width: 0; padding: 16px 14px 34px 50px; border-radius: 12px; background: linear-gradient(135deg, var(--ink-2), color-mix(in srgb, var(--ink-2) 55%, var(--ink))); box-shadow: inset 0 0 0 1px var(--sleeve-line); }
+.binder-cover { --sleeve: color-mix(in srgb, var(--on-ink) 6%, transparent); --sleeve-line: color-mix(in srgb, var(--on-ink) 12%, transparent); display: grid; grid-template-columns: repeat(var(--binder-pages, 1), minmax(0, 1fr)); width: var(--binder-width); padding: 12px; border-radius: var(--radius-panel); background: var(--panel-dark); box-shadow: 0 18px 40px rgb(var(--shadow-tint) / .28), inset 0 0 0 1px color-mix(in srgb, var(--on-ink) 8%, transparent); touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.binder-page { position: relative; min-width: 0; padding: 16px 14px 34px 50px; border-radius: 12px; background: var(--panel-dark-2); box-shadow: inset 0 0 0 1px var(--sleeve-line); }
 .binder-cover.spread .binder-page.left { padding: 18px 46px 36px 18px; border-radius: 12px 4px 4px 12px; box-shadow: inset 0 0 0 1px var(--sleeve-line), inset -18px 0 22px -16px rgb(var(--shadow-tint) / .9); }
 .binder-cover.spread .binder-page.right { padding: 18px 18px 36px 46px; border-radius: 4px 12px 12px 4px; box-shadow: inset 0 0 0 1px var(--sleeve-line), inset 18px 0 22px -16px rgb(var(--shadow-tint) / .9); }
 .binder-rings { position: absolute; z-index: 3; top: 7%; bottom: 7%; left: 12px; display: flex; flex-direction: column; justify-content: space-between; width: 24px; pointer-events: none; }
@@ -48,13 +48,19 @@
 button.binder-pocket:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px var(--sleeve-line), 0 10px 22px rgb(var(--shadow-tint) / .55); }
 button.binder-pocket:active { transform: translateY(-1px) scale(.99); }
 button.binder-pocket:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
-.binder-card { position: relative; display: block; overflow: hidden; aspect-ratio: 744 / 1039; border-radius: var(--card-radius); background: var(--ink-2); }
+.binder-card { position: relative; display: block; overflow: hidden; aspect-ratio: 744 / 1039; border-radius: var(--card-radius); background: var(--panel-dark); }
 .binder-card img { display: block; width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; }
-.binder-pocket.missing .binder-card img { filter: grayscale(1); opacity: .32; }
+.binder-pocket.missing { background: transparent; box-shadow: none; outline: 1.5px dashed var(--panel-dark-line); outline-offset: -1.5px; }
+.binder-pocket.missing .binder-card { background: transparent; }
+.binder-pocket.missing .binder-card img { filter: grayscale(1); opacity: .22; }
 .binder-card .no-image { color: var(--on-ink); background: transparent; font-size: 12px; }
-.binder-number { position: absolute; z-index: 2; left: 6px; bottom: 6px; max-width: calc(100% - 52px); overflow: hidden; padding: 3px 8px; border-radius: var(--radius-pill); background: rgb(var(--shadow-tint) / .78); color: var(--on-ink); font-size: 12px; font-weight: 700; line-height: 1.2; font-variant-numeric: tabular-nums; text-overflow: ellipsis; white-space: nowrap; }
+.binder-number { position: absolute; z-index: 2; left: 6px; bottom: 6px; max-width: calc(100% - 52px); overflow: hidden; padding: 3px 8px; border-radius: var(--radius-pill); background: rgb(var(--shadow-tint) / .78); color: var(--on-ink); font-family: var(--mono); font-size: 11px; font-weight: 700; line-height: 1.2; font-variant-numeric: tabular-nums; text-overflow: ellipsis; white-space: nowrap; }
 .binder-pocket.missing .binder-number { color: color-mix(in srgb, var(--on-ink) 70%, transparent); }
-.binder-cover.layout-3 .binder-number { left: 4px; bottom: 4px; padding: 2px 6px; font-size: 10px; }
+.binder-cover.layout-3 .binder-number { left: 4px; bottom: 4px; padding: 2px 6px; font-size: 9px; }
+.binder-cover.layout-3 .binder-set { display: none; }
+.binder-pips { position: absolute; z-index: 2; top: 6px; right: 6px; padding: 3px 4px; border-radius: var(--radius-pill); background: rgb(var(--shadow-tint) / .72); }
+.binder-cover.layout-3 .binder-pips { top: 4px; right: 4px; }
+.binder-pocket.missing .binder-pips { display: none; }
 .binder-cover.layout-3 .quantity-badge { right: 4px; bottom: 4px; min-width: 26px; height: 20px; padding: 0 6px; font-size: 12px; }
 .binder-folio { position: absolute; right: 14px; bottom: 9px; color: color-mix(in srgb, var(--on-ink) 55%, transparent); font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .binder-cover.spread .binder-page.left .binder-folio { right: auto; left: 18px; }
@@ -69,5 +75,5 @@ button.binder-pocket:focus-visible { outline: 3px solid var(--accent); outline-o
   .binder-rings { left: 9px; width: 20px; }
 }
 @media (max-width: 420px) {
-  .binder-cover.layout-3 .binder-number { display: none; }
+  .binder-cover.layout-3 .binder-number, .binder-cover.layout-3 .binder-pips { display: none; }
 }

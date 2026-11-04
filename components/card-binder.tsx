@@ -4,14 +4,15 @@ import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, ty
 import { ChevronLeft, ChevronRight, ImageOff } from "lucide-react";
 import { hasFoilTreatment, type DisplayCard } from "../lib/collection";
 import { rarityFor } from "../lib/rarity";
-import { deckCardName } from "../lib/deck-copy-limit";
+import { deckCardKey, deckCardName, type DeckCopyGoal } from "../lib/deck-copy-limit";
+import { DeckPips, setCode } from "./ledger";
 
 export type BinderLayout = 2 | 3;
 
 const SPREAD_MIN_WIDTH = 760;
 const SWIPE_DISTANCE = 48;
 
-export default function CardBinder({ cards, layout, onOpen }: { cards: DisplayCard[]; layout: BinderLayout; onOpen: (card: DisplayCard) => void }) {
+export default function CardBinder({ cards, layout, goals, onOpen }: { cards: DisplayCard[]; layout: BinderLayout; goals?: Map<string, DeckCopyGoal>; onOpen: (card: DisplayCard) => void }) {
   const root = useRef<HTMLElement>(null);
   const swipe = useRef<{ x: number; y: number; id: number } | null>(null);
   const swiped = useRef(false);
@@ -88,7 +89,7 @@ export default function CardBinder({ cards, layout, onOpen }: { cards: DisplayCa
     <div className={`binder-cover layout-${layout}${spread ? " spread" : ""}`} onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => { swipe.current = null; }} onClickCapture={(event) => { if (swiped.current) { event.preventDefault(); event.stopPropagation(); swiped.current = false; } }}>
       {pages.map(({ page, slots, blank }, offset) => <div className={`binder-page${offset === 0 ? " left" : " right"}`} key={`${page}-${layout}`} data-direction={direction} role="group" aria-label={blank ? "Empty page" : `Page ${page + 1} of ${pageCount}`}>
         {offset === 0 && <span className="binder-rings" aria-hidden="true"><span /><span /><span /></span>}
-        <div className="binder-pockets">{slots.map((card, index) => card ? <BinderPocket key={card.code} card={card} onOpen={onOpen} /> : <span className="binder-pocket empty" key={`empty-${index}`} aria-hidden="true" />)}</div>
+        <div className="binder-pockets">{slots.map((card, index) => card ? <BinderPocket key={card.code} card={card} goal={goals?.get(deckCardKey(card))} onOpen={onOpen} /> : <span className="binder-pocket empty" key={`empty-${index}`} aria-hidden="true" />)}</div>
         <span className="binder-folio" aria-hidden="true">{blank ? "" : page + 1}</span>
       </div>)}
     </div>
@@ -96,7 +97,7 @@ export default function CardBinder({ cards, layout, onOpen }: { cards: DisplayCa
   </section>;
 }
 
-function BinderPocket({ card, onOpen }: { card: DisplayCard; onOpen: (card: DisplayCard) => void }) {
+function BinderPocket({ card, goal, onOpen }: { card: DisplayCard; goal?: DeckCopyGoal; onOpen: (card: DisplayCard) => void }) {
   const [failedSource, setFailedSource] = useState<string | null>(null);
   const shiny = hasFoilTreatment(card);
   const rarity = rarityFor(card);
@@ -105,7 +106,8 @@ function BinderPocket({ card, onOpen }: { card: DisplayCard; onOpen: (card: Disp
   return <button type="button" className={`binder-pocket${owned ? "" : " missing"}${shiny ? " shiny" : ""}`} onClick={() => onOpen(card)} aria-label={label} title={deckCardName(card)}>
     <span className="binder-card">
       {card.image && failedSource !== card.image ? <img src={card.image} alt="" draggable={false} onError={() => setFailedSource(card.image)} /> : <span className="no-image"><ImageOff aria-hidden="true" /><span>{card.name}</span></span>}
-      <span className="binder-number">#{card.number}</span>
+      <span className="binder-number"><span className="binder-set">{setCode(card.set)} </span>{card.number}</span>
+      <DeckPips card={card} goal={goal} className="binder-pips" />
       {owned && <span className={`quantity-badge${shiny ? " shiny" : ""}`}>×{card.quantity}</span>}
     </span>
   </button>;
