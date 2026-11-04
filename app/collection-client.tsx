@@ -22,7 +22,13 @@ import CardBinder, { type BinderLayout } from "../components/card-binder";
 
 type Props = { initial: CollectionSnapshot; initialHistory: CollectionVersion[]; snapshots: Record<string, CollectionSnapshot> };
 type Preview = { difference: ImportDifference; version: number; filename: string; csv: string };
-const setNames = ["Vendetta", "Unleashed", "Origins", "Spiritforged", "Proving Grounds", "Radiance", "Radiance Promos"];
+const mainSets = [
+  { name: "Radiance", number: 5 },
+  { name: "Vendetta", number: 4 },
+  { name: "Unleashed", number: 3 },
+  { name: "Spiritforged", number: 2 },
+  { name: "Origins", number: 1 },
+];
 const ownershipOptions: { value: Ownership; label: string }[] = [{ value: "all", label: "All cards" }, { value: "owned", label: "Owned" }, { value: "missing", label: "Missing" }, { value: "needs", label: "Need copies" }];
 const colors = ["Fury", "Calm", "Mind", "Body", "Order", "Chaos", "Colorless"];
 const rarityOptions: { kind: RarityKind; label: string }[] = [
@@ -137,8 +143,8 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
   const allCards = useMemo(() => cardsForCollectionView(snapshot.rows), [snapshot.rows]);
   const latestCards = useMemo(() => cardsForCollectionView(currentSnapshot.rows), [currentSnapshot.rows]);
   const deckCards = useMemo(() => latestCards.filter((card) => card.set !== "Radiance" && card.set !== "Radiance Promos"), [latestCards]);
-  const sets = useMemo(() => setNames.filter((set) => allCards.some((card) => card.set === set)), [allCards]);
-  const setOptions = useMemo(() => ["All sets", ...sets].map((set) => ({ value: set, label: set })), [sets]);
+  const sets = useMemo(() => mainSets.filter((set) => allCards.some((card) => card.set === set.name)), [allCards]);
+  const setOptions = useMemo(() => [{ value: "All sets", label: "All sets" }, ...sets.map((set) => ({ value: set.name, label: `${set.number} · ${set.name}` }))], [sets]);
   const deckGoals = useMemo(() => deckCopyGoals(allCards), [allCards]);
   const setCards = useMemo(() => allCards.filter((card) => selectedSet === "All sets" || card.set === selectedSet), [allCards, selectedSet]);
   const filteredCards = useMemo(() => {
@@ -168,9 +174,9 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
   const foils = setCards.reduce((sum, card) => sum + card.foilQuantity, 0);
   const goal = useMemo(() => oneOfEachGoal(allCards, selectedSet), [allCards, selectedSet]);
   const goalNote = radianceChecklistComplete && (selectedSet === "All sets" || selectedSet === "Radiance") ? "Radiance counts regular numbers 1–167 from the riftbound-cards checklist. Promos, runes, and cards without a sourced rarity stay out." : "";
-  const setSummary = sets.map((set) => {
+  const setSummary = sets.map(({ name: set, number }) => {
     const cards = allCards.filter((card) => card.set === set);
-    return { set, owned: cards.filter((card) => card.quantity > 0).length, total: cards.length };
+    return { set, number, owned: cards.filter((card) => card.quantity > 0).length, total: cards.length };
   }).filter((item) => item.total > 0);
   const colorSummary = colors.map((color) => {
     const cards = setCards.filter((card) => card.domains.includes(color));
@@ -254,7 +260,7 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
         <nav className="set-navigation" aria-labelledby="set-navigation-title">
           <div className="set-navigation-heading"><h2 id="set-navigation-title">By set</h2><button type="button" className={section === "collection" && selectedSet === "All sets" ? "all-sets-button active" : "all-sets-button"} aria-pressed={section === "collection" && selectedSet === "All sets"} onClick={() => { setSelectedSet("All sets"); setSection("collection"); }}>All sets</button></div>
           {viewedSnapshot && <p className="sidebar-version">Viewing version {viewedSnapshot.version}</p>}
-          {setSummary.map(({ set, owned, total }) => <button type="button" className={`stat-row ${section === "collection" && selectedSet === set ? "selected" : ""}`} aria-pressed={section === "collection" && selectedSet === set} key={set} onClick={() => { setSelectedSet(set); setSection("collection"); }}><span className="stat-title">{set}</span><span className="stat-value">{formatNumber(owned)}/{formatNumber(total)}</span><span className="stat-track"><span style={{ "--progress": ratio(owned, total) } as CSSProperties} /></span></button>)}
+          {setSummary.map(({ set, number, owned, total }) => <button type="button" className={`stat-row ${section === "collection" && selectedSet === set ? "selected" : ""}`} aria-pressed={section === "collection" && selectedSet === set} key={set} onClick={() => { setSelectedSet(set); setSection("collection"); }}><span className="stat-title"><span className="set-number"><span className="visually-hidden">Set </span>{number}</span>{set}</span><span className="stat-value">{formatNumber(owned)}/{formatNumber(total)}</span><span className="stat-track"><span style={{ "--progress": ratio(owned, total) } as CSSProperties} /></span></button>)}
           <button className="sidebar-insights" type="button" aria-expanded={section === "collection" && overviewOpen} aria-controls={section === "collection" ? "overview-content" : undefined} onClick={() => { setSection("collection"); setOverviewOpen(section === "collection" ? !overviewOpen : true); }}><ChartNoAxesColumnIncreasing aria-hidden="true" />Collection insights<ChevronDown aria-hidden="true" /></button>
         </nav>
       </div>

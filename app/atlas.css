@@ -17,6 +17,8 @@
 .all-sets-button:hover, .all-sets-button.active { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
 .set-navigation .stat-row { width: calc(100% + 24px); margin: 0 -12px 6px; padding: 12px; gap: 7px 8px; border-radius: var(--radius-control); font-size: 14px; }
 .set-navigation .stat-value { font-size: 14px; color: var(--muted); }
+.set-number { display: grid; place-items: center; flex: none; min-width: 22px; height: 22px; padding: 0 6px; border-radius: var(--radius-pill); background: var(--track); color: var(--ink-2); font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.stat-row.selected .set-number { background: var(--accent); color: var(--ink); }
 .set-navigation .stat-track { height: 6px; }
 .sidebar-version { margin: 0 0 12px; color: var(--accent-ink); font-size: 12px; font-weight: 600; }
 .sidebar-insights { display: flex; align-items: center; gap: 8px; width: 100%; margin: 18px 0 0; padding: 10px 0; border: 0; background: transparent; color: var(--muted); font-size: 13px; text-align: left; }
