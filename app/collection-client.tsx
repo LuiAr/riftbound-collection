@@ -48,7 +48,6 @@ type PricedCard = { card: DisplayCard; amount: number; finish: "Standard" | "Foi
 type Ownership = "all" | "owned" | "missing" | "needs";
 type CardView = "gallery" | "binder" | "checklist";
 type Section = "collection" | "decks" | "builder" | "history";
-const DEFAULT_SET = "Vendetta";
 const GALLERY_BATCH = 60;
 const sections: Section[] = ["collection", "decks", "builder", "history"];
 const ownershipValues: Ownership[] = ["all", "owned", "missing", "needs"];
@@ -127,9 +126,6 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
   const requestedSet = urlParams.get("set");
   function setSection(next: Section) {
     writeSearchParams({ section: next === "collection" ? null : next }, "push");
-  }
-  function setSelectedSet(set: string) {
-    writeSearchParams({ set: set === DEFAULT_SET ? null : set === "All sets" ? "all" : set });
   }
   function setStatus(next: Ownership) {
     writeSearchParams({ show: next === "all" ? null : next });
@@ -272,7 +268,9 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
   const latestCards = useMemo(() => cardsForCollectionView(currentSnapshot.rows), [currentSnapshot.rows]);
   const deckCards = useMemo(() => latestCards.filter((card) => card.set !== "Radiance" && card.set !== "Radiance Promos"), [latestCards]);
   const sets = useMemo(() => mainSets.filter((set) => allCards.some((card) => card.set === set.name)), [allCards]);
-  const selectedSet = requestedSet === "all" ? "All sets" : requestedSet && allCards.some((card) => card.set === requestedSet) ? requestedSet : DEFAULT_SET;
+  const latestSet = sets[0]?.name ?? "All sets";
+  const selectedSet = requestedSet === "all" ? "All sets" : requestedSet && allCards.some((card) => card.set === requestedSet) ? requestedSet : latestSet;
+  const setSelectedSet = (set: string) => writeSearchParams({ set: set === latestSet ? null : set === "All sets" ? "all" : set });
   const setOptions = useMemo(() => [{ value: "All sets", label: "All sets" }, ...sets.map((set) => ({ value: set.name, label: `${set.number} · ${set.name}` }))], [sets]);
   const deckGoals = useMemo(() => deckCopyGoals(allCards), [allCards]);
   const setCards = useMemo(() => allCards.filter((card) => selectedSet === "All sets" || card.set === selectedSet), [allCards, selectedSet]);
