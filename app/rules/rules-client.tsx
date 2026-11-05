@@ -36,6 +36,18 @@ export default function RulesClient() {
   const [query, setQuery] = useState("");
   const [group, setGroup] = useState("All");
   const referenceStart = useRef<HTMLDivElement>(null);
+  const [controlsStuck, setControlsStuck] = useState(false);
+  useEffect(() => {
+    const marker = referenceStart.current;
+    if (!marker) return;
+    let frame = 0;
+    const check = () => { frame = 0; setControlsStuck(marker.getBoundingClientRect().top < -1); };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(check); };
+    schedule();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => { window.removeEventListener("scroll", schedule); window.removeEventListener("resize", schedule); cancelAnimationFrame(frame); };
+  }, []);
   useEffect(() => {
     const syncTopic = () => {
       const requested = window.location.hash.slice(1);
@@ -63,21 +75,21 @@ export default function RulesClient() {
 
   return <>
     <a className="skip-link" href="#main-content">Skip to reference</a>
-    <header className="site-header rules-site-header"><div className="site-header-inner">
+    <header className="site-header rules-site-header app-site-header"><div className="site-header-inner">
       <a className="brand" href={sitePath("/")}><img className="brand-mark" src={sitePath("/riftbound-logo-96.png")} alt="" width="44" height="44" /><span>Riftbound<span className="brand-light">Collection</span></span></a>
       <nav className="section-nav" aria-label="Website sections">
-        <a href={sitePath("/")}><Layers3 aria-hidden="true" />My collection</a>
-        <a href={sitePath("/?section=decks")}><ChartNoAxesColumnIncreasing aria-hidden="true" />Decks &amp; upgrades</a>
-        <a href={sitePath("/?section=builder")}><LayoutGrid aria-hidden="true" />Deck builder</a>
-        <a href={sitePath("/?section=history")}><Clock3 aria-hidden="true" />History</a>
-        <a href={sitePath("/rules/")} className="active" aria-current="page"><BookOpen aria-hidden="true" />Rules &amp; reference</a>
+        <a href={sitePath("/")}><Layers3 aria-hidden="true" /><span className="nav-full">My collection</span><span className="nav-short" aria-hidden="true">Cards</span></a>
+        <a href={sitePath("/?section=decks")}><ChartNoAxesColumnIncreasing aria-hidden="true" /><span className="nav-full">Decks &amp; upgrades</span><span className="nav-short" aria-hidden="true">Decks</span></a>
+        <a href={sitePath("/?section=builder")}><LayoutGrid aria-hidden="true" /><span className="nav-full">Deck builder</span><span className="nav-short" aria-hidden="true">Builder</span></a>
+        <a href={sitePath("/?section=history")}><Clock3 aria-hidden="true" /><span className="nav-full">History</span><span className="nav-short" aria-hidden="true">History</span></a>
+        <a href={sitePath("/rules/")} className="active" aria-current="page"><BookOpen aria-hidden="true" /><span className="nav-full">Rules &amp; reference</span><span className="nav-short" aria-hidden="true">Rules</span></a>
       </nav>
       <div className="rules-sidebar-note"><BookOpen aria-hidden="true" /><p>A little less remembering.<br />A little more playing.</p><span>Checked 16 October 2026</span></div>
     </div></header>
     <main className="collection-shell rules-page" id="main-content" tabIndex={-1}>
       <div className="rules-heading"><div><h1>Rules &amp; reference</h1><p>Your quick lookup at the table.</p></div><span className="rules-edition"><Flag aria-hidden="true" />Radiance ready</span></div>
       <div ref={referenceStart} />
-      <div className="rules-controls">
+      <div className={`rules-controls${controlsStuck ? " stuck" : ""}`}>
         <div className="rules-search"><Search aria-hidden="true" /><label className="visually-hidden" htmlFor="reference-search">Search rules, symbols and keywords</label><input id="reference-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Find a keyword, symbol or rule…" />{query && <button type="button" onClick={() => setQuery("")} aria-label="Clear reference search"><X aria-hidden="true" /></button>}</div>
         <nav className="rules-topics" aria-label="Reference topics">{topics.map(({ id, label, icon: Icon }) => <button type="button" key={id} aria-pressed={!normalized && topic === id} onClick={() => chooseTopic(id)}><Icon aria-hidden="true" />{label}</button>)}</nav>
       </div>

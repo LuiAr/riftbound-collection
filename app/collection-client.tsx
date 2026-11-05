@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
-import { ArrowRight, ArrowUp, BookOpen, ChartNoAxesColumnIncreasing, ChevronDown, ChevronLeft, ChevronRight, Clock3, Download, GalleryVertical, Grid2x2, Grid3x3, ImageOff, LayoutGrid, Layers3, ListChecks, NotebookTabs, Search, Upload } from "lucide-react";
+import { ArrowRight, ArrowUp, BookOpen, Ellipsis, ChartNoAxesColumnIncreasing, ChevronDown, ChevronLeft, ChevronRight, Clock3, Download, GalleryVertical, Grid2x2, Grid3x3, ImageOff, LayoutGrid, Layers3, ListChecks, NotebookTabs, Search, Upload } from "lucide-react";
 import { cardsForCollectionView, compareInventories, exportCsv, hasFoilTreatment, isAlternatePrinting, isOvernumbered, parseCardNexusCsv, radianceChecklistComplete, type DisplayCard, type ImportDifference, type NexusPrice } from "../lib/collection";
 import { matchesCardType, rarityFor, type RarityKind } from "../lib/rarity";
 import { oneOfEachGoal } from "../lib/goals";
@@ -10,6 +10,7 @@ import { deckCardKey, deckCardName, deckCopyGoals, deckCopyLimit, type DeckCopyG
 import type { CollectionSnapshot, CollectionVersion } from "../lib/collection-snapshot";
 import { sitePath } from "../lib/site-path";
 import { useStaticSite } from "./static-context";
+import { currentSearchParams, useSearchString, writeSearchParams } from "../lib/url-state";
 import SingleFilter from "../components/single-filter";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../components/ui/dialog";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../components/ui/dropdown-menu";
@@ -46,6 +47,16 @@ const formatPrice = (value: number) => new Intl.NumberFormat("en-US", { style: "
 type PricedCard = { card: DisplayCard; amount: number; finish: "Standard" | "Foil" };
 type Ownership = "all" | "owned" | "missing" | "needs";
 type CardView = "gallery" | "binder" | "checklist";
+type Section = "collection" | "decks" | "builder" | "history";
+const DEFAULT_SET = "Vendetta";
+const GALLERY_BATCH = 60;
+const sections: Section[] = ["collection", "decks", "builder", "history"];
+const ownershipValues: Ownership[] = ["all", "owned", "missing", "needs"];
+const rarityKinds: RarityKind[] = ["common", "uncommon", "rare", "epic", "special"];
+
+function readRarities(params: URLSearchParams): RarityKind[] {
+  return (params.get("rarity") ?? "").split(",").filter((kind): kind is RarityKind => rarityKinds.includes(kind as RarityKind));
+}
 const VIEW_STORAGE_KEY = "riftbound-collection:card-view";
 
 function readViewPreference(): { view: CardView; layout: BinderLayout } | null {
@@ -105,11 +116,31 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
   const [currentSnapshot] = useState(initial);
   const [viewedSnapshot, setViewedSnapshot] = useState<CollectionSnapshot | null>(null);
   const [history] = useState(initialHistory);
-  const [section, setSection] = useState<"collection" | "decks" | "builder" | "history">("collection");
-  useEffect(() => {
-    const requested = new URLSearchParams(window.location.search).get("section");
-    if (requested === "decks" || requested === "builder" || requested === "history") setSection(requested);
-  }, []);
+  const searchString = useSearchString();
+  const urlParams = useMemo(() => new URLSearchParams(searchString), [searchString]);
+  const requestedSection = urlParams.get("section") as Section | null;
+  const section: Section = requestedSection && sections.includes(requestedSection) ? requestedSection : "collection";
+  const requestedStatus = urlParams.get("show") as Ownership | null;
+  const status: Ownership = requestedStatus && ownershipValues.includes(requestedStatus) ? requestedStatus : "all";
+  const selectedRarities = useMemo(() => readRarities(urlParams), [urlParams]);
+  const search = urlParams.get("q") ?? "";
+  const requestedSet = urlParams.get("set");
+  function setSection(next: Section) {
+    writeSearchParams({ section: next === "collection" ? null : next }, "push");
+  }
+  function setSelectedSet(set: string) {
+    writeSearchParams({ set: set === DEFAULT_SET ? null : set === "All sets" ? "all" : set });
+  }
+  function setStatus(next: Ownership) {
+    writeSearchParams({ show: next === "all" ? null : next });
+  }
+  function setSelectedRarities(next: RarityKind[] | ((current: RarityKind[]) => RarityKind[])) {
+    const value = typeof next === "function" ? next(readRarities(currentSearchParams())) : next;
+    writeSearchParams({ rarity: rarityKinds.filter((kind) => value.includes(kind)).join(",") || null });
+  }
+  function setSearch(query: string) {
+    writeSearchParams({ q: query || null });
+  }
   const sectionShown = useRef(false);
   useEffect(() => {
     if (!sectionShown.current) { sectionShown.current = true; return; }
@@ -117,11 +148,7 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
   }, [section]);
   const [historyError, setHistoryError] = useState("");
   const snapshot = viewedSnapshot ?? currentSnapshot;
-  const [selectedSet, setSelectedSet] = useState("Vendetta");
-  const [status, setStatus] = useState<Ownership>("all");
   const [overviewOpen, setOverviewOpen] = useState(false);
-  const [selectedRarities, setSelectedRarities] = useState<RarityKind[]>([]);
-  const [search, setSearch] = useState("");
   const [preview, setPreview] = useState<Preview | null>(null);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -136,11 +163,14 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
     setCardView(view);
     setBinderLayout(layout);
     saveViewPreference(view, layout);
+    if (view !== "binder" || !window.matchMedia("(max-width: 720px)").matches) return;
+    requestAnimationFrame(() => requestAnimationFrame(() => document.querySelector(".workspace-grid > .binder")?.scrollIntoView({ block: "nearest", behavior: scrollBehaviour() })));
   }
   const prices = market.prices;
   const priceError = market.priceError ?? "";
   const fileInput = useRef<HTMLInputElement>(null);
   const importTrigger = useRef<HTMLButtonElement>(null);
+  const actionsTrigger = useRef<HTMLButtonElement>(null);
   const cardTrigger = useRef<HTMLElement | null>(null);
 
   const [toolbar, setToolbar] = useState<HTMLDivElement | null>(null);
@@ -155,21 +185,76 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
     window.addEventListener("resize", schedule);
     return () => { window.removeEventListener("scroll", schedule); window.removeEventListener("resize", schedule); cancelAnimationFrame(frame); };
   }, [toolbar]);
-  const cardSheet = useRef<HTMLDivElement>(null);
-  const swipeStart = useRef<{ x: number; y: number } | null>(null);
+  const [cardSheet, setCardSheet] = useState<HTMLDivElement | null>(null);
   const selectedCode = selectedCard?.code;
   useEffect(() => {
-    const sheet = cardSheet.current;
-    if (!sheet) return;
-    sheet.scrollTop = 0;
-    sheet.querySelector(".card-detail-copy")?.scrollTo({ top: 0 });
-  }, [selectedCode]);
+    if (!cardSheet) return;
+    cardSheet.scrollTo({ top: 0 });
+    cardSheet.querySelector(".card-detail-copy")?.scrollTo({ top: 0 });
+  }, [selectedCode, cardSheet]);
+  useEffect(() => {
+    if (!cardSheet) return;
+    const sheet = cardSheet;
+    const phone = window.matchMedia("(max-width: 720px)");
+    let start: { x: number; y: number; time: number } | null = null;
+    let mode: "pending" | "drag" | "swipe" | "scroll" = "pending";
+    let offset = 0;
+    const settle = () => { delete sheet.dataset.dragging; sheet.style.removeProperty("--sheet-drag"); };
+    const onStart = (event: TouchEvent) => {
+      start = event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY, time: performance.now() } : null;
+      mode = "pending";
+      offset = 0;
+    };
+    const onMove = (event: TouchEvent) => {
+      if (!start) return;
+      const dx = event.touches[0].clientX - start.x;
+      const dy = event.touches[0].clientY - start.y;
+      if (mode === "pending") {
+        if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+        if (Math.abs(dy) > Math.abs(dx)) mode = dy > 0 && sheet.scrollTop <= 0 && phone.matches ? "drag" : "scroll";
+        else mode = "swipe";
+      }
+      if (mode !== "drag") return;
+      event.preventDefault();
+      offset = Math.max(0, dy);
+      sheet.dataset.dragging = "true";
+      sheet.style.setProperty("--sheet-drag", `${offset}px`);
+    };
+    const onEnd = (event: TouchEvent) => {
+      if (!start) return;
+      const dx = event.changedTouches[0].clientX - start.x;
+      const dy = event.changedTouches[0].clientY - start.y;
+      const elapsed = Math.max(1, performance.now() - start.time);
+      start = null;
+      if (mode === "drag") {
+        delete sheet.dataset.dragging;
+        if (offset > 120 || (offset > 40 && offset / elapsed > 0.6)) {
+          sheet.style.setProperty("--sheet-drag", "100%");
+          window.setTimeout(() => sheet.querySelector<HTMLButtonElement>('[data-slot="dialog-close"]')?.click(), 180);
+        } else sheet.style.removeProperty("--sheet-drag");
+      } else if (mode === "swipe" && Math.abs(dx) >= 60 && Math.abs(dx) >= 2 * Math.abs(dy)) {
+        sheet.querySelector<HTMLButtonElement>(`[data-step="${dx > 0 ? "previous" : "next"}"]`)?.click();
+      }
+      mode = "pending";
+    };
+    const onCancel = () => { start = null; mode = "pending"; settle(); };
+    sheet.addEventListener("touchstart", onStart, { passive: true });
+    sheet.addEventListener("touchmove", onMove, { passive: false });
+    sheet.addEventListener("touchend", onEnd);
+    sheet.addEventListener("touchcancel", onCancel);
+    return () => {
+      sheet.removeEventListener("touchstart", onStart);
+      sheet.removeEventListener("touchmove", onMove);
+      sheet.removeEventListener("touchend", onEnd);
+      sheet.removeEventListener("touchcancel", onCancel);
+    };
+  }, [cardSheet]);
 
   function scrollBehaviour(): ScrollBehavior {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth";
   }
 
-  function goToSection(next: typeof section) {
+  function goToSection(next: Section) {
     if (next === section) window.scrollTo({ top: 0, behavior: scrollBehaviour() });
     else setSection(next);
   }
@@ -187,6 +272,7 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
   const latestCards = useMemo(() => cardsForCollectionView(currentSnapshot.rows), [currentSnapshot.rows]);
   const deckCards = useMemo(() => latestCards.filter((card) => card.set !== "Radiance" && card.set !== "Radiance Promos"), [latestCards]);
   const sets = useMemo(() => mainSets.filter((set) => allCards.some((card) => card.set === set.name)), [allCards]);
+  const selectedSet = requestedSet === "all" ? "All sets" : requestedSet && allCards.some((card) => card.set === requestedSet) ? requestedSet : DEFAULT_SET;
   const setOptions = useMemo(() => [{ value: "All sets", label: "All sets" }, ...sets.map((set) => ({ value: set.name, label: `${set.number} · ${set.name}` }))], [sets]);
   const deckGoals = useMemo(() => deckCopyGoals(allCards), [allCards]);
   const setCards = useMemo(() => allCards.filter((card) => selectedSet === "All sets" || card.set === selectedSet), [allCards, selectedSet]);
@@ -210,8 +296,23 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
     missing: filteredCards.filter((card) => card.quantity === 0).length,
     needs: cardsNeedingCopies.length,
   };
-  const visibleCards = useMemo(() => (status === "needs" ? cardsNeedingCopies : filteredCards.filter((card) => status === "all" || (status === "owned" ? card.quantity > 0 : card.quantity === 0)))
+  const visibleCards = useMemo(() => [...(status === "needs" ? cardsNeedingCopies : filteredCards.filter((card) => status === "all" || (status === "owned" ? card.quantity > 0 : card.quantity === 0)))]
     .sort((a, b) => a.set.localeCompare(b.set) || a.number.localeCompare(b.number, undefined, { numeric: true }) || a.code.localeCompare(b.code)), [filteredCards, cardsNeedingCopies, status]);
+  const filterKey = `${snapshot.importId}|${selectedSet}|${status}|${search.trim().toLowerCase()}|${selectedRarities.join(",")}`;
+  const [galleryLimit, setGalleryLimit] = useState({ key: "", count: GALLERY_BATCH });
+  const galleryShown = Math.min(visibleCards.length, galleryLimit.key === filterKey ? galleryLimit.count : GALLERY_BATCH);
+  const stepTo = (card: DisplayCard | null) => {
+    if (!card) return;
+    const index = visibleCards.findIndex((item) => item.code === card.code);
+    if (index >= galleryShown) setGalleryLimit({ key: filterKey, count: Math.ceil((index + 1) / GALLERY_BATCH) * GALLERY_BATCH });
+    setSelectedCard(card);
+  };
+
+  const searchElsewhere = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    if (!query || selectedSet === "All sets") return 0;
+    return allCards.filter((card) => card.set !== selectedSet && `${deckCardName(card)} ${card.number} ${card.set}`.toLowerCase().includes(query)).length;
+  }, [allCards, search, selectedSet]);
   const owned = setCards.filter((card) => card.quantity > 0).length;
   const copies = setCards.reduce((sum, card) => sum + card.quantity, 0);
   const foils = setCards.reduce((sum, card) => sum + card.foilQuantity, 0);
@@ -326,7 +427,8 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
   const setLabel = selectedSet === "All sets" ? "all sets" : selectedSet;
   const ownershipIndex = ownershipOptions.findIndex((option) => option.value === status);
   const openFilePicker = () => fileInput.current?.click();
-  const importButton = <button ref={importTrigger} className="primary-button" type="button" onClick={openFilePicker} disabled={busy} aria-busy={busy}><Upload aria-hidden="true" />{busy ? "Working…" : "Compare a CSV"}</button>;
+  const exportCurrent = () => downloadText(exportCsv(snapshot.headers, snapshot.rows), `riftbound-collection-${snapshot.importId ?? "current"}.csv`);
+  const importButton = <button ref={importTrigger} className={firstRun ? "primary-button" : "secondary-button"} type="button" onClick={openFilePicker} disabled={busy} aria-busy={busy}><Upload aria-hidden="true" />{busy ? "Working…" : "Compare a CSV"}</button>;
 
   return <>
     <a className="skip-link" href="#main-content">Skip to content</a>
@@ -361,7 +463,8 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
     {section === "collection" && <div className="view">
     <section className="page-head">
       <div><h1>My collection</h1><p className="head-note">{snapshot.importedAt ? `${viewedSnapshot ? "Viewing" : "Current export"} ${new Date(snapshot.importedAt).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })} · ` : ""}{snapshot.sourceName ?? "data/collection.csv"}</p></div>
-      {!viewedSnapshot && !firstRun && <div className="head-actions"><button className="secondary-button" type="button" onClick={() => downloadText(exportCsv(snapshot.headers, snapshot.rows), `riftbound-collection-${snapshot.importId ?? "current"}.csv`)}><Download aria-hidden="true" />Export CSV</button>{importButton}</div>}
+      {!viewedSnapshot && !firstRun && <div className="head-actions"><button className="secondary-button" type="button" onClick={exportCurrent}><Download aria-hidden="true" />Export CSV</button>{importButton}</div>}
+      {!viewedSnapshot && !firstRun && <div className="head-menu"><DropdownMenu><DropdownMenuTrigger ref={actionsTrigger} className="head-menu-trigger" aria-label="Collection file actions" disabled={busy}><Ellipsis aria-hidden="true" /></DropdownMenuTrigger><DropdownMenuContent align="end" className="filter-menu"><DropdownMenuItem onSelect={exportCurrent}><Download aria-hidden="true" />Export CSV</DropdownMenuItem><DropdownMenuItem onSelect={openFilePicker}><Upload aria-hidden="true" />Compare a CSV</DropdownMenuItem></DropdownMenuContent></DropdownMenu></div>}
       {!viewedSnapshot && <input ref={fileInput} className="visually-hidden" type="file" accept=".csv,text/csv" aria-label="Choose a Card Nexus CSV export" onChange={(event) => chooseFile(event.target.files?.[0])} />}
     </section>
     {viewedSnapshot && <div className="history-banner"><span>Viewing version {viewedSnapshot.version} from {new Date(viewedSnapshot.importedAt!).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}. Your latest collection is unchanged.</span><button type="button" onClick={() => setViewedSnapshot(null)}>Return to latest</button></div>}
@@ -414,23 +517,15 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
         <div className="insight-section price-insight"><h3>Card values</h3>{prices ? <><p>Cardmarket 7-day sale averages in EUR, updated {new Date(prices.createdAt).toLocaleDateString("en-US", { day: "numeric", month: "short" })}</p>{priceError && <p>{priceError}</p>}<h4>Most valuable priced card</h4>{priceHighlights.mostValuable ? <button type="button" className="price-card-row" onClick={() => openCard(priceHighlights.mostValuable!.card)}><span>{priceHighlights.mostValuable.card.name}<small>{priceHighlights.mostValuable.card.set} · {priceHighlights.mostValuable.finish}</small></span><strong>{formatPrice(priceHighlights.mostValuable.amount)}</strong></button> : <p>No owned cards have a 7-day average yet.</p>}<p className="price-coverage">{priceHighlights.pricedOwned} of {ownedTotal} owned printings priced</p><h4>Unowned cards to watch</h4>{priceHighlights.watch.length ? priceHighlights.watch.map((item) => <button type="button" className="price-card-row" key={`${item.card.code}-${item.finish}`} onClick={() => openCard(item.card)}><span>{item.card.name}<small>{item.card.number.toUpperCase()} · {item.finish}</small></span><strong>{formatPrice(item.amount)}</strong></button>) : <p>No matched 7-day prices in this set.</p>}</> : priceError ? <p>{priceError}</p> : <div role="status" aria-label="Loading recent prices"><span className="skeleton skeleton-line" /><span className="skeleton skeleton-row" /><span className="skeleton skeleton-line short" /><span className="skeleton skeleton-row" /></div>}<p className="price-source"><a href="https://www.cardmarket.com/en/Riftbound/Data/Price-Guide" target="_blank" rel="noreferrer">Cardmarket price guide</a> · Estimates vary by condition and language.</p></div>
         </div>
       </aside>
-      {visibleCards.length && cardView === "binder" ? <CardBinder key={`${snapshot.importId}|${selectedSet}|${status}|${search.trim().toLowerCase()}|${selectedRarities.join(",")}`} cards={visibleCards} layout={binderLayout} goals={deckGoals} onOpen={openCard} /> : visibleCards.length && cardView === "checklist" ? <CardChecklist cards={visibleCards} goals={deckGoals} showNeed={status === "needs"} onOpen={openCard} /> : visibleCards.length ? <div className="card-grid" aria-label="Cards">{visibleCards.map((card) => <CardTile key={card.code} card={card} deckGoal={deckGoals.get(deckCardKey(card))} showNeed={status === "needs"} onOpen={openCard} />)}</div> : <div className="empty-state"><p>{status === "needs" ? "No cards need more copies for these filters." : "No cards match these filters."}</p><button type="button" className="secondary-button" onClick={() => { setSearch(""); setStatus("all"); setSelectedRarities([]); }}>Clear filters</button></div>}
+      {visibleCards.length && cardView === "binder" ? <CardBinder key={`${snapshot.importId}|${selectedSet}|${status}|${search.trim().toLowerCase()}|${selectedRarities.join(",")}`} cards={visibleCards} layout={binderLayout} goals={deckGoals} onOpen={openCard} /> : visibleCards.length && cardView === "checklist" ? <CardChecklist cards={visibleCards} goals={deckGoals} showNeed={status === "needs"} onOpen={openCard} /> : visibleCards.length ? <div className="card-grid" aria-label="Cards">{visibleCards.slice(0, galleryShown).map((card) => <CardTile key={card.code} card={card} deckGoal={deckGoals.get(deckCardKey(card))} showNeed={status === "needs"} onOpen={openCard} />)}{galleryShown < visibleCards.length && <div className="gallery-more"><p>{formatNumber(galleryShown)} of {formatNumber(visibleCards.length)} cards shown</p><div><button type="button" className="secondary-button" onClick={() => setGalleryLimit({ key: filterKey, count: galleryShown + GALLERY_BATCH })}>Show {formatNumber(Math.min(GALLERY_BATCH, visibleCards.length - galleryShown))} more</button>{visibleCards.length - galleryShown > GALLERY_BATCH && <button type="button" className="text-button" onClick={() => setGalleryLimit({ key: filterKey, count: visibleCards.length })}>Show all</button>}</div></div>}</div> : <div className="empty-state"><p>{status === "needs" ? "No cards need more copies for these filters." : search.trim() ? `No cards in ${setLabel} match “${search.trim()}”.` : "No cards match these filters."}</p><div className="empty-actions">{searchElsewhere > 0 && <button type="button" className="primary-button" onClick={() => setSelectedSet("All sets")}>Search all sets ({formatNumber(searchElsewhere)})</button>}<button type="button" className="secondary-button" onClick={() => { writeSearchParams({ q: null, show: null, rarity: null }); }}>Clear filters</button></div></div>}
     </div>
     </div>}
     <Dialog open={selectedCard !== null} onOpenChange={(open) => { if (!open) setSelectedCard(null); }}>
-      {selectedCard && <DialogContent ref={cardSheet} className="card-detail-dialog" onKeyDown={(event) => {
-        if (event.key === "ArrowLeft" && previousCard) { event.preventDefault(); setSelectedCard(previousCard); }
-        if (event.key === "ArrowRight" && nextCard) { event.preventDefault(); setSelectedCard(nextCard); }
-      }} onTouchStart={(event) => { swipeStart.current = event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null; }} onTouchEnd={(event) => {
-        const start = swipeStart.current;
-        swipeStart.current = null;
-        if (!start) return;
-        const dx = event.changedTouches[0].clientX - start.x;
-        const dy = event.changedTouches[0].clientY - start.y;
-        if (Math.abs(dx) < 60 || Math.abs(dx) < 2 * Math.abs(dy)) return;
-        if (dx > 0 && previousCard) setSelectedCard(previousCard);
-        if (dx < 0 && nextCard) setSelectedCard(nextCard);
+      {selectedCard && <DialogContent ref={setCardSheet} className="card-detail-dialog" onKeyDown={(event) => {
+        if (event.key === "ArrowLeft" && previousCard) { event.preventDefault(); stepTo(previousCard); }
+        if (event.key === "ArrowRight" && nextCard) { event.preventDefault(); stepTo(nextCard); }
       }} onCloseAutoFocus={(event) => { event.preventDefault(); cardTrigger.current?.focus(); }}>
+        <div className="sheet-handle" aria-hidden="true" />
         <div className="card-detail-art-panel"><div className={`card-detail-art${hasFoilTreatment(selectedCard) ? " shiny" : ""}`}><CardArtwork src={selectedCard.image} alt={`${selectedFullName} card`} /></div></div>
         <div className="card-detail-copy">
           <p className="card-detail-meta"><span className="set-chip">{mainSets.find((set) => set.name === selectedCard.set) ? `${mainSets.find((set) => set.name === selectedCard.set)!.number} · ` : ""}{setCode(selectedCard.set)}</span><span>{selectedCard.number}</span><span className="card-detail-set">{selectedCard.set}</span></p>
@@ -460,15 +555,15 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
           </div>
           </div>
           {(previousCard || nextCard) && <div className="card-detail-nav">
-            <button type="button" className="secondary-button" disabled={!previousCard} onClick={() => previousCard && setSelectedCard(previousCard)} aria-label={previousCard ? `Previous card, ${previousCard.name}, ${previousCard.number}` : "No previous card"}><ChevronLeft aria-hidden="true" />{previousCard?.number ?? ""}</button>
+            <button type="button" className="secondary-button" data-step="previous" disabled={!previousCard} onClick={() => stepTo(previousCard)} aria-label={previousCard ? `Previous card, ${previousCard.name}, ${previousCard.number}` : "No previous card"}><ChevronLeft aria-hidden="true" />{previousCard?.number ?? ""}</button>
             <span>{selectedIndex + 1} of {visibleCards.length} shown</span>
-            <button type="button" className="secondary-button" disabled={!nextCard} onClick={() => nextCard && setSelectedCard(nextCard)} aria-label={nextCard ? `Next card, ${nextCard.name}, ${nextCard.number}` : "No next card"}>{nextCard?.number ?? ""}<ChevronRight aria-hidden="true" /></button>
+            <button type="button" className="secondary-button" data-step="next" disabled={!nextCard} onClick={() => stepTo(nextCard)} aria-label={nextCard ? `Next card, ${nextCard.name}, ${nextCard.number}` : "No next card"}>{nextCard?.number ?? ""}<ChevronRight aria-hidden="true" /></button>
           </div>}
         </div>
       </DialogContent>}
     </Dialog>
     <Dialog open={preview !== null} onOpenChange={(open) => { if (!open && !busy) setPreview(null); }}>
-      {preview && <DialogContent className="import-dialog" onInteractOutside={(event) => { if (busy) event.preventDefault(); }} onEscapeKeyDown={(event) => { if (busy) event.preventDefault(); }} onCloseAutoFocus={(event) => { event.preventDefault(); importTrigger.current?.focus(); }}>
+      {preview && <DialogContent className="import-dialog" onInteractOutside={(event) => { if (busy) event.preventDefault(); }} onEscapeKeyDown={(event) => { if (busy) event.preventDefault(); }} onCloseAutoFocus={(event) => { event.preventDefault(); (importTrigger.current?.offsetParent ? importTrigger.current : actionsTrigger.current)?.focus(); }}>
         <div className="dialog-top"><DialogTitle><span id="import-title">Review this export</span></DialogTitle><DialogDescription>{preview.filename}</DialogDescription></div>
         <div className="stat-tiles"><div><strong>{preview.difference.incomingRows}</strong><span>rows in file</span></div><div className="accent"><strong>{preview.difference.newCards.length}</strong><span>new cards</span></div><div><strong>{preview.difference.newFoils.length}</strong><span>foil additions</span></div></div>
         <div className="dialog-scroll"><DifferenceList title="Cards you did not own" items={preview.difference.newCards} /><DifferenceList title="New foil copies" items={preview.difference.newFoils} /><DifferenceList title="More standard copies" items={preview.difference.moreCopies} />{preview.difference.removedCopies > 0 && <p className="removal-note">This export removes or changes the finish of {preview.difference.removedCopies} previously recorded copies.</p>}{preview.difference.newCards.length + preview.difference.newFoils.length + preview.difference.moreCopies.length === 0 && preview.difference.removedCopies === 0 && <p className="no-changes">No quantity changes found. You can still save this export as your latest snapshot.</p>}</div>
