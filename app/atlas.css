@@ -149,6 +149,7 @@ h1 { font-size: clamp(32px, 3vw, 42px); letter-spacing: -.035em; }
   .ownership-toggle { max-width: none; }
   .ownership-toggle button { min-height: 48px; height: auto; flex-direction: column; gap: 1px; padding: 7px 2px; font-size: 12px; }
   .search-field { grid-column: 1 / -1; }
+  .search-box input { font-size: 16px; }
   .filter-note { font-size: 12px; }
   .workspace-grid > .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 14px; }
   .card-name { font-size: 14px; }

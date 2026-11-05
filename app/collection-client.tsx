@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
-import { ArrowRight, BookOpen, ChartNoAxesColumnIncreasing, ChevronDown, ChevronLeft, ChevronRight, Clock3, Download, GalleryVertical, Grid2x2, Grid3x3, ImageOff, LayoutGrid, Layers3, ListChecks, NotebookTabs, Search, Upload } from "lucide-react";
+import { ArrowRight, ArrowUp, BookOpen, ChartNoAxesColumnIncreasing, ChevronDown, ChevronLeft, ChevronRight, Clock3, Download, GalleryVertical, Grid2x2, Grid3x3, ImageOff, LayoutGrid, Layers3, ListChecks, NotebookTabs, Search, Upload } from "lucide-react";
 import { cardsForCollectionView, compareInventories, exportCsv, hasFoilTreatment, isAlternatePrinting, isOvernumbered, parseCardNexusCsv, radianceChecklistComplete, type DisplayCard, type ImportDifference, type NexusPrice } from "../lib/collection";
 import { matchesCardType, rarityFor, type RarityKind } from "../lib/rarity";
 import { oneOfEachGoal } from "../lib/goals";
@@ -110,6 +110,11 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
     const requested = new URLSearchParams(window.location.search).get("section");
     if (requested === "decks" || requested === "builder" || requested === "history") setSection(requested);
   }, []);
+  const sectionShown = useRef(false);
+  useEffect(() => {
+    if (!sectionShown.current) { sectionShown.current = true; return; }
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [section]);
   const [historyError, setHistoryError] = useState("");
   const snapshot = viewedSnapshot ?? currentSnapshot;
   const [selectedSet, setSelectedSet] = useState("Vendetta");
@@ -137,6 +142,41 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
   const fileInput = useRef<HTMLInputElement>(null);
   const importTrigger = useRef<HTMLButtonElement>(null);
   const cardTrigger = useRef<HTMLElement | null>(null);
+
+  const [toolbar, setToolbar] = useState<HTMLDivElement | null>(null);
+  const [toolbarAbove, setToolbarAbove] = useState(false);
+  useEffect(() => {
+    if (!toolbar) return;
+    let frame = 0;
+    const check = () => { frame = 0; setToolbarAbove(toolbar.getBoundingClientRect().bottom < 0); };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(check); };
+    schedule();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => { window.removeEventListener("scroll", schedule); window.removeEventListener("resize", schedule); cancelAnimationFrame(frame); };
+  }, [toolbar]);
+  const cardSheet = useRef<HTMLDivElement>(null);
+  const swipeStart = useRef<{ x: number; y: number } | null>(null);
+  const selectedCode = selectedCard?.code;
+  useEffect(() => {
+    const sheet = cardSheet.current;
+    if (!sheet) return;
+    sheet.scrollTop = 0;
+    sheet.querySelector(".card-detail-copy")?.scrollTo({ top: 0 });
+  }, [selectedCode]);
+
+  function scrollBehaviour(): ScrollBehavior {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth";
+  }
+
+  function goToSection(next: typeof section) {
+    if (next === section) window.scrollTo({ top: 0, behavior: scrollBehaviour() });
+    else setSection(next);
+  }
+
+  function jumpToFilters() {
+    toolbar?.scrollIntoView({ block: "start", behavior: scrollBehaviour() });
+  }
 
   function openCard(card: DisplayCard) {
     cardTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -294,10 +334,10 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
       <div className="site-header-inner">
         <div className="brand"><img className="brand-mark" src={sitePath("/riftbound-logo-96.png")} alt="" width="44" height="44" /><span>Riftbound<span className="brand-light">Collection</span></span></div>
         <nav className="section-nav" aria-label="Website sections">
-          <button type="button" className={section === "collection" ? "active" : ""} aria-current={section === "collection" ? "page" : undefined} onClick={() => setSection("collection")}><Layers3 aria-hidden="true" /><span className="nav-full">My collection</span><span className="nav-short" aria-hidden="true">Cards</span></button>
-          <button type="button" className={section === "decks" ? "active" : ""} aria-current={section === "decks" ? "page" : undefined} onClick={() => setSection("decks")}><ChartNoAxesColumnIncreasing aria-hidden="true" /><span className="nav-full">Decks & upgrades</span><span className="nav-short" aria-hidden="true">Decks</span></button>
-          <button type="button" className={section === "builder" ? "active" : ""} aria-current={section === "builder" ? "page" : undefined} onClick={() => setSection("builder")}><LayoutGrid aria-hidden="true" /><span className="nav-full">Deck builder</span><span className="nav-short" aria-hidden="true">Builder</span></button>
-          <button type="button" className={section === "history" ? "active" : ""} aria-current={section === "history" ? "page" : undefined} onClick={() => setSection("history")}><Clock3 aria-hidden="true" /><span className="nav-full">History</span><span className="nav-short" aria-hidden="true">History</span></button>
+          <button type="button" className={section === "collection" ? "active" : ""} aria-current={section === "collection" ? "page" : undefined} onClick={() => goToSection("collection")}><Layers3 aria-hidden="true" /><span className="nav-full">My collection</span><span className="nav-short" aria-hidden="true">Cards</span></button>
+          <button type="button" className={section === "decks" ? "active" : ""} aria-current={section === "decks" ? "page" : undefined} onClick={() => goToSection("decks")}><ChartNoAxesColumnIncreasing aria-hidden="true" /><span className="nav-full">Decks & upgrades</span><span className="nav-short" aria-hidden="true">Decks</span></button>
+          <button type="button" className={section === "builder" ? "active" : ""} aria-current={section === "builder" ? "page" : undefined} onClick={() => goToSection("builder")}><LayoutGrid aria-hidden="true" /><span className="nav-full">Deck builder</span><span className="nav-short" aria-hidden="true">Builder</span></button>
+          <button type="button" className={section === "history" ? "active" : ""} aria-current={section === "history" ? "page" : undefined} onClick={() => goToSection("history")}><Clock3 aria-hidden="true" /><span className="nav-full">History</span><span className="nav-short" aria-hidden="true">History</span></button>
           <a href={sitePath("/rules/")}><BookOpen aria-hidden="true" /><span className="nav-full">Rules &amp; reference</span><span className="nav-short" aria-hidden="true">Rules</span></a>
         </nav>
         <nav className="set-navigation" aria-labelledby="set-navigation-title">
@@ -344,7 +384,7 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
       </section>}
       {!firstRun && <div className="summary-side panel"><ChaseList chase={chase} onOpen={openCard} id="chase-title" /></div>}
       </div>
-      <div className="card-toolbar">
+      <div className="card-toolbar" ref={setToolbar}>
         <h2 className="visually-hidden">Cards</h2>
         <div className="toolbar-top">
           <div className="ownership-toggle" role="group" aria-label="Ownership" style={{ "--index": ownershipIndex } as CSSProperties}>{ownershipOptions.map((option) => <button type="button" key={option.value} aria-pressed={status === option.value} onClick={() => setStatus(option.value)}>{option.label}<span>{formatNumber(ownershipCounts[option.value])}</span></button>)}</div>
@@ -378,7 +418,19 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
     </div>
     </div>}
     <Dialog open={selectedCard !== null} onOpenChange={(open) => { if (!open) setSelectedCard(null); }}>
-      {selectedCard && <DialogContent className="card-detail-dialog" onCloseAutoFocus={(event) => { event.preventDefault(); cardTrigger.current?.focus(); }}>
+      {selectedCard && <DialogContent ref={cardSheet} className="card-detail-dialog" onKeyDown={(event) => {
+        if (event.key === "ArrowLeft" && previousCard) { event.preventDefault(); setSelectedCard(previousCard); }
+        if (event.key === "ArrowRight" && nextCard) { event.preventDefault(); setSelectedCard(nextCard); }
+      }} onTouchStart={(event) => { swipeStart.current = event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null; }} onTouchEnd={(event) => {
+        const start = swipeStart.current;
+        swipeStart.current = null;
+        if (!start) return;
+        const dx = event.changedTouches[0].clientX - start.x;
+        const dy = event.changedTouches[0].clientY - start.y;
+        if (Math.abs(dx) < 60 || Math.abs(dx) < 2 * Math.abs(dy)) return;
+        if (dx > 0 && previousCard) setSelectedCard(previousCard);
+        if (dx < 0 && nextCard) setSelectedCard(nextCard);
+      }} onCloseAutoFocus={(event) => { event.preventDefault(); cardTrigger.current?.focus(); }}>
         <div className="card-detail-art-panel"><div className={`card-detail-art${hasFoilTreatment(selectedCard) ? " shiny" : ""}`}><CardArtwork src={selectedCard.image} alt={`${selectedFullName} card`} /></div></div>
         <div className="card-detail-copy">
           <p className="card-detail-meta"><span className="set-chip">{mainSets.find((set) => set.name === selectedCard.set) ? `${mainSets.find((set) => set.name === selectedCard.set)!.number} · ` : ""}{setCode(selectedCard.set)}</span><span>{selectedCard.number}</span><span className="card-detail-set">{selectedCard.set}</span></p>
@@ -426,6 +478,7 @@ export default function CollectionClient({ initial, initialHistory, snapshots }:
       </DialogContent>}
     </Dialog>
     </main>
+    {section === "collection" && toolbarAbove && <button type="button" className="jump-to-filters" onClick={jumpToFilters}><ArrowUp aria-hidden="true" />Filters</button>}
     <footer className="site-footer"><p>Card images and names © Riot Games. Card catalog via <a href="https://github.com/LouisCourrian/riftbound-cards" target="_blank" rel="noreferrer">riftbound-cards</a>.</p></footer>
   </>;
 }
