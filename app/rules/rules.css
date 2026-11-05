@@ -140,14 +140,17 @@
   .section-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .section-nav a { justify-content: flex-start; min-height: 42px; padding: 9px 12px; }
   .section-nav a:last-child { grid-column: 1 / -1; }
-  .rules-site-header .section-nav { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
-  .rules-site-header .section-nav a { display: none; }
-  .rules-site-header .section-nav a:first-child, .rules-site-header .section-nav a:last-child { display: flex; grid-column: span 2; }
+  .rules-page { padding-bottom: calc(112px + env(safe-area-inset-bottom)); }
   .rules-heading { padding: 25px 0 14px; align-items: start; }
   .rules-heading h1 { font-size: 29px; }
   .rules-heading p { font-size: 14px; margin-top: 8px; }
   .rules-edition { display: none; }
-  .rules-controls { padding: 10px 0; }
+  .rules-controls { padding: 10px 0; transition: padding .2s var(--ease), box-shadow .2s var(--ease); }
+  .rules-controls.stuck { padding: 6px 0 8px; box-shadow: 0 1px 0 var(--line); }
+  .rules-controls.stuck .rules-search { height: 40px; }
+  .rules-controls.stuck .rules-topics { margin-top: 6px; padding: 3px; }
+  .rules-controls.stuck .rules-topics button { flex-direction: row; min-height: 32px; padding: 4px 2px; }
+  .rules-controls.stuck .rules-topics svg { display: none; }
   .rules-search { height: 48px; padding: 0 12px; }
   .rules-topics { gap: 2px; padding: 4px; margin-top: 9px; }
   .rules-topics button { flex-direction: column; gap: 4px; min-height: 55px; padding: 5px 2px; font-size: 11px; line-height: 1.3; }
